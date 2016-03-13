@@ -4,17 +4,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>kp-pi-topics</artifactId>
+        <artifactId>kp-pi-security</artifactId>
         <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kp-pi-topics-impl</artifactId>
+    <artifactId>kp-pi-security-impl</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Topics IMPL</name>
+    <name>KP Paladins Inn - Security IMPL</name>
     <description>
-        kp-pi-topics OSGi bundle project.
+        kp-pi-security OSGi bundle project.
     </description>
 
     <properties>
@@ -31,9 +31,9 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Bundle-Activator>de.kaiserpfalzEdv.paladinsInn.topics.Activator</Bundle-Activator>
+                        <Bundle-Activator>de.kaiserpfalzEdv.paladinsInn.security.Activator</Bundle-Activator>
                         <Export-Package>
-                            de.kaiserpfalzEdv.paladinsInn.topics.impl.*;version=${project.version}
+                            de.kaiserpfalzEdv.paladinsInn.security.impl.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *

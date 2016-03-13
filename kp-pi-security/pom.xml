@@ -10,12 +10,12 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kp-pi-topics</artifactId>
-    <name>KP Paladins Inn - Topics</name>
+    <artifactId>kp-pi-security</artifactId>
+    <name>KP Paladins Inn - Security</name>
     <packaging>pom</packaging>
 
     <modules>
-        <module>kp-pi-topics-api</module>
-        <module>kp-pi-topics-impl</module>
+        <module>kp-pi-security-api</module>
+        <module>kp-pi-security-impl</module>
     </modules>
 </project>

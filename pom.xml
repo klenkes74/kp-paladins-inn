@@ -11,6 +11,7 @@
 
     <modules>
         <module>kp-pi-topics</module>
+        <module>kp-pi-security</module>
         <module>kp-pi-camel-integration</module>
     </modules>
 
@@ -87,8 +88,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
+        <skipBehaviorTests>true</skipBehaviorTests>
+
         <maven-bundle-plugin.version>3.0.0</maven-bundle-plugin.version>
         <maven-compiler-plugin.version>2.5.1</maven-compiler-plugin.version>
+        <cucumber-java8.version>1.2.3</cucumber-java8.version>
     </properties>
 
     <build>
@@ -153,4 +157,33 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <profiles>
+        <profile>
+            <id>behavior-tests</id>
+
+            <activation>
+                <property>
+                    <name>skipBehaviorTests</name>
+                    <value>false</value>
+                </property>
+            </activation>
+
+
+            <dependencies>
+                <dependency>
+                    <groupId>junit</groupId>
+                    <artifactId>junit</artifactId>
+                    <version>4.12</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
+                    <groupId>info.cukes</groupId>
+                    <artifactId>cucumber-java8</artifactId>
+                    <version>${cucumber-java8.version}</version>
+                    <scope>test</scope>
+                </dependency>
+            </dependencies>
+        </profile>
+    </profiles>
 </project>
