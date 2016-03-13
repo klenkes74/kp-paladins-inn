@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+    <artifactId>kp-pi-root</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0.0-SNAPSHOT</version>
+
+    <modules>
+        <module>kp-pi-camel-integration</module>
+    </modules>
+
+    <url>http://www.paladins-inn.de</url>
+    <name>KP Paladins Inn - Root</name>
+    <description>The Paladins-Inn Services</description>
+
+    <inceptionYear>2016</inceptionYear>
+
+    <organization>
+        <name>Kaiserpfalz EDV-Service</name>
+        <url>http://www.kaiserpfalz-edv.de</url>
+    </organization>
+
+    <mailingLists>
+        <mailingList>
+            <name>Paladin's Inn - Announce</name>
+            <post>paladins-inn-announce@kaiserpfalz-edv.de</post>
+            <subscribe>paladins-inn-announce+subscribe@kaiserpfalz-edv.de?subject=subscribe</subscribe>
+            <unsubscribe>paladins-inn-announce+subscribe@kaiserpfalz-edv.de?subject=subscribe</unsubscribe>
+        </mailingList>
+
+        <mailingList>
+            <name>Paladin's Inn - Users</name>
+            <post>paladins-inn-user@kaiserpfalz-edv.de</post>
+            <subscribe>paladins-inn-user+subscribe@kaiserpfalz-edv.de?subject=subscribe</subscribe>
+            <unsubscribe>paladins-inn-user+subscribe@kaiserpfalz-edv.de?subject=subscribe</unsubscribe>
+        </mailingList>
+
+        <mailingList>
+            <name>Paladin's Inn - Developers</name>
+            <post>paladins-inn-developer@kaiserpfalz-edv.de</post>
+            <subscribe>paladins-inn-developer+subscribe@kaiserpfalz-edv.de?subject=subscribe</subscribe>
+            <unsubscribe>paladins-inn-developer+subscribe@kaiserpfalz-edv.de?subject=subscribe</unsubscribe>
+        </mailingList>
+    </mailingLists>
+
+    <ciManagement>
+        <system>jenkins</system>
+        <url>http://devzone.kaiserpfalz-edv.de/ci/</url>
+    </ciManagement>
+
+    <issueManagement>
+        <system>jira</system>
+        <url>http://devzone.kaiserpfalz-edv.de/issues/browse/KPPI</url>
+    </issueManagement>
+
+    <developers>
+        <developer>
+            <id>klenkes74</id>
+            <name>Roland Thomas Lichti</name>
+            <organization>Kaiserpfalz EDV-Service</organization>
+            <organizationUrl>http://www.kaiserpfalz-edv.de</organizationUrl>
+            <email>rlichti@kaiserpfalz-edv.de</email>
+            <roles>
+                <role>Sole Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+</project>
