@@ -47,6 +47,12 @@
 
     <dependencies>
         <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-topics-api</artifactId>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
         </dependency>

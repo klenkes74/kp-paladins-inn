@@ -4,15 +4,22 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>kp-pi-topics</artifactId>
+        <artifactId>kp-pi-events</artifactId>
         <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kp-pi-topics-api</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>kp-pi-events-impl</artifactId>
+    <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Topics API</name>
+    <name>KP Paladins Inn - Events IMPL</name>
+    <description>
+        kp-pi-events OSGi bundle project.
+    </description>
+
+    <properties>
+        <skipBehaviorTests>false</skipBehaviorTests>
+    </properties>
 
 
     <build>
@@ -24,8 +31,9 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
+                        <Bundle-Activator>de.kaiserpfalzEdv.paladinsInn.events.Activator</Bundle-Activator>
                         <Export-Package>
-                            de.kaiserpfalzEdv.paladinsInn.topics.*;version=${project.version}
+                            de.kaiserpfalzEdv.paladinsInn.events.impl.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
@@ -38,6 +46,23 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-events-api</artifactId>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.core</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.smb-tec.neo4j</groupId>
+            <artifactId>neo4j-community</artifactId>
+        </dependency>
+
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
