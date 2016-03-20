@@ -4,22 +4,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>kp-pi-shops</artifactId>
+        <artifactId>kp-pi-commons</artifactId>
         <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kp-pi-shops-impl</artifactId>
-    <packaging>bundle</packaging>
+    <artifactId>kp-pi-commons-api</artifactId>
+    <packaging>jar</packaging>
 
-    <name>KP Paladins Inn - Shops IMPL</name>
-    <description>
-        kp-pi-shops OSGi bundle project.
-    </description>
-
-    <properties>
-        <skipBehaviorTests>false</skipBehaviorTests>
-    </properties>
+    <name>KP Paladins Inn - Commons API</name>
 
 
     <build>
@@ -31,9 +24,8 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Bundle-Activator>de.kaiserpfalzEdv.paladinsInn.shops.Activator</Bundle-Activator>
                         <Export-Package>
-                            de.kaiserpfalzEdv.paladinsInn.shops.impl.*;version=${project.version}
+                            de.kaiserpfalzEdv.paladinsInn.commons.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
@@ -46,33 +38,6 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-            <artifactId>kp-pi-shops-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-            <artifactId>kp-pi-commons-impl</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-            <artifactId>kp-pi-topics-impl</artifactId>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.smb-tec.neo4j</groupId>
-            <artifactId>neo4j-community</artifactId>
-        </dependency>
-
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

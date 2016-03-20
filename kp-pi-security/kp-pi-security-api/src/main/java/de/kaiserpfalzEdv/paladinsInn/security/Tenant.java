@@ -14,31 +14,21 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.topics;
+package de.kaiserpfalzEdv.paladinsInn.security;
 
 import de.kaiserpfalzEdv.paladinsInn.commons.Identifiable;
-import de.kaiserpfalzEdv.paladinsInn.commons.Nameable;
-import de.kaiserpfalzEdv.paladinsInn.security.Maintainable;
-import de.kaiserpfalzEdv.paladinsInn.security.Tenant;
-import de.kaiserpfalzEdv.paladinsInn.security.TenantHolding;
-import de.kaiserpfalzEdv.paladinsInn.security.User;
 
 import java.io.Serializable;
-import java.util.List;
 
 /**
- * A single topic.
- * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-18
+ * The tenant of a data node in the database.
+ *
+ * @author rlichti {@literal <rlichti@redhat.com>}
+ * @since 2016-03-20
  */
-public interface Topic extends Identifiable, Nameable, TenantHolding, Maintainable, Serializable {
+public interface Tenant extends Identifiable {
     /**
-     * @return The parent topic.
+     * @return the name of the tenant.
      */
-    Topic getParent();
-
-    /**
-     * @return list of children topics of the current topic.
-     */
-    List<Topic> getChildren();
+    String getName();
 }

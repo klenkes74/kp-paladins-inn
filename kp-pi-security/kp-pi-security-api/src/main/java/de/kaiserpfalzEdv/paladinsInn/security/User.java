@@ -14,31 +14,28 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.topics;
+package de.kaiserpfalzEdv.paladinsInn.security;
 
 import de.kaiserpfalzEdv.paladinsInn.commons.Identifiable;
 import de.kaiserpfalzEdv.paladinsInn.commons.Nameable;
-import de.kaiserpfalzEdv.paladinsInn.security.Maintainable;
-import de.kaiserpfalzEdv.paladinsInn.security.Tenant;
-import de.kaiserpfalzEdv.paladinsInn.security.TenantHolding;
-import de.kaiserpfalzEdv.paladinsInn.security.User;
 
-import java.io.Serializable;
-import java.util.List;
+import java.security.Principal;
 
 /**
- * A single topic.
- * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-18
+ * A registered user.
+ *
+ * @author rlichti {@literal <rlichti@redhat.com>}
+ * @since 2016-03-20
  */
-public interface Topic extends Identifiable, Nameable, TenantHolding, Maintainable, Serializable {
+public interface User extends Identifiable, Nameable, Principal {
     /**
-     * @return The parent topic.
+     * @param password The new password.
      */
-    Topic getParent();
+    void setPassword(final String password);
 
     /**
-     * @return list of children topics of the current topic.
+     * @param passwordToCheck The password to check against the saved password.
+     * @return if both passwords checked.
      */
-    List<Topic> getChildren();
+    boolean checkPassword(final String passwordToCheck);
 }

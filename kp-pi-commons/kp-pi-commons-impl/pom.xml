@@ -4,17 +4,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>kp-pi-shops</artifactId>
+        <artifactId>kp-pi-commons</artifactId>
         <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kp-pi-shops-impl</artifactId>
+    <artifactId>kp-pi-commons-impl</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Shops IMPL</name>
+    <name>KP Paladins Inn - Commons IMPL</name>
     <description>
-        kp-pi-shops OSGi bundle project.
+        kp-pi-commons OSGi bundle project.
     </description>
 
     <properties>
@@ -31,9 +31,8 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Bundle-Activator>de.kaiserpfalzEdv.paladinsInn.shops.Activator</Bundle-Activator>
                         <Export-Package>
-                            de.kaiserpfalzEdv.paladinsInn.shops.impl.*;version=${project.version}
+                            de.kaiserpfalzEdv.paladinsInn.commons.impl.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
@@ -48,17 +47,7 @@
     <dependencies>
         <dependency>
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-            <artifactId>kp-pi-shops-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-            <artifactId>kp-pi-commons-impl</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-            <artifactId>kp-pi-topics-impl</artifactId>
+            <artifactId>kp-pi-commons-api</artifactId>
         </dependency>
 
 

@@ -14,31 +14,20 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.topics;
-
-import de.kaiserpfalzEdv.paladinsInn.commons.Identifiable;
-import de.kaiserpfalzEdv.paladinsInn.commons.Nameable;
-import de.kaiserpfalzEdv.paladinsInn.security.Maintainable;
-import de.kaiserpfalzEdv.paladinsInn.security.Tenant;
-import de.kaiserpfalzEdv.paladinsInn.security.TenantHolding;
-import de.kaiserpfalzEdv.paladinsInn.security.User;
+package de.kaiserpfalzEdv.paladinsInn.commons;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.UUID;
 
 /**
- * A single topic.
+ * An identifiable object.
+ *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-18
  */
-public interface Topic extends Identifiable, Nameable, TenantHolding, Maintainable, Serializable {
+public interface Identifiable extends Serializable {
     /**
-     * @return The parent topic.
+     * @return The unique ID of this object.
      */
-    Topic getParent();
-
-    /**
-     * @return list of children topics of the current topic.
-     */
-    List<Topic> getChildren();
+    UUID getIdentifier();
 }
