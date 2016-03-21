@@ -14,19 +14,36 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.commons;
+package de.kaiserpfalzEdv.paladinsInn.commons.impl;
+
+import de.kaiserpfalzEdv.paladinsInn.commons.IdentityWritable;
 
 import java.util.UUID;
 
 /**
- * The writable identifiable object.
+ * A base implementation for all identifable classes (including writable interface).
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-19
+ * @since 2016-03-20
  */
-public interface IdentityWritable extends Identifiable {
-    /**
-     * @param id the (new) identity of an object.
-     */
-    void setIdentity(final UUID id);
+public class AbstractIdentityBase implements IdentityWritable {
+    private UUID id;
+
+    public AbstractIdentityBase() {
+        this.id = UUID.randomUUID();
+    }
+
+    public AbstractIdentityBase(final UUID id) {
+        this.id = id;
+    }
+
+    @Override
+    public void setIdentity(UUID id) {
+        this.id = id;
+    }
+
+    @Override
+    public UUID getIdentifier() {
+        return id;
+    }
 }

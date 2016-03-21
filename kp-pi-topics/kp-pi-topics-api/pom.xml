@@ -26,6 +26,7 @@
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
                             de.kaiserpfalzEdv.paladinsInn.topics.*;version=${project.version}
+                            de.kaiserpfalzEdv.paladinsInn.topics.client.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *

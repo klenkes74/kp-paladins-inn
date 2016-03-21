@@ -19,7 +19,7 @@ package de.kaiserpfalzEdv.paladinsInn.commons;
 /**
  * An object with an unique name.
  *
- * @author rlichti {@literal <rlichti@redhat.com>}
+ * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
 public interface Nameable {

@@ -19,9 +19,7 @@ package de.kaiserpfalzEdv.paladinsInn.topics;
 import de.kaiserpfalzEdv.paladinsInn.commons.Identifiable;
 import de.kaiserpfalzEdv.paladinsInn.commons.Nameable;
 import de.kaiserpfalzEdv.paladinsInn.security.Maintainable;
-import de.kaiserpfalzEdv.paladinsInn.security.Tenant;
 import de.kaiserpfalzEdv.paladinsInn.security.TenantHolding;
-import de.kaiserpfalzEdv.paladinsInn.security.User;
 
 import java.io.Serializable;
 import java.util.List;

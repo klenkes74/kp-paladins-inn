@@ -47,6 +47,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-security-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-commons-impl</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>org.osgi</groupId>
             <artifactId>org.osgi.core</artifactId>
         </dependency>

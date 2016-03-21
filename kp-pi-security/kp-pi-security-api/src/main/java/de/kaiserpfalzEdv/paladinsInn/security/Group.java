@@ -14,19 +14,14 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.commons;
+package de.kaiserpfalzEdv.paladinsInn.security;
 
-import java.util.UUID;
+import de.kaiserpfalzEdv.paladinsInn.commons.Identifiable;
+import de.kaiserpfalzEdv.paladinsInn.commons.Nameable;
 
 /**
- * The writable identifiable object.
- *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-19
+ * @since 2016-03-20
  */
-public interface IdentityWritable extends Identifiable {
-    /**
-     * @param id the (new) identity of an object.
-     */
-    void setIdentity(final UUID id);
+public interface Group extends Identifiable, Nameable {
 }

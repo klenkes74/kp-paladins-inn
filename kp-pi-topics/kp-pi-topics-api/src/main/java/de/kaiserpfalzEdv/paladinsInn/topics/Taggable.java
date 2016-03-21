@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * An object tagged with topics.
  *
- * @author rlichti {@literal <rlichti@redhat.com>}
+ * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
 public interface Taggable {

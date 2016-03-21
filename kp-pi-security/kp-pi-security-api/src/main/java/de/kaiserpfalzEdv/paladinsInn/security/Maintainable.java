@@ -16,15 +16,17 @@
 
 package de.kaiserpfalzEdv.paladinsInn.security;
 
+import java.util.UUID;
+
 /**
  * An object that is maintained by an user.
  *
- * @author rlichti {@literal <rlichti@redhat.com>}
+ * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
 public interface Maintainable {
     /**
      * @return The maintainer of this objects.
      */
-    User getMaintainer();
+    UUID getMaintainer();
 }

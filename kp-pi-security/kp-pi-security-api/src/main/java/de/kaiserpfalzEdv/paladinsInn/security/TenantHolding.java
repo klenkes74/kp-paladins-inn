@@ -16,15 +16,17 @@
 
 package de.kaiserpfalzEdv.paladinsInn.security;
 
+import java.util.UUID;
+
 /**
  * An object that is attached to a tenant.
  *
- * @author rlichti {@literal <rlichti@redhat.com>}
+ * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
 public interface TenantHolding {
     /**
      * @return The tenant of this object.
      */
-    Tenant getTenant();
+    UUID getTenant();
 }

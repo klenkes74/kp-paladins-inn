@@ -17,18 +17,17 @@
 package de.kaiserpfalzEdv.paladinsInn.security;
 
 import de.kaiserpfalzEdv.paladinsInn.commons.Identifiable;
+import de.kaiserpfalzEdv.paladinsInn.commons.Nameable;
 
 import java.io.Serializable;
 
 /**
  * The tenant of a data node in the database.
  *
- * @author rlichti {@literal <rlichti@redhat.com>}
+ * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public interface Tenant extends Identifiable {
-    /**
-     * @return the name of the tenant.
-     */
-    String getName();
+public interface Tenant extends Identifiable, Nameable {
+    User getMaintainer();
+
 }

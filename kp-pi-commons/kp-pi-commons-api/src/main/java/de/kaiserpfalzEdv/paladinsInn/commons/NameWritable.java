@@ -16,17 +16,15 @@
 
 package de.kaiserpfalzEdv.paladinsInn.commons;
 
-import java.util.UUID;
-
 /**
- * The writable identifiable object.
+ * The write interface of the nameable objects.
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-19
+ * @since 2016-03-20
  */
-public interface IdentityWritable extends Identifiable {
+public interface NameWritable extends Nameable {
     /**
-     * @param id the (new) identity of an object.
+     * @param name The name of the object.
      */
-    void setIdentity(final UUID id);
+    void setName(String name);
 }

@@ -14,19 +14,15 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.commons;
+package de.kaiserpfalzEdv.paladinsInn.topics;
 
-import java.util.UUID;
+import java.io.Serializable;
 
 /**
- * The writable identifiable object.
- *
+ * A query for topics
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-19
+ * @since 2016-03-20
  */
-public interface IdentityWritable extends Identifiable {
-    /**
-     * @param id the (new) identity of an object.
-     */
-    void setIdentity(final UUID id);
+public class TopicQuery implements Serializable {
+
 }

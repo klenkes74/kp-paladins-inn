@@ -24,7 +24,7 @@ import java.security.Principal;
 /**
  * A registered user.
  *
- * @author rlichti {@literal <rlichti@redhat.com>}
+ * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
 public interface User extends Identifiable, Nameable, Principal {
