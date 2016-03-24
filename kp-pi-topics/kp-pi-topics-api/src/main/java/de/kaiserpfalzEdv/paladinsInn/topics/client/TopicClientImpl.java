@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.topics.client;
+package de.kaiserpfalzedv.paladinsinn.topics.client;
 
-import de.kaiserpfalzEdv.paladinsInn.topics.Topic;
+import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 
 import java.util.ArrayList;
 import java.util.Collections;

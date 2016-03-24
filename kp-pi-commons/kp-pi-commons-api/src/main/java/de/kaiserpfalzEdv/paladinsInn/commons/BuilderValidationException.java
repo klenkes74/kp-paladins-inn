@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.commons;
+package de.kaiserpfalzedv.paladinsinn.commons;
 
 import java.util.Collections;
 import java.util.HashSet;

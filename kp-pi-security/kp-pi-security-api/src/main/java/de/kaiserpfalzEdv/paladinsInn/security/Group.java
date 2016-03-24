@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.security;
+package de.kaiserpfalzedv.paladinsinn.security;
 
-import de.kaiserpfalzEdv.paladinsInn.commons.Identifiable;
-import de.kaiserpfalzEdv.paladinsInn.commons.Nameable;
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.Nameable;
 
 /**
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}

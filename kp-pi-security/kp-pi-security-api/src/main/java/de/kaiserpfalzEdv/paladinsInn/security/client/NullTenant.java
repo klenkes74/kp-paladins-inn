@@ -14,17 +14,32 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.commons;
+package de.kaiserpfalzedv.paladinsinn.security.client;
+
+import de.kaiserpfalzedv.paladinsinn.security.Tenant;
+import de.kaiserpfalzedv.paladinsinn.security.User;
+
+import java.util.UUID;
 
 /**
- * An object with an unique name.
- *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-20
+ * @since 2016-03-24
  */
-public interface Nameable {
-    /**
-     * @return The name of the object.
-     */
-    String getName();
+public class NullTenant implements Tenant {
+    private static final UUID identifier = UUID.fromString("4dfb9268-7f29-4442-a458-f00e7e620f18");
+
+    @Override
+    public User getMaintainer() {
+        return new NullUser();
+    }
+
+    @Override
+    public UUID getIdentifier() {
+        return identifier;
+    }
+
+    @Override
+    public String getName() {
+        return "no tenant";
+    }
 }

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.security;
+package de.kaiserpfalzedv.paladinsinn.security;
 
 import java.util.UUID;
 

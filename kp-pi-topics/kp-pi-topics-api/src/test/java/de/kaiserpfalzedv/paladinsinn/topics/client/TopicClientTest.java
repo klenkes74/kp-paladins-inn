@@ -14,17 +14,27 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.commons;
+package de.kaiserpfalzedv.paladinsinn.topics.client;
+
+import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
+import de.kaiserpfalzedv.paladinsinn.topics.Topic;
+import org.junit.Assert;
+import org.junit.Test;
+
+import static org.junit.Assert.assertEquals;
 
 /**
- * An object with an unique name.
- *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-20
+ * @since 2016-03-24
  */
-public interface Nameable {
-    /**
-     * @return The name of the object.
-     */
-    String getName();
+public class TopicClientTest {
+
+    @Test
+    public void createMinimalTopic() throws BuilderValidationException {
+        Topic result = new TopicBuilder()
+                .setName("TestTopic")
+                .build();
+
+        assertEquals("TestTopic", result.getName());
+    }
 }

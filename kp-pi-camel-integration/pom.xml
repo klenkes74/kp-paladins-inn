@@ -90,8 +90,8 @@
                 <configuration>
                     <instructions>
                         <Bundle-SymbolicName>kp-paladins-inn</Bundle-SymbolicName>
-                        <Bundle-Activator>de.kaiserpfalzEdv.paladinsInn.camel.Activator</Bundle-Activator>
-                        <Private-Package>de.kaiserpfalzEdv.paladinsInn.camel.impl.*</Private-Package>
+                        <Bundle-Activator>de.kaiserpfalzedv.paladinsinn.camel.Activator</Bundle-Activator>
+                        <Private-Package>de.kaiserpfalzedv.paladinsinn.camel.impl.*</Private-Package>
                         <Import-Package>*</Import-Package>
                     </instructions>
                 </configuration>

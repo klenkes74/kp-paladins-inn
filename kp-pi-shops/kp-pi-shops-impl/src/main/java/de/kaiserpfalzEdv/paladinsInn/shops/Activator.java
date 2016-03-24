@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package de.kaiserpfalzEdv.paladinsInn.shops;
+package de.kaiserpfalzedv.paladinsinn.shops;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;

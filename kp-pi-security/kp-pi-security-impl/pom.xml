@@ -31,9 +31,9 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Bundle-Activator>de.kaiserpfalzEdv.paladinsInn.security.Activator</Bundle-Activator>
+                        <Bundle-Activator>de.kaiserpfalzedv.paladinsinn.security.Activator</Bundle-Activator>
                         <Export-Package>
-                            de.kaiserpfalzEdv.paladinsInn.security.impl.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.security.impl.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *

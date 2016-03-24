@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.commons.impl;
+package de.kaiserpfalzedv.paladinsinn.commons.impl;
 
-import de.kaiserpfalzEdv.paladinsInn.commons.NameWritable;
+import de.kaiserpfalzedv.paladinsinn.commons.NameWritable;
 
 import java.util.UUID;
 

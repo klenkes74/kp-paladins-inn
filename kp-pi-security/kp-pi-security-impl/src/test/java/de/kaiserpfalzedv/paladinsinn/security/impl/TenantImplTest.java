@@ -14,17 +14,51 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.commons;
+package de.kaiserpfalzedv.paladinsinn.security.impl;
+
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 /**
- * An object with an unique name.
- *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public interface Nameable {
-    /**
-     * @return The name of the object.
-     */
-    String getName();
+public class TenantImplTest {
+    @Before
+    public void setUp() throws Exception {
+
+    }
+
+    @After
+    public void tearDown() throws Exception {
+
+    }
+
+    @Test
+    public void testGetMaintainer() throws Exception {
+
+    }
+
+    @Test
+    public void testSetName() throws Exception {
+
+    }
+
+    @Test
+    public void testGetName() throws Exception {
+
+    }
+
+    @Test
+    public void testSetIdentity() throws Exception {
+
+    }
+
+    @Test
+    public void testGetIdentifier() throws Exception {
+
+    }
 }

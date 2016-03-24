@@ -14,18 +14,17 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.events;
+package de.kaiserpfalzedv.paladinsinn.events;
 
-import de.kaiserpfalzEdv.paladinsInn.commons.Identifiable;
-import de.kaiserpfalzEdv.paladinsInn.commons.Nameable;
-import de.kaiserpfalzEdv.paladinsInn.security.Maintainable;
-import de.kaiserpfalzEdv.paladinsInn.security.TenantHolding;
-import de.kaiserpfalzEdv.paladinsInn.topics.Taggable;
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.Nameable;
+import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
+import de.kaiserpfalzedv.paladinsinn.security.TenantHolding;
+import de.kaiserpfalzedv.paladinsinn.topics.Taggable;
 
 import java.io.Serializable;
 import java.net.URL;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 /**

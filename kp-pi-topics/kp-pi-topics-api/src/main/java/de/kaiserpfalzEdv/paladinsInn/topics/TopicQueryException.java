@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.topics;
+package de.kaiserpfalzedv.paladinsinn.topics;
 
-import de.kaiserpfalzEdv.paladinsInn.commons.PaladinsInnBaseException;
+import de.kaiserpfalzedv.paladinsinn.commons.PaladinsInnBaseException;
 
 /**
  * A failure occured while working on the {@link TopicQuery}. The failed query can be retrieved from the exception by

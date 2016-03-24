@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.topics;
+package de.kaiserpfalzedv.paladinsinn.topics;
 
-import de.kaiserpfalzEdv.paladinsInn.commons.Identifiable;
-import de.kaiserpfalzEdv.paladinsInn.commons.Nameable;
-import de.kaiserpfalzEdv.paladinsInn.security.Maintainable;
-import de.kaiserpfalzEdv.paladinsInn.security.TenantHolding;
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.Nameable;
+import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
+import de.kaiserpfalzedv.paladinsinn.security.TenantHolding;
 
 import java.io.Serializable;
 import java.util.List;

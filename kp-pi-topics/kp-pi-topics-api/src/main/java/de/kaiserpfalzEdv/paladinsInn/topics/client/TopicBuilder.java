@@ -14,13 +14,15 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.topics.client;
+package de.kaiserpfalzedv.paladinsinn.topics.client;
 
-import de.kaiserpfalzEdv.paladinsInn.commons.Builder;
-import de.kaiserpfalzEdv.paladinsInn.commons.BuilderValidationException;
-import de.kaiserpfalzEdv.paladinsInn.security.Tenant;
-import de.kaiserpfalzEdv.paladinsInn.security.User;
-import de.kaiserpfalzEdv.paladinsInn.topics.Topic;
+import de.kaiserpfalzedv.paladinsinn.commons.Builder;
+import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
+import de.kaiserpfalzedv.paladinsinn.security.Tenant;
+import de.kaiserpfalzedv.paladinsinn.security.User;
+import de.kaiserpfalzedv.paladinsinn.security.client.NullTenant;
+import de.kaiserpfalzedv.paladinsinn.security.client.NullUser;
+import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -64,6 +66,18 @@ public class TopicBuilder implements Builder<Topic> {
 
         if (name == null) {
             failures.add("A topic needs a name. No name given!");
+        }
+
+        if (maintainer == null) {
+            maintainer = new NullUser().getIdentifier();
+        }
+
+        if (parent == null) {
+            parent = new NullTopic();
+        }
+
+        if (tenant == null) {
+            tenant = new NullTenant().getIdentifier();
         }
 
         if (failures.size() != 0) {

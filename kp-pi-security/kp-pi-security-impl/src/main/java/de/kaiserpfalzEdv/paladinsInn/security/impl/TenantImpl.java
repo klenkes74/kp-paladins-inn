@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzEdv.paladinsInn.security.impl;
+package de.kaiserpfalzedv.paladinsinn.security.impl;
 
-import de.kaiserpfalzEdv.paladinsInn.commons.IdentityWritable;
-import de.kaiserpfalzEdv.paladinsInn.commons.NameWritable;
-import de.kaiserpfalzEdv.paladinsInn.commons.impl.AbstractNamedAndIdentifiedBase;
-import de.kaiserpfalzEdv.paladinsInn.security.Tenant;
-import de.kaiserpfalzEdv.paladinsInn.security.User;
+import de.kaiserpfalzedv.paladinsinn.commons.IdentityWritable;
+import de.kaiserpfalzedv.paladinsinn.commons.NameWritable;
+import de.kaiserpfalzedv.paladinsinn.commons.impl.AbstractNamedAndIdentifiedBase;
+import de.kaiserpfalzedv.paladinsinn.security.Tenant;
+import de.kaiserpfalzedv.paladinsinn.security.User;
 
 import java.util.UUID;
 

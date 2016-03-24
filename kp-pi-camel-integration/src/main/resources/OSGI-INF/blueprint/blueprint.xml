@@ -23,7 +23,7 @@
        http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
        http://camel.apache.org/schema/blueprint http://camel.apache.org/schema/blueprint/camel-blueprint.xsd">
 
-  <bean id="helloBean" class="de.kaiserpfalzEdv.paladinsInn.HelloBean">
+  <bean id="helloBean" class="de.kaiserpfalzedv.paladinsinn.HelloBean">
       <property name="say" value="Hi from Camel"/>
   </bean>
 

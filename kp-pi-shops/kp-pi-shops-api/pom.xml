@@ -24,7 +24,7 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.kaiserpfalzEdv.paladinsInn.shops.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.shops.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *

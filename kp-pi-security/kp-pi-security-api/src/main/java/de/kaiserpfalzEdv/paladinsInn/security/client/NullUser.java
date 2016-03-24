@@ -14,17 +14,36 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.commons;
+package de.kaiserpfalzedv.paladinsinn.security.client;
+
+import de.kaiserpfalzedv.paladinsinn.security.User;
+
+import java.util.UUID;
 
 /**
- * An object with an unique name.
- *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-20
+ * @since 2016-03-24
  */
-public interface Nameable {
-    /**
-     * @return The name of the object.
-     */
-    String getName();
+public class NullUser implements User {
+    private static final UUID identity = UUID.fromString("736eb2d8-dacf-48bd-879a-00bb83e969c7");
+
+    @Override
+    public void setPassword(String password) {
+
+    }
+
+    @Override
+    public boolean checkPassword(String passwordToCheck) {
+        return false;
+    }
+
+    @Override
+    public UUID getIdentifier() {
+        return identity;
+    }
+
+    @Override
+    public String getName() {
+        return "no user";
+    }
 }

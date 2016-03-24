@@ -25,8 +25,8 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.kaiserpfalzEdv.paladinsInn.topics.*;version=${project.version}
-                            de.kaiserpfalzEdv.paladinsInn.topics.client.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.topics.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.topics.client.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
