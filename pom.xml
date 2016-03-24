@@ -63,6 +63,14 @@
         <url>http://devzone.kaiserpfalz-edv.de/issues/browse/KPPI</url>
     </issueManagement>
 
+    <distributionManagement>
+        <site>
+            <id>kaiserpfalz</id>
+            <name>Kaiserpfalz EDV-Service</name>
+            <url>http://www.kaiserpfalz-edv.de</url>
+        </site>
+    </distributionManagement>
+
     <developers>
         <developer>
             <id>klenkes74</id>
