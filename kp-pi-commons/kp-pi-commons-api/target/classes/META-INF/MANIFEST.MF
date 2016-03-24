@@ -1,0 +1,17 @@
+Manifest-Version: 1.0
+Bnd-LastModified: 1458493990094
+Build-Jdk: 1.8.0_65
+Built-By: rlichti
+Bundle-Description: The Paladins-Inn Services
+Bundle-DocURL: http://www.kaiserpfalz-edv.de
+Bundle-License: https://www.apache.org/licenses/LICENSE-2.0.txt
+Bundle-ManifestVersion: 2
+Bundle-Name: KP Paladins Inn - Commons API
+Bundle-SymbolicName: kp-pi-commons-api
+Bundle-Vendor: Kaiserpfalz EDV-Service
+Bundle-Version: 1.0.0.SNAPSHOT
+Created-By: Apache Maven Bundle Plugin
+Export-Package: de.kaiserpfalzEdv.paladinsInn.commons;version="1.0.0.SNA
+ PSHOT"
+Require-Capability: osgi.ee;filter:="(&(osgi.ee=JavaSE)(version=1.8))"
+Tool: Bnd-3.0.0.201509101326
