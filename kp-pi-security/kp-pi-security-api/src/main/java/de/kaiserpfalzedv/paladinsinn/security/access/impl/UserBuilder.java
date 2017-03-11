@@ -25,7 +25,7 @@ import de.kaiserpfalzedv.paladinsinn.security.access.Email;
 import de.kaiserpfalzedv.paladinsinn.security.access.User;
 import de.kaiserpfalzedv.paladinsinn.security.access.UserIdGenerator;
 import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
-import de.kaiserpfalzedv.paladinsinn.security.impl.IdentifiableAbstractBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractBuilder;
 
 /**
  * Builds the principal given the correct data.

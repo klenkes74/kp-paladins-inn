@@ -19,7 +19,7 @@ package de.kaiserpfalzedv.paladinsinn.security.access;
 import java.util.Locale;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.security.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
 
 /**
@@ -52,5 +52,4 @@ public interface User extends Identifiable {
      * @return if both passwords checked.
      */
     boolean checkPassword(final String passwordToCheck);
-
 }

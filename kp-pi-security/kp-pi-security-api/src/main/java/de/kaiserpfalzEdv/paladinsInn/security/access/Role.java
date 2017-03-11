@@ -19,7 +19,7 @@ package de.kaiserpfalzedv.paladinsinn.security.access;
 import java.security.Principal;
 import java.util.Set;
 
-import de.kaiserpfalzedv.paladinsinn.security.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}

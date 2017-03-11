@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.impl;
+package de.kaiserpfalzedv.paladinsinn.commons.impl;
 
 import java.util.Objects;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.security.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}

@@ -18,9 +18,9 @@ package de.kaiserpfalzedv.paladinsinn.security.tenant.impl;
 
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.security.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 import de.kaiserpfalzedv.paladinsinn.security.access.User;
-import de.kaiserpfalzedv.paladinsinn.security.impl.IdentifiableAbstractImpl;
+import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractImpl;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.Tenant;
 
 /**

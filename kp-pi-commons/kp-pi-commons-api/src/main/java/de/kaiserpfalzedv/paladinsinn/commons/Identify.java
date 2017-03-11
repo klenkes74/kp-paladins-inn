@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,22 +14,20 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security;
+package de.kaiserpfalzedv.paladinsinn.commons;
 
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.UUID;
 
 /**
- * A base interface to all security objects.
- * 
- * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
- * @version 1.0.0
- * @since 2017-03-11
+ * An identifiable object.
+ *
+ * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @since 2016-03-18
  */
-public interface Identifiable extends Principal, Serializable {
+public interface Identify extends Serializable {
     /**
-     * @return the unique id of the object.
+     * @return The unique ID of this object.
      */
-    UUID getUniqueId();
+    UUID getIdentifier();
 }

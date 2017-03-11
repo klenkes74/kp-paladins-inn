@@ -21,7 +21,7 @@ import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.Identify;
 import de.kaiserpfalzedv.paladinsinn.commons.Nameable;
 import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantHolding;
@@ -33,7 +33,7 @@ import de.kaiserpfalzedv.paladinsinn.topics.Taggable;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public interface Event extends Identifiable, Nameable, Taggable, TenantHolding, Maintainable, Serializable {
+public interface Event extends Identify, Nameable, Taggable, TenantHolding, Maintainable, Serializable {
     /**
      * @return The start date of the event.
      */

@@ -20,7 +20,7 @@ import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.security.access.User;
 import de.kaiserpfalzedv.paladinsinn.security.access.impl.NullUser;
-import de.kaiserpfalzedv.paladinsinn.security.impl.IdentifiableAbstractImpl;
+import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractImpl;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.Tenant;
 
 /**

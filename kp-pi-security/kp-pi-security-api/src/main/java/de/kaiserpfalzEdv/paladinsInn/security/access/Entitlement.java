@@ -16,7 +16,7 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access;
 
-import de.kaiserpfalzedv.paladinsinn.security.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}

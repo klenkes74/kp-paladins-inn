@@ -11,11 +11,11 @@
 
     <modules>
         <module>kp-pi-commons</module>
+        <module>kp-pi-security</module>
         <module>kp-pi-topics</module>
         <module>kp-pi-events</module>
         <module>kp-pi-peers</module>
         <module>kp-pi-shops</module>
-        <module>kp-pi-security</module>
     </modules>
 
     <url>http://www.paladins-inn.de</url>

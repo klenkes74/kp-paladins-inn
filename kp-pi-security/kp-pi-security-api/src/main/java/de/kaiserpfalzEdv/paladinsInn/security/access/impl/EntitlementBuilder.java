@@ -18,7 +18,7 @@ package de.kaiserpfalzedv.paladinsinn.security.access.impl;
 
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.security.impl.IdentifiableAbstractBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.access.Entitlement;
 
 /**

@@ -19,7 +19,7 @@ package de.kaiserpfalzedv.paladinsinn.security.access.impl;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.security.access.Entitlement;
-import de.kaiserpfalzedv.paladinsinn.security.impl.IdentifiableAbstractImpl;
+import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractImpl;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}

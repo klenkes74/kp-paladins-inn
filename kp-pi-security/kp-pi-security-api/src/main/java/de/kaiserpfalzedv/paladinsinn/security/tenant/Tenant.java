@@ -16,7 +16,7 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.tenant;
 
-import de.kaiserpfalzedv.paladinsinn.security.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 import de.kaiserpfalzedv.paladinsinn.security.access.User;
 
 /**

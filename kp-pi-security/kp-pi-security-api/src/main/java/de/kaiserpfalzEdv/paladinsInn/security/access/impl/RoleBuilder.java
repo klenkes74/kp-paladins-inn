@@ -22,7 +22,7 @@ import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.security.access.Entitlement;
 import de.kaiserpfalzedv.paladinsinn.security.access.Role;
-import de.kaiserpfalzedv.paladinsinn.security.impl.IdentifiableAbstractBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractBuilder;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
