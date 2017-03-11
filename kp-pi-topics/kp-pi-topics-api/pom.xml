@@ -14,10 +14,44 @@
 
     <name>KP Paladins Inn - Topics API</name>
 
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-Version>${project.version}</Bundle-Version>
+                        <Export-Package>
+                            de.kaiserpfalzedv.paladinsinn.topics.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.topics.client.*;version=${project.version}
+                        </Export-Package>
+                        <Import-Package>
+                            *
+                        </Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
     <dependencies>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-commons-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-security-api</artifactId>
         </dependency>
     </dependencies>
 </project>

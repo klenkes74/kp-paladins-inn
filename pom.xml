@@ -10,7 +10,11 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <modules>
+        <module>kp-pi-commons</module>
         <module>kp-pi-topics</module>
+        <module>kp-pi-events</module>
+        <module>kp-pi-peers</module>
+        <module>kp-pi-shops</module>
         <module>kp-pi-security</module>
     </modules>
 
@@ -57,6 +61,14 @@
         <system>jira</system>
         <url>http://devzone.kaiserpfalz-edv.de/issues/browse/KPPI</url>
     </issueManagement>
+
+    <distributionManagement>
+        <site>
+            <id>kaiserpfalz</id>
+            <name>Kaiserpfalz EDV-Service</name>
+            <url>http://www.kaiserpfalz-edv.de</url>
+        </site>
+    </distributionManagement>
 
     <developers>
         <developer>
@@ -119,6 +131,14 @@
                     <artifactId>maven-bundle-plugin</artifactId>
                     <version>${maven-bundle-plugin.version}</version>
                     <extensions>true</extensions>
+                    <executions>
+                        <execution>
+                            <phase>post-integration-test</phase>
+                            <goals>
+                                <goal>bundle</goal>
+                            </goals>
+                        </execution>
+                    </executions>
                 </plugin>
             </plugins>
         </pluginManagement>
@@ -128,7 +148,62 @@
         <dependencies>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-commons-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-commons-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
                 <artifactId>kp-pi-security-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-security-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-events-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-events-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-peers-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-peers-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-shops-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-shops-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-topics-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-topics-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

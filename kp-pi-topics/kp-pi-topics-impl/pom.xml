@@ -46,6 +46,16 @@
 
     <dependencies>
         <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-topics-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-commons-impl</artifactId>
+        </dependency>
+
+        <dependency>
             <groupId>com.smb-tec.neo4j</groupId>
             <artifactId>neo4j-community</artifactId>
         </dependency>
