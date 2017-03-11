@@ -17,19 +17,15 @@
 package de.kaiserpfalzedv.paladinsinn.commons;
 
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.UUID;
 
 /**
- * A base interface to all security objects.
- * 
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-11
  */
-public interface Identifiable extends Principal, Serializable {
-    /**
-     * @return the unique id of the object.
-     */
-    UUID getUniqueId();
+public interface Identifiable extends Serializable {
+    public UUID getUniqueId();
+
+    public String getName();
 }

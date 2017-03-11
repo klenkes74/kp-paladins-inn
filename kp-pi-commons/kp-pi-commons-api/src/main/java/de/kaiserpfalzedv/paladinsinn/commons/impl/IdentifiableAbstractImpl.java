@@ -27,7 +27,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
  * @since 2017-03-11
  */
 public abstract class IdentifiableAbstractImpl implements Identifiable {
-    private static final long serialVersionUID = -1960897761625553726L;
+    private static final long serialVersionUID = -6746639967151130899L;
 
     
     private UUID uniqueId;
