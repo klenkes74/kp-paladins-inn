@@ -24,7 +24,7 @@ import java.util.UUID;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-19
  */
-public interface IdentityWritable extends Identify {
+public interface IdentityWritable extends Identifiable {
     /**
      * @param id the (new) identity of an object.
      */

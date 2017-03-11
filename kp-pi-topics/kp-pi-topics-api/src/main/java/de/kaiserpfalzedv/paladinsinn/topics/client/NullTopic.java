@@ -16,13 +16,13 @@
 
 package de.kaiserpfalzedv.paladinsinn.topics.client;
 
+import de.kaiserpfalzedv.paladinsinn.security.client.NullTenant;
+import de.kaiserpfalzedv.paladinsinn.security.client.NullUser;
+import de.kaiserpfalzedv.paladinsinn.topics.Topic;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
-import de.kaiserpfalzedv.paladinsinn.security.access.impl.NullUser;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.impl.NullTenant;
-import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 
 /**
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -48,7 +48,7 @@ public class NullTopic implements Topic {
 
     @Override
     public UUID getMaintainer() {
-        return new NullUser().getUniqueId();
+        return new NullUser().getIdentifier();
     }
 
     @Override
@@ -58,6 +58,6 @@ public class NullTopic implements Topic {
 
     @Override
     public UUID getTenant() {
-        return new NullTenant().getUniqueId();
+        return new NullTenant().getIdentifier();
     }
 }
