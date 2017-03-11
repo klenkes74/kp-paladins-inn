@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,32 +14,24 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.client;
-
-import de.kaiserpfalzedv.paladinsinn.security.Tenant;
-import de.kaiserpfalzedv.paladinsinn.security.User;
+package de.kaiserpfalzedv.paladinsinn.security.access.impl;
 
 import java.util.UUID;
+
+import de.kaiserpfalzedv.paladinsinn.security.access.User;
 
 /**
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-24
  */
-public class NullTenant implements Tenant {
-    private static final UUID identifier = UUID.fromString("4dfb9268-7f29-4442-a458-f00e7e620f18");
-
-    @Override
-    public User getMaintainer() {
-        return new NullUser();
-    }
-
-    @Override
-    public UUID getIdentifier() {
-        return identifier;
-    }
-
-    @Override
-    public String getName() {
-        return "no tenant";
+public class NullUser  extends UserImpl implements User {
+    public NullUser() {
+        super(
+                UUID.fromString("736eb2d8-dacf-48bd-879a-00bb83e969c7"),
+              "",
+              null,
+              null,
+              null
+        );
     }
 }

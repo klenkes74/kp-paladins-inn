@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,21 +14,20 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.impl;
-
-import de.kaiserpfalzedv.paladinsinn.commons.IdentityWritable;
-import de.kaiserpfalzedv.paladinsinn.commons.NameWritable;
-import de.kaiserpfalzedv.paladinsinn.commons.impl.AbstractNamedAndIdentifiedBase;
-import de.kaiserpfalzedv.paladinsinn.security.Tenant;
-import de.kaiserpfalzedv.paladinsinn.security.User;
+package de.kaiserpfalzedv.paladinsinn.security.tenant.impl;
 
 import java.util.UUID;
+
+import de.kaiserpfalzedv.paladinsinn.security.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.security.access.User;
+import de.kaiserpfalzedv.paladinsinn.security.impl.IdentifiableAbstractImpl;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.Tenant;
 
 /**
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public class TenantImpl extends AbstractNamedAndIdentifiedBase implements Tenant, IdentityWritable, NameWritable {
+public class TenantImpl extends IdentifiableAbstractImpl implements Tenant, Identifiable {
     private User maintainer;
 
     public TenantImpl(final UUID id, final String name, final User maintainer) {

@@ -20,7 +20,7 @@ import java.time.LocalDate;
 import java.util.Locale;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.security.access.impl.PrincipalBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.access.impl.UserBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.identity.Gender;
 import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
 import de.kaiserpfalzedv.paladinsinn.security.identity.impl.NameBuilder;
@@ -39,12 +39,12 @@ import static org.junit.Assert.assertTrue;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public class PrincipalTest {
-    private static final Logger LOG = LoggerFactory.getLogger(PrincipalTest.class);
+public class UserTest {
+    private static final Logger LOG = LoggerFactory.getLogger(UserTest.class);
 
     private static final String PRINCIPAL_NAME = "principal";
 
-    private PrincipalBuilder service;
+    private UserBuilder service;
 
 
     @Test
@@ -60,7 +60,7 @@ public class PrincipalTest {
 
     @Test
     public void shouldCreateMinimalPrincipalWhenNameIsGiven() {
-        Principal result = service.withName(PRINCIPAL_NAME).build();
+        User result = service.withName(PRINCIPAL_NAME).build();
 
         assertEquals("The name does not match", PRINCIPAL_NAME, result.getName());
     }
@@ -83,7 +83,7 @@ public class PrincipalTest {
                 .build();
         Email emailAddress = new Email("rlichti@kaiserpfalz-edv.de");
 
-        Principal result = service
+        User result = service
                 .withPerson(person)
                 .withUniqueId(uniqueId)
                 .withEmailAddress(emailAddress)
@@ -115,13 +115,13 @@ public class PrincipalTest {
                 .build();
         Email emailAddress = new Email("rlichti@kaiserpfalz-edv.de");
 
-        Principal input = service
+        User input = service
                 .withPerson(person)
                 .withUniqueId(uniqueId)
                 .withEmailAddress(emailAddress)
                 .build();
 
-        Principal result = service
+        User result = service
                 .withPrincipal(input)
                 .build();
 
@@ -131,7 +131,7 @@ public class PrincipalTest {
 
     @Before
     public void setUpService() {
-        service = new PrincipalBuilder();
+        service = new UserBuilder();
     }
 
     @After

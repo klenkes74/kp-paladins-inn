@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,17 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security;
+package de.kaiserpfalzedv.paladinsinn.security.tenant;
 
-import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
-import de.kaiserpfalzedv.paladinsinn.commons.Nameable;
-
-import java.security.Principal;
+import de.kaiserpfalzedv.paladinsinn.security.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.security.access.User;
 
 /**
- * A registered user.
+ * The tenant of a data node in the database.
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public interface User extends Identifiable, Nameable, Principal {
-    /**
-     * @param password The new password.
-     */
-    void setPassword(final String password);
-
-    /**
-     * @param passwordToCheck The password to check against the saved password.
-     * @return if both passwords checked.
-     */
-    boolean checkPassword(final String passwordToCheck);
+public interface Tenant extends Identifiable {
+    User getMaintainer();
 }

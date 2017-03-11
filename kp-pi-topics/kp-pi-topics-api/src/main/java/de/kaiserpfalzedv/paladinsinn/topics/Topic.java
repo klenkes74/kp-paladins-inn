@@ -19,7 +19,7 @@ package de.kaiserpfalzedv.paladinsinn.topics;
 import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 import de.kaiserpfalzedv.paladinsinn.commons.Nameable;
 import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
-import de.kaiserpfalzedv.paladinsinn.security.TenantHolding;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantHolding;
 
 import java.io.Serializable;
 import java.util.List;

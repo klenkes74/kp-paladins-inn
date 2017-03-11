@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,36 +14,33 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.client;
-
-import de.kaiserpfalzedv.paladinsinn.security.User;
+package de.kaiserpfalzedv.paladinsinn.security.tenant.impl;
 
 import java.util.UUID;
+
+import de.kaiserpfalzedv.paladinsinn.security.access.User;
+import de.kaiserpfalzedv.paladinsinn.security.access.impl.NullUser;
+import de.kaiserpfalzedv.paladinsinn.security.impl.IdentifiableAbstractImpl;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.Tenant;
 
 /**
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-24
  */
-public class NullUser implements User {
-    private static final UUID identity = UUID.fromString("736eb2d8-dacf-48bd-879a-00bb83e969c7");
+public class NullTenant extends IdentifiableAbstractImpl implements Tenant {
+    private static final UUID identifier = UUID.fromString("4dfb9268-7f29-4442-a458-f00e7e620f18");
 
-    @Override
-    public void setPassword(String password) {
-
+    public NullTenant() {
+        super(UUID.fromString("4dfb9268-7f29-4442-a458-f00e7e620f18"), "");
     }
 
     @Override
-    public boolean checkPassword(String passwordToCheck) {
-        return false;
-    }
-
-    @Override
-    public UUID getIdentifier() {
-        return identity;
+    public User getMaintainer() {
+        return new NullUser();
     }
 
     @Override
     public String getName() {
-        return "no user";
+        return "no tenant";
     }
 }
