@@ -31,9 +31,8 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Bundle-Activator>de.kaiserpfalzEdv.paladinsInn.security.Activator</Bundle-Activator>
                         <Export-Package>
-                            de.kaiserpfalzEdv.paladinsInn.security.impl.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.security.impl.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
@@ -47,8 +46,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-security-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.brickred</groupId>
+            <artifactId>socialauth</artifactId>
+            <version>4.14</version>
         </dependency>
 
         <dependency>

@@ -13,11 +13,21 @@
     <packaging>jar</packaging>
 
     <name>KP Paladins Inn - Security API</name>
+    <description>
+        The API of the security layer. Mainly the identity and account data needed for the application.
+    </description>
 
     <dependencies>
         <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        
+        <dependency>
             <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 </project>

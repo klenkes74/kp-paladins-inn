@@ -31,9 +31,8 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Bundle-Activator>de.kaiserpfalzEdv.paladinsInn.topics.Activator</Bundle-Activator>
                         <Export-Package>
-                            de.kaiserpfalzEdv.paladinsInn.topics.impl.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.topics.impl.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
@@ -46,11 +45,6 @@
 
 
     <dependencies>
-        <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>com.smb-tec.neo4j</groupId>
             <artifactId>neo4j-community</artifactId>
