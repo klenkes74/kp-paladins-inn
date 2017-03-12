@@ -26,7 +26,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public class AbstractIdentityBase implements Identifiable {
+public abstract class AbstractIdentityBase implements Identifiable {
     private UUID id;
     private String name;
 
