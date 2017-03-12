@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,31 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.commons;
+package de.kaiserpfalzedv.paladinsinn.commons.person;
+
+import java.io.Serializable;
 
 /**
- * An object with an unique name.
- *
- * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-20
+ * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 1.0.0
+ * @since 2017-03-11
  */
-public interface Nameable {
-    /**
-     * @return The name of the object.
-     */
-    String getName();
+public interface Name extends Serializable {
+    String getGivenNamePrefix();
+
+    String getGivenName();
+
+    String getGivenNamePostfix();
+
+    String getSnPrefix();
+
+    String getSn();
+
+    String getSnPostfix();
+
+    String getFormalSn();
+
+    String getInformalFullName();
+
+    String getFormalFullName();
 }

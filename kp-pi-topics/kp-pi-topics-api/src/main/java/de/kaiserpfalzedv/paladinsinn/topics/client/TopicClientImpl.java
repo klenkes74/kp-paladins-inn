@@ -16,12 +16,12 @@
 
 package de.kaiserpfalzedv.paladinsinn.topics.client;
 
-import de.kaiserpfalzedv.paladinsinn.topics.Topic;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+
+import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 
 /**
  * The client side read-only implementation of a Topic.
@@ -59,7 +59,8 @@ public class TopicClientImpl implements Topic {
     }
 
 
-    public UUID getIdentifier() {
+    @Override
+    public UUID getUniqueId() {
         return identity;
     }
 

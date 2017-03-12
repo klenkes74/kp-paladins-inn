@@ -16,6 +16,8 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access;
 
+import java.security.Principal;
+
 import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 
 /**

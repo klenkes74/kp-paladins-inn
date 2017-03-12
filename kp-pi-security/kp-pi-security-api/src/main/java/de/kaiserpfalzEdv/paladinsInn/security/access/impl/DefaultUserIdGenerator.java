@@ -16,10 +16,10 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.impl;
 
-import de.kaiserpfalzedv.paladinsinn.security.access.Email;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
 import de.kaiserpfalzedv.paladinsinn.security.access.UserIdGenerator;
-import de.kaiserpfalzedv.paladinsinn.security.identity.Name;
-import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
+import de.kaiserpfalzedv.paladinsinn.security.access.Persona;
 
 /**
  * Creates a default user id by:
@@ -43,7 +43,7 @@ import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
 public class DefaultUserIdGenerator implements UserIdGenerator {
 
     @Override
-    public String generateUserId(final Person person, final Email emailAddress) {
+    public String generateUserId(final Persona person, final Email emailAddress) {
         String result = null;
 
         if (person != null) {

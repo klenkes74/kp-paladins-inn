@@ -17,20 +17,30 @@
 package de.kaiserpfalzedv.paladinsinn.security.access;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Locale;
+import java.util.UUID;
+
+import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-11
  */
-public class Email implements Serializable {
-    private String email;
+public interface Persona extends Serializable {
+    UUID getUniqueId();
 
-    public Email(final String email) {
-        this.email = email;
-    }
+    Name getName();
 
-    public String getAddress() {
-        return email;
-    }
+    Gender getGender();
+
+    LocalDate getDateOfBirth();
+
+    int getAge();
+
+    Locale getCountry();
+
+    Locale getLocale();
 }

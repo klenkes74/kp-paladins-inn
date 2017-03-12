@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.identity.impl;
+package de.kaiserpfalzedv.paladinsinn.security.access.impl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,9 +23,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.security.identity.Gender;
-import de.kaiserpfalzedv.paladinsinn.security.identity.Name;
-import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
+import de.kaiserpfalzedv.paladinsinn.security.access.Persona;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -45,11 +45,11 @@ public class PersonBuilder {
      */
     private final ArrayList<String> errors = new ArrayList<>(2);
 
-    public Person build() {
+    public Persona build() {
         setDefaultValuesIfNeeded();
         validateBeforeBuild();
 
-        return new PersonImpl(uniqueId, name, gender, dateOfBirth, calculateAge(dateOfBirth), country, locale);
+        return new PersonaImpl(uniqueId, name, gender, dateOfBirth, calculateAge(dateOfBirth), country, locale);
     }
 
     private void setDefaultValuesIfNeeded() {
@@ -90,7 +90,7 @@ public class PersonBuilder {
     }
 
 
-    public PersonBuilder withPerson(final Person person) {
+    public PersonBuilder withPerson(final Persona person) {
         uniqueId = person.getUniqueId();
         name = person.getName();
         gender = person.getGender();

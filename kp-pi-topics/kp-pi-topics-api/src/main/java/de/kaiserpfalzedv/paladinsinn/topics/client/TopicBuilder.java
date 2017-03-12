@@ -16,18 +16,18 @@
 
 package de.kaiserpfalzedv.paladinsinn.topics.client;
 
-import de.kaiserpfalzedv.paladinsinn.commons.Builder;
-import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
-import de.kaiserpfalzedv.paladinsinn.security.Tenant;
-import de.kaiserpfalzedv.paladinsinn.security.User;
-import de.kaiserpfalzedv.paladinsinn.security.client.NullTenant;
-import de.kaiserpfalzedv.paladinsinn.security.client.NullUser;
-import de.kaiserpfalzedv.paladinsinn.topics.Topic;
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.UUID;
+
+import de.kaiserpfalzedv.paladinsinn.commons.Builder;
+import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
+import de.kaiserpfalzedv.paladinsinn.security.access.User;
+import de.kaiserpfalzedv.paladinsinn.security.access.impl.NullUser;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.Tenant;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.impl.NullTenant;
+import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 
 /**
  * Builds a new topic.
@@ -69,7 +69,7 @@ public class TopicBuilder implements Builder<Topic> {
         }
 
         if (maintainer == null) {
-            maintainer = new NullUser().getIdentifier();
+            maintainer = new NullUser().getUniqueId();
         }
 
         if (parent == null) {
@@ -77,7 +77,7 @@ public class TopicBuilder implements Builder<Topic> {
         }
 
         if (tenant == null) {
-            tenant = new NullTenant().getIdentifier();
+            tenant = new NullTenant().getUniqueId();
         }
 
         if (failures.size() != 0) {
@@ -86,7 +86,7 @@ public class TopicBuilder implements Builder<Topic> {
     }
 
     public TopicBuilder withTopic(final Topic topic) {
-        setIdentifier(topic.getIdentifier());
+        setIdentifier(topic.getUniqueId());
         setTenant(topic.getTenant());
         setMaintainer(topic.getMaintainer());
         setName(topic.getName());
@@ -108,7 +108,7 @@ public class TopicBuilder implements Builder<Topic> {
     }
 
     public TopicBuilder setTenant(final Tenant tenant) {
-        this.tenant = tenant.getIdentifier();
+        this.tenant = tenant.getUniqueId();
         return this;
     }
 
@@ -118,7 +118,7 @@ public class TopicBuilder implements Builder<Topic> {
     }
 
     public TopicBuilder setMaintainer(final User maintainer) {
-        this.maintainer = maintainer.getIdentifier();
+        this.maintainer = maintainer.getUniqueId();
         return this;
     }
 

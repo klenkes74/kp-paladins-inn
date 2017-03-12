@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.identity;
+package de.kaiserpfalzedv.paladinsinn.commons.person;
 
 import java.io.Serializable;
 
@@ -23,22 +23,14 @@ import java.io.Serializable;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public interface Name extends Serializable {
-    String getGivenNamePrefix();
+public class Email implements Serializable {
+    private String email;
 
-    String getGivenName();
+    public Email(final String email) {
+        this.email = email;
+    }
 
-    String getGivenNamePostfix();
-
-    String getSnPrefix();
-
-    String getSn();
-
-    String getSnPostfix();
-
-    String getFormalSn();
-
-    String getInformalFullName();
-
-    String getFormalFullName();
+    public String getAddress() {
+        return email;
+    }
 }

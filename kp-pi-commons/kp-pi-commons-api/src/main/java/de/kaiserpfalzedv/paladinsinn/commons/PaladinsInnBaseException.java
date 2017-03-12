@@ -24,7 +24,7 @@ import java.util.UUID;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public class PaladinsInnBaseException extends Exception implements IdentityWritable {
+public class PaladinsInnBaseException extends Exception implements Identifiable {
     /**
      * Unique identifier of this exception.
      */
@@ -50,12 +50,12 @@ public class PaladinsInnBaseException extends Exception implements IdentityWrita
 
 
     @Override
-    public UUID getIdentifier() {
+    public UUID getUniqueId() {
         return identifier;
     }
 
     @Override
-    public void setIdentity(final UUID id) {
-        this.identifier = id;
+    public String getName() {
+        return getClass().getSimpleName();
     }
 }

@@ -21,10 +21,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.security.access.Email;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
 import de.kaiserpfalzedv.paladinsinn.security.access.User;
 import de.kaiserpfalzedv.paladinsinn.security.access.UserIdGenerator;
-import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
+import de.kaiserpfalzedv.paladinsinn.security.access.Persona;
 import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractBuilder;
 
 /**
@@ -35,8 +35,9 @@ import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractBuilder;
  * @since 2017-03-11
  */
 public class UserBuilder extends IdentifiableAbstractBuilder<User> {
-    private Person person;
+    private Persona person;
     private Email emailAddress;
+    private String password;
 
 
     private UserIdGenerator userIdGenerator;
@@ -55,7 +56,8 @@ public class UserBuilder extends IdentifiableAbstractBuilder<User> {
         return new UserImpl(
                 uniqueId, name,
                 person,
-                emailAddress
+                emailAddress,
+                password
         );
     }
 
@@ -134,13 +136,18 @@ public class UserBuilder extends IdentifiableAbstractBuilder<User> {
         return (UserBuilder) super.withName(name);
     }
 
-    public UserBuilder withPerson(final Person person) {
+    public UserBuilder withPerson(final Persona person) {
         this.person = person ;
         return this;
     }
 
     public UserBuilder withEmailAddress(final Email emailAddress) {
         this.emailAddress = emailAddress;
+        return this;
+    }
+
+    public UserBuilder withPassword(final String password) {
+        this.password = password;
         return this;
     }
 }

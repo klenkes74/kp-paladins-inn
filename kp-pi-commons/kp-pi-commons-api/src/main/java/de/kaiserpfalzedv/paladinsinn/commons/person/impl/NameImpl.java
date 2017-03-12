@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.identity.impl;
+package de.kaiserpfalzedv.paladinsinn.commons.person.impl;
 
 import java.util.Objects;
 
-import de.kaiserpfalzedv.paladinsinn.security.identity.Name;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
 
 /**
  * This is a full name.

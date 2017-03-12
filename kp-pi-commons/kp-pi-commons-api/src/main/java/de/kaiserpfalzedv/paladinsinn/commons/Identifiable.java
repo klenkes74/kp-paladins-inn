@@ -17,6 +17,7 @@
 package de.kaiserpfalzedv.paladinsinn.commons;
 
 import java.io.Serializable;
+import java.security.Principal;
 import java.util.UUID;
 
 /**
@@ -24,8 +25,6 @@ import java.util.UUID;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public interface Identifiable extends Serializable {
+public interface Identifiable extends Principal, Serializable {
     public UUID getUniqueId();
-
-    public String getName();
 }

@@ -20,7 +20,7 @@ import java.util.Locale;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
-import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
 
 /**
  * Paladins Inn uses an extended principal containing some additional data of the user.
@@ -35,7 +35,7 @@ public interface User extends Identifiable {
     /**
      * @return the person of the user.
      */
-    Person getPerson();
+    Persona getPerson();
 
     /**
      * @return the preferred language of the user. If not set returns default {@link Locale} of the JVM runtime.

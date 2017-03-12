@@ -19,9 +19,9 @@ package de.kaiserpfalzedv.paladinsinn.security.access.impl;
 import java.util.Locale;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.security.access.Email;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
 import de.kaiserpfalzedv.paladinsinn.security.access.User;
-import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
+import de.kaiserpfalzedv.paladinsinn.security.access.Persona;
 import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractImpl;
 
 /**
@@ -32,7 +32,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractImpl;
 class UserImpl extends IdentifiableAbstractImpl implements User {
     private static final long serialVersionUID = 7375303558202040469L;
     
-    private Person person;
+    private Persona person;
     private Email emailAddress;
 
     private String password;
@@ -41,7 +41,7 @@ class UserImpl extends IdentifiableAbstractImpl implements User {
     UserImpl(
             final UUID uniqueId,
             final String name,
-            final Person person,
+            final Persona person,
             final Email emailAddress,
             final String password
     ) {
@@ -53,7 +53,7 @@ class UserImpl extends IdentifiableAbstractImpl implements User {
     }
     
 
-    public Person getPerson() {
+    public Persona getPerson() {
         return person;
     }
 

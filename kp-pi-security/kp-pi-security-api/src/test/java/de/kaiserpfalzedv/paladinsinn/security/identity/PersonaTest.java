@@ -21,8 +21,11 @@ import java.util.List;
 import java.util.Locale;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.security.identity.impl.NameBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.identity.impl.PersonBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
+import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.access.Persona;
+import de.kaiserpfalzedv.paladinsinn.security.access.impl.PersonBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,8 +40,8 @@ import static org.junit.Assert.assertTrue;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public class PersonTest {
-    private static final Logger LOG = LoggerFactory.getLogger(PersonTest.class);
+public class PersonaTest {
+    private static final Logger LOG = LoggerFactory.getLogger(PersonaTest.class);
 
     private static final UUID PERSON_UNIQUE_ID = UUID.randomUUID();
     private static final Gender PERSON_GENDER = Gender.gender_questioning;
@@ -69,7 +72,7 @@ public class PersonTest {
     private PersonBuilder service;
 
 
-    private Person generateFullPersonName() {
+    private Persona generateFullPersonName() {
         return service
                     .withUniqueId(PERSON_UNIQUE_ID)
                     .withName(PERSON_NAME)
@@ -82,7 +85,7 @@ public class PersonTest {
 
     @Test
     public void shouldIncludeEverythingInToStringWhenGivenAFullPerson() {
-        Person person = generateFullPersonName();
+        Persona person = generateFullPersonName();
 
         assertTrue(
                 "Must contain the data: " + person.toString(),
@@ -93,23 +96,23 @@ public class PersonTest {
 
     @Test
     public void shouldReturnTrueWhenGivenItselfAsComparison() {
-        Person result = generateFullPersonName();
+        Persona result = generateFullPersonName();
 
         assertTrue("Comparing with itself should be true!", result.equals(result));
     }
 
     @Test
     public void shouldReturnFalseWhenGivenAnotherObject() {
-        Person result = generateFullPersonName();
+        Persona result = generateFullPersonName();
 
         assertFalse("Comparing with another classes object should fail!", result.equals(this));
     }
 
     @Test
     public void shouldReturnTrueWhenGivenTheSameFullObject() {
-        Person personA = generateFullPersonName();
+        Persona personA = generateFullPersonName();
 
-        Person personB =  new PersonBuilder().withPerson(personA).build();
+        Persona personB =  new PersonBuilder().withPerson(personA).build();
 
         assertTrue("Two identical persons should match (personA=personB)!", personA.equals(personB));
         assertTrue("Two identical persons should match (personB=personA)!", personB.equals(personA));

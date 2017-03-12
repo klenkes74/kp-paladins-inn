@@ -16,7 +16,7 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access;
 
-import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
 
 /**
  * Used to calculate default user id from the data of a user.
@@ -26,5 +26,5 @@ import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
  * @since 2017-03-11
  */
 public interface UserIdGenerator {
-    String generateUserId(Person person, Email emailAddress);
+    String generateUserId(Persona persona, Email emailAddress);
 }

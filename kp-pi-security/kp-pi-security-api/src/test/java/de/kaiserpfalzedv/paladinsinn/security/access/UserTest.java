@@ -20,11 +20,11 @@ import java.time.LocalDate;
 import java.util.Locale;
 import java.util.UUID;
 
+import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
 import de.kaiserpfalzedv.paladinsinn.security.access.impl.UserBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.identity.Gender;
-import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
-import de.kaiserpfalzedv.paladinsinn.security.identity.impl.NameBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.identity.impl.PersonBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
+import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.access.impl.PersonBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -69,7 +69,7 @@ public class UserTest {
     @Test
     public void shouldCreateFullPrincipalWhenPersonIsGiven() {
         UUID uniqueId = UUID.randomUUID();
-        Person person = new PersonBuilder()
+        Persona person = new PersonBuilder()
                 .withName(
                         new NameBuilder()
                                 .withSn("sur name")
@@ -100,7 +100,7 @@ public class UserTest {
     @Test
     public void shouldCreateIdenticalPrincipalWhenPrincipalIsGiven() {
         UUID uniqueId = UUID.randomUUID();
-        Person person = new PersonBuilder()
+        Persona person = new PersonBuilder()
                 .withUniqueId(uniqueId)
                 .withName(
                         new NameBuilder()

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.identity;
+package de.kaiserpfalzedv.paladinsinn.commons.person;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}

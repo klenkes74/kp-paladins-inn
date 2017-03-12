@@ -14,23 +14,23 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.identity.impl;
+package de.kaiserpfalzedv.paladinsinn.security.access.impl;
 
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.Objects;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.security.identity.Gender;
-import de.kaiserpfalzedv.paladinsinn.security.identity.Name;
-import de.kaiserpfalzedv.paladinsinn.security.identity.Person;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
+import de.kaiserpfalzedv.paladinsinn.security.access.Persona;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-11
  */
-public class PersonImpl implements Person {
+public class PersonaImpl implements Persona {
     private static final long serialVersionUID = -1049362696230737811L;
 
     
@@ -44,7 +44,7 @@ public class PersonImpl implements Person {
     private Locale country;
     private Locale locale;
 
-    PersonImpl(
+    PersonaImpl(
             final UUID uniqueId,
             final Name name,
             final Gender gender,
@@ -104,8 +104,8 @@ public class PersonImpl implements Person {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PersonImpl)) return false;
-        Person person = (Person) o;
+        if (!(o instanceof PersonaImpl)) return false;
+        Persona person = (Persona) o;
         return Objects.equals(getUniqueId(), person.getUniqueId());
     }
 

@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.identity.impl;
+package de.kaiserpfalzedv.paladinsinn.commons.person.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import de.kaiserpfalzedv.paladinsinn.security.identity.Name;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}

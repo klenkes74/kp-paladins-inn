@@ -16,9 +16,9 @@
 
 package de.kaiserpfalzedv.paladinsinn.commons.impl;
 
-import de.kaiserpfalzedv.paladinsinn.commons.IdentityWritable;
-
 import java.util.UUID;
+
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 
 /**
  * A base implementation for all identifable classes (including writable interface).
@@ -26,24 +26,32 @@ import java.util.UUID;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public class AbstractIdentityBase implements IdentityWritable {
+public class AbstractIdentityBase implements Identifiable {
     private UUID id;
+    private String name;
 
     public AbstractIdentityBase() {
-        this.id = UUID.randomUUID();
+        this(UUID.randomUUID());
     }
+
 
     public AbstractIdentityBase(final UUID id) {
-        this.id = id;
+        this(id, id.toString());
     }
 
-    @Override
-    public void setIdentity(UUID id) {
+    public AbstractIdentityBase(final UUID id, final String name) {
         this.id = id;
+        this.name = name;
     }
 
+    
     @Override
-    public UUID getIdentifier() {
+    public UUID getUniqueId() {
         return id;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

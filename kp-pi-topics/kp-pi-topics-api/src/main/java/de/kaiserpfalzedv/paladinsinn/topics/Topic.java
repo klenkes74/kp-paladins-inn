@@ -16,20 +16,19 @@
 
 package de.kaiserpfalzedv.paladinsinn.topics;
 
-import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
-import de.kaiserpfalzedv.paladinsinn.commons.Nameable;
-import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
-import de.kaiserpfalzedv.paladinsinn.security.TenantHolding;
-
 import java.io.Serializable;
 import java.util.List;
+
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantHolding;
 
 /**
  * A single topic.
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-18
  */
-public interface Topic extends Identifiable, Nameable, TenantHolding, Maintainable, Serializable {
+public interface Topic extends Identifiable, TenantHolding, Maintainable, Serializable {
     /**
      * @return The parent topic.
      */
