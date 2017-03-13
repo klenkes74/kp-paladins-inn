@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.identity;
+package de.kaiserpfalzedv.paladinsinn.security.access;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,7 +24,6 @@ import java.util.UUID;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
 import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.access.Persona;
 import de.kaiserpfalzedv.paladinsinn.security.access.impl.PersonBuilder;
 import org.junit.After;
 import org.junit.Before;
@@ -32,6 +31,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -43,9 +43,11 @@ import static org.junit.Assert.assertTrue;
 public class PersonaTest {
     private static final Logger LOG = LoggerFactory.getLogger(PersonaTest.class);
 
-    private static final UUID PERSON_UNIQUE_ID = UUID.randomUUID();
+    private static final String PERSON_UNIQUE_ID_STRING = "0737074c-51a2-4d98-89a3-886c61d1ec1d";
+    private static final UUID PERSON_UNIQUE_ID = UUID.fromString(PERSON_UNIQUE_ID_STRING);
     private static final Gender PERSON_GENDER = Gender.gender_questioning;
     private static final LocalDate PERSON_DOB = LocalDate.parse("2000-01-01");
+    private static final int PERSON_AGE = LocalDate.now().getYear() - PERSON_DOB.getYear();
     private static final Locale PERSON_COUNTRY = Locale.GERMANY;
     private static final Locale PERSON_LOCALE = Locale.GERMAN;
 
@@ -62,8 +64,13 @@ public class PersonaTest {
             .withSnPrefix(SN_PREFIX).withSn(SN).withSnPostfix(SN_POSTFIX)
             .build();
 
-    private static final String PERSON_STRING = new StringBuilder('{')
-            .append("").append('}').toString();
+    private static final String PERSON_STRING = new StringBuilder().append('{')
+            .append(PERSON_UNIQUE_ID_STRING)
+            .append(", ").append(PERSON_NAME.getInformalFullName())
+            .append(" (").append(PERSON_DOB)
+            .append("), country: ").append(PERSON_COUNTRY)
+            .append(", locale: ").append(PERSON_LOCALE)
+            .append('}').toString();
 
 
 
@@ -72,7 +79,7 @@ public class PersonaTest {
     private PersonBuilder service;
 
 
-    private Persona generateFullPersonName() {
+    private Persona generateFullPersona() {
         return service
                     .withUniqueId(PERSON_UNIQUE_ID)
                     .withName(PERSON_NAME)
@@ -85,7 +92,7 @@ public class PersonaTest {
 
     @Test
     public void shouldIncludeEverythingInToStringWhenGivenAFullPerson() {
-        Persona person = generateFullPersonName();
+        Persona person = generateFullPersona();
 
         assertTrue(
                 "Must contain the data: " + person.toString(),
@@ -93,24 +100,46 @@ public class PersonaTest {
         );
     }
 
+    @Test
+    public void shouldReturnTheCorrectDOBWhenADateOfBirthIsSpecified() {
+        Persona result = generateFullPersona();
+
+        assertEquals("The date of birth does not match!", PERSON_DOB, result.getDateOfBirth());
+    }
 
     @Test
+    public void shouldReturnTheCorrectAgeWhenADateOfBirthIsSpecified() {
+        Persona result = generateFullPersona();
+
+        assertEquals("Age does not match!", PERSON_AGE, result.getAge());
+    }
+
+    @Test
+    public void shouldReturnTheCorrectGenderWhenADateOfBirthIsSpecified() {
+        Persona result = generateFullPersona();
+
+        assertEquals("Gender does not match!", PERSON_GENDER, result.getGender());
+    }
+
+
+    @SuppressWarnings("EqualsWithItself")
+    @Test
     public void shouldReturnTrueWhenGivenItselfAsComparison() {
-        Persona result = generateFullPersonName();
+        Persona result = generateFullPersona();
 
         assertTrue("Comparing with itself should be true!", result.equals(result));
     }
 
     @Test
     public void shouldReturnFalseWhenGivenAnotherObject() {
-        Persona result = generateFullPersonName();
+        Persona result = generateFullPersona();
 
         assertFalse("Comparing with another classes object should fail!", result.equals(this));
     }
 
     @Test
     public void shouldReturnTrueWhenGivenTheSameFullObject() {
-        Persona personA = generateFullPersonName();
+        Persona personA = generateFullPersona();
 
         Persona personB =  new PersonBuilder().withPerson(personA).build();
 

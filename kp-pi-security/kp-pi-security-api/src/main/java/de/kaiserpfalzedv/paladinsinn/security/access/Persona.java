@@ -19,8 +19,8 @@ package de.kaiserpfalzedv.paladinsinn.security.access;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Locale;
-import java.util.UUID;
 
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
 
@@ -29,11 +29,9 @@ import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public interface Persona extends Serializable {
-    UUID getUniqueId();
-
-    Name getName();
-
+public interface Persona extends Identifiable, Serializable {
+    Name getFullName();
+    
     Gender getGender();
 
     LocalDate getDateOfBirth();

@@ -92,7 +92,7 @@ public class PersonBuilder {
 
     public PersonBuilder withPerson(final Persona person) {
         uniqueId = person.getUniqueId();
-        name = person.getName();
+        name = person.getFullName();
         gender = person.getGender();
         dateOfBirth = person.getDateOfBirth();
         country = person.getCountry();

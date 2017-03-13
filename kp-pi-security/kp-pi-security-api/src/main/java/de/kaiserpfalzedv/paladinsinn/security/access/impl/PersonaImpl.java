@@ -70,8 +70,12 @@ public class PersonaImpl implements Persona {
         return uniqueId;
     }
 
-    @Override
-    public Name getName() {
+    public String getName() {
+        return name.getFormalFullName();
+    }
+
+    
+    public Name getFullName() {
         return name;
     }
 
@@ -119,7 +123,7 @@ public class PersonaImpl implements Persona {
     public String toString() {
         StringBuilder result = new StringBuilder()
                 .append(getClass().getSimpleName()).append('@').append(System.identityHashCode(this)).append('{')
-                .append(getUniqueId()).append(", ").append(getName().getInformalFullName());
+                .append(getUniqueId()).append(", ").append(getFullName().getInformalFullName());
 
         if (getDateOfBirth() != null) {
             result.append(" (").append(getDateOfBirth()).append(')');

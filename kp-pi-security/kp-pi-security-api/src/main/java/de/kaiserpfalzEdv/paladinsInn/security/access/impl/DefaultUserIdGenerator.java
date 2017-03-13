@@ -47,7 +47,7 @@ public class DefaultUserIdGenerator implements UserIdGenerator {
         String result = null;
 
         if (person != null) {
-            Name name = person.getName();
+            Name name = person.getFullName();
 
             String sn = name.getSn();
             int snLength = sn.length();

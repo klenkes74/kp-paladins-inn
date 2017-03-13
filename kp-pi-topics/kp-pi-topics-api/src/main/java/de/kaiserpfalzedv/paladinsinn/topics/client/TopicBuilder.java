@@ -47,14 +47,10 @@ public class TopicBuilder implements Builder<Topic> {
     public Topic build() throws BuilderValidationException {
         validate();
 
-        Topic result = new TopicClientImpl(
+        return new TopicClientImpl(
                 identifier, tenant, maintainer,
                 name, parent, children
         );
-
-
-
-        return result;
     }
 
     public void validate() throws BuilderValidationException {
