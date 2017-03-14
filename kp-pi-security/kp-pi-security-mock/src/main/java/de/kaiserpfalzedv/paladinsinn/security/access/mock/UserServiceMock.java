@@ -22,17 +22,21 @@ import java.util.HashMap;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 
+import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
 import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
-import de.kaiserpfalzedv.paladinsinn.security.access.services.LoginService;
 import de.kaiserpfalzedv.paladinsinn.security.access.PasswordFailureException;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.access.UserHasNoAccessToTenantException;
 import de.kaiserpfalzedv.paladinsinn.security.access.UserIsLockedException;
-import de.kaiserpfalzedv.paladinsinn.security.access.services.UserLoaderService;
 import de.kaiserpfalzedv.paladinsinn.security.access.UserNotFoundException;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.Persona;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.UserBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.security.access.services.LoginService;
+import de.kaiserpfalzedv.paladinsinn.security.access.services.UserIdGenerator;
+import de.kaiserpfalzedv.paladinsinn.security.access.services.UserLoaderService;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.impl.NullTenant;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,7 +48,7 @@ import org.slf4j.LoggerFactory;
  * @since 2017-03-14
  */
 @MockService
-public class UserServiceMock implements LoginService, UserLoaderService {
+public class UserServiceMock implements LoginService, UserLoaderService, UserIdGenerator {
     private static final Logger LOG = LoggerFactory.getLogger(UserServiceMock.class);
 
     private static final HashMap<Tenant, HashMap<String, User>> tenantUsers = new HashMap<>();
@@ -137,5 +141,94 @@ public class UserServiceMock implements LoginService, UserLoaderService {
         }
 
         LOG.info("Loaded {} users for tenant {} into User Service MOCK.", users.size(), tenant);
+    }
+
+
+    @Override
+    public String generateUserId(final Persona person, final Email emailAddress) {
+        String result = calculateUserIdByName(person);
+
+        if (result == null || result.isEmpty()) {
+            result = calculateUserIdByEmailAddress(emailAddress);
+        }
+
+        result += fillZeros(result);
+        result = result.replace(' ', '_');
+
+
+        int counter = 0;
+        while (users.containsKey(result)) {
+            counter++;
+
+            if (counter < 10) {
+                result = result.substring(0, 7) + counter;
+            } else if (counter < 100) {
+                result = result.substring(0, 6) + counter;
+            } else if (counter < 1000) {
+                result = result.substring(0, 5) + counter;
+            } else if (counter < 10000) {
+                result = result.substring(0, 4) + counter;
+            } else if (counter < 100000) {
+                result = result.substring(0, 3) + counter;
+            } else if (counter < 1000000) {
+                result = result.substring(0, 2) + counter;
+            } else if (counter < 10000000) {
+                result = result.substring(0, 1) + counter;
+            } else if (counter < 100000000) {
+                result = "" + counter;
+            } else {
+                throw new IllegalStateException("No valid user id found!");
+            }
+        }
+
+        return result;
+    }
+
+    private String calculateUserIdByName(final Persona person) {
+        String result;
+
+        Name name = person.getFullName();
+
+        String sn = name.getSn();
+        int snLength = sn.length();
+
+        String givenName = name.getGivenName();
+        int givenNameLength = givenName.length();
+
+        if (snLength >= 7 && givenNameLength >= 1) {
+            result = givenName.substring(0, 1) + sn.substring(0, 7);
+        } else if (givenNameLength == 0) {
+            result = sn.substring(0, 8);
+        } else {
+            result = givenName.substring(0, 8 - snLength) + sn;
+        }
+
+        return result;
+    }
+
+    private String calculateUserIdByEmailAddress(final Email emailAddress) {
+        String result = "";
+
+        if (emailAddress != null) {
+            result = emailAddress.getAddress();
+        }
+
+        return result;
+    }
+
+    /**
+     * Return a string consiting of 0s to fill up to 8 letters.
+     *
+     * @param userId The user id generated.
+     *
+     * @return string of 0s to fill the original userId to 8 letters.
+     */
+    private String fillZeros(final String userId) {
+        int length = userId.length();
+
+        if (length >= 8)
+            return "";
+
+        return String.format("%" + (7 - length) + "d", 0);
     }
 }
