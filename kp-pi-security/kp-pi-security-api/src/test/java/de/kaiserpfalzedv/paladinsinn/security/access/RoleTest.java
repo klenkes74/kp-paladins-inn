@@ -19,8 +19,10 @@ package de.kaiserpfalzedv.paladinsinn.security.access;
 import java.util.HashSet;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.security.access.impl.EntitlementBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.access.impl.RoleBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.EntitlementBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.RoleBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.Entitlement;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.Role;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

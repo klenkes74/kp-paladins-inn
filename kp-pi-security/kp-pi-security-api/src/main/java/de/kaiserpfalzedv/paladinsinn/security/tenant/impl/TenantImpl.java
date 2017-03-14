@@ -19,9 +19,9 @@ package de.kaiserpfalzedv.paladinsinn.security.tenant.impl;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
-import de.kaiserpfalzedv.paladinsinn.security.access.User;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractImpl;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.Tenant;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}

@@ -14,29 +14,34 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.tenant.impl;
+package de.kaiserpfalzedv.paladinsinn.security.access.services;
 
-import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractImpl;
+import java.util.Collection;
+
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.NullUser;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
- * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-24
+ * A bulk loadig interface for user data.
+ *
+ * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 1.0.0
+ * @since 2017-03-14
  */
-public class NullTenant extends IdentifiableAbstractImpl implements Tenant {
-    public NullTenant() {
-        super(Tenant.DEFAULT_TENANT, "");
-    }
+public interface UserLoaderService {
+    /**
+     * Loads the users into the user database.
+     *
+     * @param users the users to load for the default tenant.
+     */
+    void loadUsers(final Collection<User> users);
 
-    @Override
-    public User getMaintainer() {
-        return new NullUser();
-    }
+    /**
+     * Loads the users into the user database with access to the given tenant.
+     *
+     * @param tenant The tenant for the users.
+     * @param users The users to load into the database.
+     */
+    void loadUsersForTenant(final Tenant tenant, final Collection<User> users);
 
-    @Override
-    public String getName() {
-        return "no tenant";
-    }
 }

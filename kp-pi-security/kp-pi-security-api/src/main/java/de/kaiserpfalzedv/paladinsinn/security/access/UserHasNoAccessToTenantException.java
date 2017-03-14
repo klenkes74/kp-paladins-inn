@@ -14,29 +14,19 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.tenant.impl;
+package de.kaiserpfalzedv.paladinsinn.security.access;
 
-import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractImpl;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.NullUser;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
- * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-24
+ * This exception is thrown if the user has no access to the tenant given.
+ *
+ * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 1.0.0
+ * @since 2017-03-14
  */
-public class NullTenant extends IdentifiableAbstractImpl implements Tenant {
-    public NullTenant() {
-        super(Tenant.DEFAULT_TENANT, "");
-    }
-
-    @Override
-    public User getMaintainer() {
-        return new NullUser();
-    }
-
-    @Override
-    public String getName() {
-        return "no tenant";
+public class UserHasNoAccessToTenantException extends SecurityException {
+    public UserHasNoAccessToTenantException(final String userId, final Tenant tenant) {
+        super(String.format("%s is not entitled for tenant %s.", userId, tenant.getName()));
     }
 }

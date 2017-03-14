@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,27 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.topics;
+package de.kaiserpfalzedv.paladinsinn.security.tenant.model;
 
-import java.io.Serializable;
-import java.util.List;
+import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
-import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.TenantHolding;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 
 /**
- * A single topic.
+ * The tenant of a data node in the database.
+ *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-18
+ * @since 2016-03-20
  */
-public interface Topic extends Identifiable, TenantHolding, Maintainable, Serializable {
+public interface Tenant extends Identifiable {
     /**
-     * @return The parent topic.
+     * The default tenant id for non-multitenant systems.
      */
-    Topic getParent();
+    static final UUID DEFAULT_TENANT = UUID.fromString("4dfb9268-7f29-4442-a458-f00e7e620f18");
 
     /**
-     * @return list of children topics of the current topic.
+     * @return the maintainer of this tenant.
      */
-    List<Topic> getChildren();
+    User getMaintainer();
 }

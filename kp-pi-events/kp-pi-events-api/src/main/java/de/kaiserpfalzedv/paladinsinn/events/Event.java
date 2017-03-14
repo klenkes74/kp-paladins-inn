@@ -23,7 +23,7 @@ import java.time.LocalDateTime;
 
 import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantHolding;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.model.TenantHolding;
 import de.kaiserpfalzedv.paladinsinn.topics.Taggable;
 
 /**

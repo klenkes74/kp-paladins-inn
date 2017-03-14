@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,19 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.topics;
+package de.kaiserpfalzedv.paladinsinn.security.tenant.model;
 
-import java.io.Serializable;
-import java.util.List;
-
-import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
-import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.TenantHolding;
+import java.util.UUID;
 
 /**
- * A single topic.
+ * An object that is attached to a tenant.
+ *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-18
+ * @since 2016-03-20
  */
-public interface Topic extends Identifiable, TenantHolding, Maintainable, Serializable {
+public interface TenantHolding {
     /**
-     * @return The parent topic.
+     * @return The tenant of this object.
      */
-    Topic getParent();
-
-    /**
-     * @return list of children topics of the current topic.
-     */
-    List<Topic> getChildren();
+    UUID getTenant();
 }

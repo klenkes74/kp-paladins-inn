@@ -24,7 +24,7 @@ import java.util.UUID;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public class PaladinsInnBaseRuntimeException extends RuntimeException implements Identifiable {
+public abstract class PaladinsInnBaseRuntimeException extends RuntimeException implements Identifiable {
     /**
      * Unique identifier of this exception.
      */

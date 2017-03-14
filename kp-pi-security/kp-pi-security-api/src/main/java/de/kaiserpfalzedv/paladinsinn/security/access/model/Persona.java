@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,28 +14,31 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.topics;
+package de.kaiserpfalzedv.paladinsinn.security.access.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.Locale;
 
 import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
-import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.TenantHolding;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
 
 /**
- * A single topic.
- * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-18
+ * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 1.0.0
+ * @since 2017-03-11
  */
-public interface Topic extends Identifiable, TenantHolding, Maintainable, Serializable {
-    /**
-     * @return The parent topic.
-     */
-    Topic getParent();
+public interface Persona extends Identifiable, Serializable {
+    Name getFullName();
+    
+    Gender getGender();
 
-    /**
-     * @return list of children topics of the current topic.
-     */
-    List<Topic> getChildren();
+    LocalDate getDateOfBirth();
+
+    int getAge();
+
+    Locale getCountry();
+
+    Locale getLocale();
 }

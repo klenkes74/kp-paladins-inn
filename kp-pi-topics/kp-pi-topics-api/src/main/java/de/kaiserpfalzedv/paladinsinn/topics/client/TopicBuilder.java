@@ -23,9 +23,9 @@ import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.Builder;
 import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
-import de.kaiserpfalzedv.paladinsinn.security.access.User;
-import de.kaiserpfalzedv.paladinsinn.security.access.impl.NullUser;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.Tenant;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.NullUser;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.impl.NullTenant;
 import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 

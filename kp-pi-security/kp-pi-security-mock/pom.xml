@@ -9,12 +9,12 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kp-pi-security-impl</artifactId>
+    <artifactId>kp-pi-security-mock</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Security IMPL</name>
+    <name>KP Paladins Inn - Security MOCK</name>
     <description>
-        kp-pi-security OSGi bundle project.
+        kp-pi-security mock service for development of other services.
     </description>
 
     <properties>
@@ -29,11 +29,11 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <configuration>
                     <instructions>
-                        <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+                        <Bundle-SymbolicName>kp-pi-security-impl</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.kaiserpfalzedv.paladinsinn.security.access.impl.*;version=${project.version}
-                            de.kaiserpfalzedv.paladinsinn.security.tenant.impl.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.security.access.mock.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.security.tenant.mock.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
@@ -49,17 +49,6 @@
         <dependency>
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
             <artifactId>kp-pi-security-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.brickred</groupId>
-            <artifactId>socialauth</artifactId>
-            <version>4.14</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.smb-tec.neo4j</groupId>
-            <artifactId>neo4j-community</artifactId>
         </dependency>
 
 

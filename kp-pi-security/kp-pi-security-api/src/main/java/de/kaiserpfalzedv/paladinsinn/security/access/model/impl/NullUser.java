@@ -14,29 +14,25 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.tenant.impl;
+package de.kaiserpfalzedv.paladinsinn.security.access.model.impl;
 
-import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractImpl;
+import java.util.UUID;
+
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.NullUser;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-24
  */
-public class NullTenant extends IdentifiableAbstractImpl implements Tenant {
-    public NullTenant() {
-        super(Tenant.DEFAULT_TENANT, "");
-    }
-
-    @Override
-    public User getMaintainer() {
-        return new NullUser();
-    }
-
-    @Override
-    public String getName() {
-        return "no tenant";
+public class NullUser  extends UserImpl implements User {
+    public NullUser() {
+        super(
+            UUID.fromString("736eb2d8-dacf-48bd-879a-00bb83e969c7"),
+            "",
+            null,
+            null,
+            null,
+            true
+        );
     }
 }

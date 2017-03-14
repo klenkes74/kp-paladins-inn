@@ -21,10 +21,12 @@ import java.util.Locale;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
-import de.kaiserpfalzedv.paladinsinn.security.access.impl.UserBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.UserBuilder;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.access.impl.PersonBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.PersonBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.Persona;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -122,7 +124,7 @@ public class UserTest {
                 .build();
 
         User result = service
-                .withPrincipal(input)
+                .withUser(input)
                 .build();
 
         assertTrue("The principals don't match", input.equals(result));
@@ -131,7 +133,7 @@ public class UserTest {
 
     @Before
     public void setUpService() {
-        service = new UserBuilder();
+        service = new UserBuilder().withUserIdGenerator(new TestUserIdGenerator());
     }
 
     @After
