@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,7 +21,7 @@ import java.util.UUID;
 import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 
 /**
- * A base implementation for all identifable classes.
+ * A base implementation for all identifable classes (including writable interface).
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
@@ -30,21 +30,16 @@ public abstract class AbstractIdentityBase implements Identifiable {
     private UUID id;
     private String name;
 
-    public AbstractIdentityBase() {
-        this(UUID.randomUUID());
+    public AbstractIdentityBase(final String name) {
+        this(name, UUID.randomUUID());
+
     }
 
-
-    public AbstractIdentityBase(final UUID id) {
-        this(id, id.toString());
-    }
-
-    public AbstractIdentityBase(final UUID id, final String name) {
-        this.id = id;
+    public AbstractIdentityBase(final String name, final UUID id) {
         this.name = name;
+        this.id = id;
     }
 
-    
     @Override
     public UUID getUniqueId() {
         return id;

@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.access;
+package de.kaiserpfalzedv.paladinsinn.security.access.model;
 
 import java.util.HashSet;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.EntitlementBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.RoleBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.Entitlement;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.Role;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

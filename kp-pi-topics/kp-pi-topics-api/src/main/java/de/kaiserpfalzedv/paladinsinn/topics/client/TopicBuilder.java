@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,8 +25,8 @@ import de.kaiserpfalzedv.paladinsinn.commons.Builder;
 import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.NullUser;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.impl.NullTenant;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 
 /**
@@ -35,14 +35,12 @@ import de.kaiserpfalzedv.paladinsinn.topics.Topic;
  * @since 2016-03-20
  */
 public class TopicBuilder implements Builder<Topic> {
+    private final ArrayList<Topic> children = new ArrayList<>();
     private UUID identifier;
     private UUID tenant;
     private UUID maintainer;
-
     private String name;
     private Topic parent;
-    private final ArrayList<Topic> children = new ArrayList<>();
-
 
     public Topic build() throws BuilderValidationException {
         validate();
@@ -103,18 +101,8 @@ public class TopicBuilder implements Builder<Topic> {
         return this;
     }
 
-    public TopicBuilder setTenant(final Tenant tenant) {
-        this.tenant = tenant.getUniqueId();
-        return this;
-    }
-
     public TopicBuilder setMaintainer(final UUID maintainer) {
         this.maintainer = maintainer;
-        return this;
-    }
-
-    public TopicBuilder setMaintainer(final User maintainer) {
-        this.maintainer = maintainer.getUniqueId();
         return this;
     }
 
@@ -128,15 +116,25 @@ public class TopicBuilder implements Builder<Topic> {
         return this;
     }
 
-    public TopicBuilder unsetParent() {
-        this.parent = null;
-        return this;
-    }
-
     public TopicBuilder setChildren(final Collection<Topic> children) {
         if (children != null) {
             this.children.addAll(children);
         }
+        return this;
+    }
+
+    public TopicBuilder setTenant(final Tenant tenant) {
+        this.tenant = tenant.getUniqueId();
+        return this;
+    }
+
+    public TopicBuilder setMaintainer(final User maintainer) {
+        this.maintainer = maintainer.getUniqueId();
+        return this;
+    }
+
+    public TopicBuilder unsetParent() {
+        this.parent = null;
         return this;
     }
 }

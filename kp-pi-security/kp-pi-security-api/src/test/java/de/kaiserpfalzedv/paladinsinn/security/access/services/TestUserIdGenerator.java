@@ -14,12 +14,11 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.access;
+package de.kaiserpfalzedv.paladinsinn.security.access.services;
 
 import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.Persona;
-import de.kaiserpfalzedv.paladinsinn.security.access.services.UserIdGenerator;
 
 /**
  * Creates a default user id by:

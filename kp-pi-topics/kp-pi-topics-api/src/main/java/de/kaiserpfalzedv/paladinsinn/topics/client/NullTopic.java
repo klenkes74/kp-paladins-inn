@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.NullUser;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.impl.NullTenant;
 import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 
 /**
@@ -57,6 +58,6 @@ public class NullTopic implements Topic {
 
     @Override
     public UUID getTenant() {
-        return new NullUser().getUniqueId();
+        return new NullTenant().getUniqueId();
     }
 }

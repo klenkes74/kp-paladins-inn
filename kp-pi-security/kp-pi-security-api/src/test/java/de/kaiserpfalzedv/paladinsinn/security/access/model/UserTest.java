@@ -14,19 +14,18 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.access;
+package de.kaiserpfalzedv.paladinsinn.security.access.model;
 
 import java.time.LocalDate;
 import java.util.Locale;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.UserBuilder;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.PersonBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.Persona;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.UserBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.access.services.TestUserIdGenerator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

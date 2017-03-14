@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.access;
+package de.kaiserpfalzedv.paladinsinn.security.access.model;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,7 +25,6 @@ import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
 import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.PersonBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.Persona;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -79,6 +78,15 @@ public class PersonaTest {
 
     private PersonBuilder service;
 
+    @Test
+    public void shouldIncludeEverythingInToStringWhenGivenAFullPerson() {
+        Persona person = generateFullPersona();
+
+        assertTrue(
+                "Must contain the data: " + person.toString(),
+                person.toString().contains(PERSON_STRING)
+        );
+    }
 
     private Persona generateFullPersona() {
         return service
@@ -89,16 +97,6 @@ public class PersonaTest {
                     .withCountry(PERSON_COUNTRY)
                     .withLocale(PERSON_LOCALE)
                     .build();
-    }
-
-    @Test
-    public void shouldIncludeEverythingInToStringWhenGivenAFullPerson() {
-        Persona person = generateFullPersona();
-
-        assertTrue(
-                "Must contain the data: " + person.toString(),
-                person.toString().contains(PERSON_STRING)
-        );
     }
 
     @Test
