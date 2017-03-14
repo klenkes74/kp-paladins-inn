@@ -21,7 +21,7 @@ import java.util.UUID;
 import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 
 /**
- * A base implementation for all identifable classes (including writable interface).
+ * A base implementation for all identifable classes.
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
