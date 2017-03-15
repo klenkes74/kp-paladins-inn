@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,12 +16,12 @@
 
 package de.kaiserpfalzedv.paladinsinn.topics.client;
 
-import de.kaiserpfalzedv.paladinsinn.topics.Topic;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+
+import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 
 /**
  * The client side read-only implementation of a Topic.
@@ -30,14 +30,12 @@ import java.util.UUID;
  * @since 2016-03-20
  */
 public class TopicClientImpl implements Topic {
+    private final ArrayList<Topic> children = new ArrayList<>();
     private UUID tenant;
     private UUID maintainer;
-
     private UUID identity;
     private String name;
-
     private Topic parent;
-    private final ArrayList<Topic> children = new ArrayList<>();
 
 
     TopicClientImpl(
@@ -59,7 +57,8 @@ public class TopicClientImpl implements Topic {
     }
 
 
-    public UUID getIdentifier() {
+    @Override
+    public UUID getUniqueId() {
         return identity;
     }
 

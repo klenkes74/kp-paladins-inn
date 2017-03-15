@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,16 +16,15 @@
 
 package de.kaiserpfalzedv.paladinsinn.events;
 
-import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
-import de.kaiserpfalzedv.paladinsinn.commons.Nameable;
-import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
-import de.kaiserpfalzedv.paladinsinn.security.TenantHolding;
-import de.kaiserpfalzedv.paladinsinn.topics.Taggable;
-
 import java.io.Serializable;
 import java.net.URL;
 import java.time.Duration;
 import java.time.LocalDateTime;
+
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.model.TenantHolding;
+import de.kaiserpfalzedv.paladinsinn.topics.Taggable;
 
 /**
  * The event data for the events in the database.
@@ -33,7 +32,7 @@ import java.time.LocalDateTime;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public interface Event extends Identifiable, Nameable, Taggable, TenantHolding, Maintainable, Serializable {
+public interface Event extends Identifiable, Taggable, TenantHolding, Maintainable, Serializable {
     /**
      * @return The start date of the event.
      */

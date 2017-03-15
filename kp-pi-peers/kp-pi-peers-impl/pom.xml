@@ -62,11 +62,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.osgi</groupId>
-            <artifactId>org.osgi.core</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>com.smb-tec.neo4j</groupId>
             <artifactId>neo4j-community</artifactId>
         </dependency>

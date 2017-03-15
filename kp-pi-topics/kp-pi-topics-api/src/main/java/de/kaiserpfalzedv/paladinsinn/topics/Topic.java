@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,20 +16,19 @@
 
 package de.kaiserpfalzedv.paladinsinn.topics;
 
-import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
-import de.kaiserpfalzedv.paladinsinn.commons.Nameable;
-import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
-import de.kaiserpfalzedv.paladinsinn.security.TenantHolding;
-
 import java.io.Serializable;
 import java.util.List;
+
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.model.TenantHolding;
 
 /**
  * A single topic.
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-18
  */
-public interface Topic extends Identifiable, Nameable, TenantHolding, Maintainable, Serializable {
+public interface Topic extends Identifiable, TenantHolding, Maintainable, Serializable {
     /**
      * @return The parent topic.
      */
