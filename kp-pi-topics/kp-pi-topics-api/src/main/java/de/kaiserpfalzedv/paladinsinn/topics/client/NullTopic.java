@@ -16,13 +16,13 @@
 
 package de.kaiserpfalzedv.paladinsinn.topics.client;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.NullUser;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.impl.NullTenant;
 import de.kaiserpfalzedv.paladinsinn.topics.Topic;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}

@@ -16,12 +16,12 @@
 
 package de.kaiserpfalzedv.paladinsinn.topics;
 
-import java.io.Serializable;
-import java.util.List;
-
 import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.TenantHolding;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * A single topic.
