@@ -23,7 +23,7 @@ import java.util.UUID;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.PersonBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.PersonaBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.UserBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.access.services.TestUserIdGenerator;
 import org.junit.After;
@@ -70,7 +70,7 @@ public class UserTest {
     @Test
     public void shouldCreateFullPrincipalWhenPersonIsGiven() {
         UUID uniqueId = UUID.randomUUID();
-        Persona person = new PersonBuilder()
+        Persona person = new PersonaBuilder()
                 .withName(
                         new NameBuilder()
                                 .withSn("sur name")
@@ -101,7 +101,7 @@ public class UserTest {
     @Test
     public void shouldCreateIdenticalPrincipalWhenPrincipalIsGiven() {
         UUID uniqueId = UUID.randomUUID();
-        Persona person = new PersonBuilder()
+        Persona person = new PersonaBuilder()
                 .withUniqueId(uniqueId)
                 .withName(
                         new NameBuilder()

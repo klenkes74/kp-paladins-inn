@@ -19,12 +19,12 @@ package de.kaiserpfalzedv.paladinsinn.security.access.model.impl;
 import java.util.Locale;
 import java.util.UUID;
 
+import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractImpl;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
 import de.kaiserpfalzedv.paladinsinn.security.access.PasswordFailureException;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.Persona;
-import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractImpl;
 import de.kaiserpfalzedv.paladinsinn.security.access.UserIsLockedException;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.Persona;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -39,7 +39,7 @@ class UserImpl extends IdentifiableAbstractImpl implements User {
 
     private String password;
 
-    private boolean locked;
+    private boolean locked = false;
 
 
     UserImpl(
@@ -93,5 +93,19 @@ class UserImpl extends IdentifiableAbstractImpl implements User {
     @Override
     public boolean isLocked() {
         return locked;
+    }
+
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder()
+                .append(getClass().getSimpleName()).append('@').append(System.identityHashCode(this)).append('{')
+                .append(getUniqueId()).append(", ").append(getName());
+
+        if (locked) {
+            result.append(", locked");
+        }
+
+        return result.append('}').toString();
     }
 }

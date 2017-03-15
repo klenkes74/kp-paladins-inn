@@ -24,7 +24,7 @@ import java.util.UUID;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
 import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.PersonBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.PersonaBuilder;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -46,8 +46,9 @@ public class PersonaTest {
     private static final String PERSON_UNIQUE_ID_STRING = "0737074c-51a2-4d98-89a3-886c61d1ec1d";
     private static final UUID PERSON_UNIQUE_ID = UUID.fromString(PERSON_UNIQUE_ID_STRING);
     private static final Gender PERSON_GENDER = Gender.gender_questioning;
-    private static final LocalDate PERSON_DOB = LocalDate.parse("2000-01-01");
-    private static final int PERSON_AGE = LocalDate.now().getYear() - PERSON_DOB.getYear();
+    private static final LocalDate PERSON_DOB = LocalDate.parse("2000-12-31");
+    private static final int PERSON_AGE = LocalDate.ofEpochDay(LocalDate.now().toEpochDay() - PERSON_DOB.toEpochDay())
+                                                   .getYear() - 1970;
     private static final Locale PERSON_COUNTRY = Locale.GERMANY;
     private static final Locale PERSON_LOCALE = Locale.GERMAN;
 
@@ -73,10 +74,7 @@ public class PersonaTest {
             .append('}').toString();
 
 
-
-
-
-    private PersonBuilder service;
+    private PersonaBuilder service;
 
     @Test
     public void shouldIncludeEverythingInToStringWhenGivenAFullPerson() {
@@ -140,7 +138,7 @@ public class PersonaTest {
     public void shouldReturnTrueWhenGivenTheSameFullObject() {
         Persona personA = generateFullPersona();
 
-        Persona personB =  new PersonBuilder().withPerson(personA).build();
+        Persona personB = new PersonaBuilder().withPerson(personA).build();
 
         assertTrue("Two identical persons should match (personA=personB)!", personA.equals(personB));
         assertTrue("Two identical persons should match (personB=personA)!", personB.equals(personA));
@@ -166,7 +164,7 @@ public class PersonaTest {
     
     @Before
     public void setUpService() {
-        service = new PersonBuilder();
+        service = new PersonaBuilder();
     }
 
     @After

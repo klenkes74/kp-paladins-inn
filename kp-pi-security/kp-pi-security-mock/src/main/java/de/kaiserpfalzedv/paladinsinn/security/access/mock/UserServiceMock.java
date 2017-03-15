@@ -131,7 +131,15 @@ public class UserServiceMock implements LoginService, UserLoaderService, UserIdG
     public synchronized void loadUsersForTenant(final Tenant tenant, final Collection<User> users) {
         HashMap<String, User> newTenantUsers = new HashMap<>(users.size());
 
-        users.forEach(u -> { UserServiceMock.users.put(u.getName(), u); newTenantUsers.put(u.getName(), u);});
+        users.forEach(u -> {
+            if (UserServiceMock.users.containsKey(u.getName())) {
+                throw new IllegalArgumentException("The user id '" + u.getName()
+                                                           + "' is assigned multiple times. Please check!");
+            }
+
+            UserServiceMock.users.put(u.getName(), u);
+            newTenantUsers.put(u.getName(), u);
+        });
 
         if (UserServiceMock.tenantUsers.containsKey(tenant)) {
             UserServiceMock.tenantUsers.get(tenant).clear();

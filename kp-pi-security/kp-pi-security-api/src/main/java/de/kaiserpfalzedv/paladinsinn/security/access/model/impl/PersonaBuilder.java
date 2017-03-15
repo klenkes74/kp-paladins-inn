@@ -32,18 +32,17 @@ import de.kaiserpfalzedv.paladinsinn.security.access.model.Persona;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public class PersonBuilder {
+public class PersonaBuilder {
+    /**
+     * A list of errors during validation.
+     */
+    private final ArrayList<String> errors = new ArrayList<>(2);
     private UUID uniqueId;
     private Name name;
     private Gender gender;
     private LocalDate dateOfBirth;
     private Locale country;
     private Locale locale;
-
-    /**
-     * A list of errors during validation.
-     */
-    private final ArrayList<String> errors = new ArrayList<>(2);
 
     public Persona build() {
         setDefaultValuesIfNeeded();
@@ -69,7 +68,7 @@ public class PersonBuilder {
     }
 
     private int calculateAge(final LocalDate dateOfBirth) {
-        return LocalDate.now().getYear() - dateOfBirth.getYear();
+        return LocalDate.ofEpochDay(LocalDate.now().toEpochDay() - dateOfBirth.toEpochDay()).getYear() - 1970;
     }
 
 
@@ -90,7 +89,7 @@ public class PersonBuilder {
     }
 
 
-    public PersonBuilder withPerson(final Persona person) {
+    public PersonaBuilder withPerson(final Persona person) {
         uniqueId = person.getUniqueId();
         name = person.getFullName();
         gender = person.getGender();
@@ -102,32 +101,32 @@ public class PersonBuilder {
     }
 
 
-    public PersonBuilder withUniqueId(final UUID uniqueId) {
+    public PersonaBuilder withUniqueId(final UUID uniqueId) {
         this.uniqueId = uniqueId;
         return this;
     }
 
-    public PersonBuilder withName(final Name name) {
+    public PersonaBuilder withName(final Name name) {
         this.name = name;
         return this;
     }
 
-    public PersonBuilder withGender(final Gender gender) {
+    public PersonaBuilder withGender(final Gender gender) {
         this.gender = gender;
         return this;
     }
 
-    public PersonBuilder withDateOfBirth(final LocalDate dateOfBirth) {
+    public PersonaBuilder withDateOfBirth(final LocalDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
         return this;
     }
 
-    public PersonBuilder withCountry(final Locale country) {
+    public PersonaBuilder withCountry(final Locale country) {
         this.country = country;
         return this;
     }
 
-    public PersonBuilder withLocale(final Locale locale) {
+    public PersonaBuilder withLocale(final Locale locale) {
         this.locale = locale;
         return this;
     }
