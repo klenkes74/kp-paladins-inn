@@ -9,7 +9,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kp-pi-security-impl</artifactId>
+    <artifactId>kp-pi-security-service</artifactId>
     <packaging>bundle</packaging>
 
     <name>KP Paladins Inn - Security SERVICE</name>
