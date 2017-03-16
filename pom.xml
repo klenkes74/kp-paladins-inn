@@ -186,7 +186,12 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-security-impl</artifactId>
+                <artifactId>kp-pi-security-service</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-security-mock</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>

@@ -18,7 +18,7 @@ package de.kaiserpfalzedv.paladinsinn.security.access;
 
 /**
  * The user is locked and has no access to the system.
- * 
+ *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-14
