@@ -16,9 +16,9 @@
 
 package de.kaiserpfalzedv.paladinsinn.commons.impl;
 
-import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
-
 import java.util.UUID;
+
+import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 
 /**
  * A base implementation for all identifable classes (including writable interface).
