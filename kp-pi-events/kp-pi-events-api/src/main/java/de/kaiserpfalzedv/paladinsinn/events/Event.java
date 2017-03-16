@@ -21,11 +21,6 @@ import de.kaiserpfalzedv.paladinsinn.security.Maintainable;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.TenantHolding;
 import de.kaiserpfalzedv.paladinsinn.topics.Taggable;
 
-import java.io.Serializable;
-import java.net.URL;
-import java.time.Duration;
-import java.time.LocalDateTime;
-
 /**
  * The event data for the events in the database.
  *

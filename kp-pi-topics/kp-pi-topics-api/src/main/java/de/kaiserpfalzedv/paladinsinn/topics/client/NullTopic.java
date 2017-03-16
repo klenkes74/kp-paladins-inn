@@ -16,13 +16,20 @@
 
 package de.kaiserpfalzedv.paladinsinn.topics.client;
 
+<<<<<<< HEAD
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.NullUser;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.impl.NullTenant;
 import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 
+=======
+>>>>>>> 4f87448e905e4f7d16a94b7ee30b572313d112b6
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.NullUser;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.impl.NullTenant;
+import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 
 /**
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
