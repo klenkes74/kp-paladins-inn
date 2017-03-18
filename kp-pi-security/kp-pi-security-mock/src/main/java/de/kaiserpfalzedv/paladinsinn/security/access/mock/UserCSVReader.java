@@ -31,6 +31,7 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
 
+import de.kaiserpfalzedv.paladinsinn.commons.DataReader;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
@@ -44,7 +45,7 @@ import org.slf4j.LoggerFactory;
  * @version 1.0.0
  * @since 2017-03-14
  */
-public class UserCSVReader {
+public class UserCSVReader implements DataReader<User> {
     private static final Logger LOG = LoggerFactory.getLogger(UserCSVReader.class);
 
 
@@ -65,16 +66,28 @@ public class UserCSVReader {
     }
 
 
+    @Override
     public Set<User> read(URI uri) throws IOException {
         return read(uri.toURL().openStream());
     }
 
 
+    @Override
     public Set<User> read(InputStream stream) {
         Scanner scanner = new Scanner(stream);
         scanner.useDelimiter(";");
 
         return readAllLines(scanner);
+    }
+
+    @Override
+    public Set<User> read(String fileName) throws FileNotFoundException {
+        return read(new File(fileName));
+    }
+
+    @Override
+    public Set<User> read(File file) throws FileNotFoundException {
+        return read(new FileInputStream(file));
     }
 
     private Set<User> readAllLines(Scanner scanner) {
@@ -171,13 +184,5 @@ public class UserCSVReader {
         }
 
         return result.build();
-    }
-
-    public Set<User> read(String fileName) throws FileNotFoundException {
-        return read(new File(fileName));
-    }
-
-    public Set<User> read(File file) throws FileNotFoundException {
-        return read(new FileInputStream(file));
     }
 }

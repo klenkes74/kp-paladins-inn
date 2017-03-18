@@ -47,6 +47,6 @@ public class TenantImpl extends IdentifiableAbstractImpl implements Tenant, Iden
                                                .append(getUniqueId())
                                                .append(", ").append(key)
                                                .append(", ").append(getName())
-                                               .toString();
+                                               .append("}").toString();
     }
 }

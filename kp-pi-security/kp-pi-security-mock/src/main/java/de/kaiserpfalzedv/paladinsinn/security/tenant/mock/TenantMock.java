@@ -27,6 +27,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.impl.PageBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantPersistenceException;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantPersistenceRuntimeException;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
@@ -40,6 +41,7 @@ import org.slf4j.LoggerFactory;
  * @version 1.0.0
  * @since 2017-03-18
  */
+@MockService
 public class TenantMock implements TenantService {
     private static final Logger LOG = LoggerFactory.getLogger(TenantMock.class);
 
@@ -50,28 +52,11 @@ public class TenantMock implements TenantService {
 
     @Override
     public Tenant create(final Tenant tenant) throws TenantPersistenceException {
+        checkDuplicateTenantUniqueId(tenant);
+        checkDuplicateTenantKey(tenant);
+        checkDuplicateTenantName(tenant);
+
         Tenant data;
-
-        if (tenantsByUniqueId.containsKey(tenant.getUniqueId())) {
-            LOG.warn("Tenant with unique id {} already exists: {}",
-                     tenant.getUniqueId(), tenantsByUniqueId.get(tenant.getUniqueId())
-            );
-            throw new TenantPersistenceException("Tenant with unique id " + tenant.getUniqueId() + " already exists!");
-        }
-        if (tenantsByKey.containsKey(tenant.getKey())) {
-            LOG.warn("Tenant with key '{}' already exists: {}",
-                     tenant.getName(), tenantsByName.get(tenant.getName())
-            );
-            throw new TenantPersistenceException("Tenant with name '" + tenant.getName() + "' already exists!");
-        }
-        if (tenantsByName.containsKey(tenant.getName())) {
-            LOG.warn("Tenant with name '{}' already exists: {}",
-                     tenant.getName(), tenantsByName.get(tenant.getName())
-            );
-            throw new TenantPersistenceException("Tenant with name '" + tenant.getName() + "' already exists!");
-        }
-
-
         try {
             data = new TenantBuilder().withTenant(tenant).build();
         } catch (BuilderValidationException e) {
@@ -86,6 +71,33 @@ public class TenantMock implements TenantService {
 
         LOG.info("Saved tenant to persistence: {} -> {}", tenant, data);
         return data;
+    }
+
+    private void checkDuplicateTenantUniqueId(Tenant tenant) throws TenantPersistenceException {
+        if (tenantsByUniqueId.containsKey(tenant.getUniqueId())) {
+            LOG.warn("Tenant with unique id {} already exists: {}",
+                     tenant.getUniqueId(), tenantsByUniqueId.get(tenant.getUniqueId())
+            );
+            throw new TenantPersistenceException("Tenant with unique id " + tenant.getUniqueId() + " already exists!");
+        }
+    }
+
+    private void checkDuplicateTenantKey(Tenant tenant) throws TenantPersistenceException {
+        if (tenantsByKey.containsKey(tenant.getKey())) {
+            LOG.warn("Tenant with key '{}' already exists: {}",
+                     tenant.getKey(), tenantsByKey.get(tenant.getKey())
+            );
+            throw new TenantPersistenceException("Tenant with name '" + tenant.getName() + "' already exists!");
+        }
+    }
+
+    private void checkDuplicateTenantName(Tenant tenant) throws TenantPersistenceException {
+        if (tenantsByName.containsKey(tenant.getName())) {
+            LOG.warn("Tenant with name '{}' already exists: {}",
+                     tenant.getName(), tenantsByName.get(tenant.getName())
+            );
+            throw new TenantPersistenceException("Tenant with name '" + tenant.getName() + "' already exists!");
+        }
     }
 
 
