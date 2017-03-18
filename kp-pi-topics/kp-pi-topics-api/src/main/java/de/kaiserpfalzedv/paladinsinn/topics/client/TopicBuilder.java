@@ -25,8 +25,8 @@ import de.kaiserpfalzedv.paladinsinn.commons.Builder;
 import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.NullUser;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.impl.NullTenant;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.model.impl.NullTenant;
 import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 
 /**
