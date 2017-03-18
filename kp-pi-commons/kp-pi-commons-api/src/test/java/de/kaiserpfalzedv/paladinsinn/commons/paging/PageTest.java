@@ -35,10 +35,10 @@ import static org.junit.Assert.assertEquals;
 public class PageTest {
     private static final Logger LOG = LoggerFactory.getLogger(PageTest.class);
 
-    private static final ArrayList<String> DATA = new ArrayList<>(9);
+    private static final long TOTAL_ELEMENTS = 9;
+    private static final ArrayList<String> DATA = new ArrayList<>((int) TOTAL_ELEMENTS);
     private static final long PAGE_SIZE = 2;
-    private static final long TOTAL_ELEMENTS = DATA.size();
-    private static final long TOTAL_PAGES = DATA.size() / PAGE_SIZE + ((DATA.size() % PAGE_SIZE != 0) ? 1 : 1);
+    private static final long TOTAL_PAGES = TOTAL_ELEMENTS / PAGE_SIZE + ((TOTAL_ELEMENTS % PAGE_SIZE != 0) ? 1 : 1);
 
     static {
         DATA.add("ABC");
@@ -71,7 +71,6 @@ public class PageTest {
     private Page<String> generatePage(long page) throws BuilderValidationException {
         return new PageBuilder<String>()
                 .withPage(DATA, page, PAGE_SIZE)
-                .withTotalElements(DATA.size())
                 .build();
     }
 
