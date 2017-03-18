@@ -35,8 +35,8 @@ import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.UserBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.access.services.LoginService;
 import de.kaiserpfalzedv.paladinsinn.security.access.services.UserIdGenerator;
 import de.kaiserpfalzedv.paladinsinn.security.access.services.UserLoaderService;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.impl.NullTenant;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.model.impl.NullTenant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

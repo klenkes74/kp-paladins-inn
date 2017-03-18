@@ -16,17 +16,21 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access;
 
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
+import java.security.Principal;
+
+import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 
 /**
- * This exception is thrown if the user has no access to the tenant given.
- *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2017-03-14
+ * @since 2017-03-17
  */
-public class UserHasNoAccessToTenantException extends UserIsNotEntitledException {
-    public UserHasNoAccessToTenantException(final String userId, final Tenant tenant) {
-        super(String.format("%s is not entitled for tenant %s.", userId, tenant.getName()));
+public class UserIsNotEntitledException extends SecurityException {
+    public UserIsNotEntitledException(String message) {
+        super(message);
+    }
+
+    public UserIsNotEntitledException(final User user, final Principal entitlement) {
+        super(String.format("User %s is not entitled for %s", user, entitlement));
     }
 }

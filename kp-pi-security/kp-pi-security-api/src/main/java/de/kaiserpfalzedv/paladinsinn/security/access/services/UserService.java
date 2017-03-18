@@ -14,19 +14,29 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.access;
+package de.kaiserpfalzedv.paladinsinn.security.access.services;
 
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
+import java.util.Set;
+
+import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
+import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 
 /**
- * This exception is thrown if the user has no access to the tenant given.
- *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2017-03-14
+ * @since 2017-03-18
  */
-public class UserHasNoAccessToTenantException extends UserIsNotEntitledException {
-    public UserHasNoAccessToTenantException(final String userId, final Tenant tenant) {
-        super(String.format("%s is not entitled for tenant %s.", userId, tenant.getName()));
-    }
+public interface UserService {
+    User create(User user);
+
+    Set<User> retrieve();
+
+    Page<User> retrieve(PageRequest pageRequest);
+
+    User retrieve(String userName);
+
+    User update(User user);
+
+    void delete(User user);
 }
