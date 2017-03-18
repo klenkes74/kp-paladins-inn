@@ -19,7 +19,6 @@ package de.kaiserpfalzedv.paladinsinn.security.tenant.model;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 
 /**
  * The tenant of a data node in the database.
@@ -31,10 +30,7 @@ public interface Tenant extends Identifiable {
     /**
      * The default tenant id for non-multitenant systems.
      */
-    static final UUID DEFAULT_TENANT = UUID.fromString("4dfb9268-7f29-4442-a458-f00e7e620f18");
+    UUID DEFAULT_TENANT = UUID.fromString("4dfb9268-7f29-4442-a458-f00e7e620f18");
 
-    /**
-     * @return the maintainer of this tenant.
-     */
-    User getMaintainer();
+    String getKey();
 }

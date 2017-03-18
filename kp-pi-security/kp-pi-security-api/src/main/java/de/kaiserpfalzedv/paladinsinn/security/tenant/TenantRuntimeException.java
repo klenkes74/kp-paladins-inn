@@ -16,49 +16,27 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.tenant;
 
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import de.kaiserpfalzedv.paladinsinn.commons.PaladinsInnBaseRuntimeException;
 
 /**
- * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2016-03-20
+ * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 1.0.0
+ * @since 2017-03-18
  */
-public class TenantImplTest {
-
-    @Test
-    public void testGetMaintainer() throws Exception {
-
+public class TenantRuntimeException extends PaladinsInnBaseRuntimeException {
+    public TenantRuntimeException(String message) {
+        super(message);
     }
 
-    @Test
-    public void testSetName() throws Exception {
-
+    public TenantRuntimeException(String message, Throwable cause) {
+        super(message, cause);
     }
 
-    @Test
-    public void testGetName() throws Exception {
-
+    public TenantRuntimeException(Throwable cause) {
+        super(cause);
     }
 
-    @Test
-    public void testSetIdentity() throws Exception {
-
-    }
-
-    @Test
-    public void testGetIdentifier() throws Exception {
-
-    }
-
-
-    @Before
-    public void setUp() throws Exception {
-
-    }
-
-    @After
-    public void tearDown() throws Exception {
-
+    public TenantRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 }

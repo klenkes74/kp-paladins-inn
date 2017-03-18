@@ -17,8 +17,6 @@
 package de.kaiserpfalzedv.paladinsinn.security.tenant.model.impl;
 
 import de.kaiserpfalzedv.paladinsinn.commons.impl.IdentifiableAbstractImpl;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.NullUser;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
@@ -31,12 +29,12 @@ public class NullTenant extends IdentifiableAbstractImpl implements Tenant {
     }
 
     @Override
-    public User getMaintainer() {
-        return new NullUser();
+    public String getName() {
+        return "no tenant";
     }
 
     @Override
-    public String getName() {
-        return "no tenant";
+    public String getKey() {
+        return "NUL";
     }
 }

@@ -22,6 +22,8 @@ import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantPersistenceException;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantPersistenceRuntimeException;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
@@ -30,21 +32,24 @@ import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
  * @since 2017-03-18
  */
 public interface TenantService {
-    Tenant create(Tenant tenant, Tenant data);
+    Tenant create(Tenant tenant) throws TenantPersistenceException;
 
-    Optional<Tenant> retrieve(Tenant tenant, UUID uniqueId);
 
-    Optional<Tenant> retrieve(Tenant tenant, String tenantName);
+    Optional<Tenant> retrieve(UUID uniqueId);
 
-    Set<Tenant> retrieve(Tenant tenant);
+    Optional<Tenant> retrieve(String tenantKey);
 
-    Page<Tenant> retrieve(Tenant tenant, PageRequest pageRequest);
+    Set<Tenant> retrieve();
 
-    Tenant update(Tenant tenant, Tenant data);
+    Page<Tenant> retrieve(PageRequest pageRequest) throws TenantPersistenceRuntimeException;
 
-    void delete(Tenant tenant, Tenant data);
 
-    void delete(Tenant tenant, UUID uniqueId);
+    Tenant update(Tenant data) throws TenantPersistenceException;
 
-    void delete(Tenant tenant, String tenantName);
+
+    void delete(Tenant data);
+
+    void delete(UUID uniqueId);
+
+    void delete(String tenantName);
 }
