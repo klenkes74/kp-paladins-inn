@@ -69,7 +69,7 @@ public class PageTest {
     }
 
     private Page<String> generatePage(long page) throws BuilderValidationException {
-        return new PageBuilder<Page<String>, String>()
+        return new PageBuilder<String>()
                 .withPage(DATA, page, PAGE_SIZE)
                 .withTotalElements(DATA.size())
                 .build();

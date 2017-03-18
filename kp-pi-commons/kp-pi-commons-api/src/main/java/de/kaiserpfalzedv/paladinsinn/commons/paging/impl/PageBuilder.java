@@ -34,7 +34,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
  * @version 1.0.0
  * @since 2017-03-17
  */
-public class PageBuilder<P extends Page<T>, T extends Serializable> implements Builder<Page<T>> {
+public class PageBuilder<T extends Serializable> implements Builder<Page<T>> {
     private final ArrayList<T> data = new ArrayList<>();
 
     private PageRequest request;
@@ -86,19 +86,19 @@ public class PageBuilder<P extends Page<T>, T extends Serializable> implements B
         }
 
         if (failures.size() >= 1) {
-            throw new BuilderValidationException("The page could not be build.", failures);
+            throw new BuilderValidationException(PageImpl.class, failures);
         }
     }
 
 
-    public PageBuilder<P, T> withData(final Collection<T> data) {
+    public PageBuilder<T> withData(final Collection<T> data) {
         if (data != null) {
             this.data.addAll(data);
         }
         return this;
     }
 
-    public PageBuilder<P, T> withRequest(final PageRequest request) {
+    public PageBuilder<T> withRequest(final PageRequest request) {
         this.request = request;
         return this;
     }
@@ -112,7 +112,7 @@ public class PageBuilder<P extends Page<T>, T extends Serializable> implements B
      *
      * @return the page builder itself.
      */
-    public PageBuilder<P, T> withPage(final Collection<T> data, final long pageNumber, final long pageSize) {
+    public PageBuilder<T> withPage(final Collection<T> data, final long pageNumber, final long pageSize) {
         this.totalElements = data.size();
         this.totalPages = data.size() / pageSize + ((data.size() % pageSize != 0) ? 1 : 0);
 
@@ -148,12 +148,12 @@ public class PageBuilder<P extends Page<T>, T extends Serializable> implements B
         }
     }
 
-    public PageBuilder<P, T> withTotalPages(final long totalPages) {
+    public PageBuilder<T> withTotalPages(final long totalPages) {
         this.totalPages = totalPages;
         return this;
     }
 
-    public PageBuilder<P, T> withTotalElements(final long totalElements) {
+    public PageBuilder<T> withTotalElements(final long totalElements) {
         this.totalElements = totalElements;
         return this;
     }

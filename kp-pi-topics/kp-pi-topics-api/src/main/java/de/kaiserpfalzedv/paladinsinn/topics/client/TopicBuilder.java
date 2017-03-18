@@ -75,7 +75,7 @@ public class TopicBuilder implements Builder<Topic> {
         }
 
         if (failures.size() != 0) {
-            throw new BuilderValidationException(failures);
+            throw new BuilderValidationException(TopicClientImpl.class, failures);
         }
     }
 
