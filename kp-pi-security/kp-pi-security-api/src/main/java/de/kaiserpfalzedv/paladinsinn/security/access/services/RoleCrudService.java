@@ -21,27 +21,27 @@ import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.Entitlement;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.Role;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2017-03-17
+ * @since 2017-03-18
  */
-public interface EntitlementService {
-    Entitlement create(Entitlement entitlement);
+public interface RoleCrudService {
+    Role create(Role role);
 
-    Set<Entitlement> retrieve();
+    Set<Role> retrieve();
 
-    Page<Entitlement> retrieve(PageRequest pageRequest);
+    Page<Role> retrieve(PageRequest pageRequest);
 
-    Entitlement retrieve(String entitlementName);
+    Role retrieve(String roleName);
 
-    Entitlement update(Entitlement entitlement);
+    Role update(Role role);
 
-    void delete(Entitlement entitlement);
+    void delete(Role role);
 
     void delete(UUID uniqueId);
 
-    void delete(String entitlementName);
+    void delete(String roleName);
 }

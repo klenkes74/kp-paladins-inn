@@ -25,20 +25,40 @@ import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
 
 /**
+ * The basic identity data of a person.
+ *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-11
  */
 public interface Persona extends Identifiable, Serializable {
+    /**
+     * @return the full name data of this persona.
+     */
     Name getFullName();
-    
+
+    /**
+     * @return the gender of the person.
+     */
     Gender getGender();
 
+    /**
+     * @return the date of birth of the person.
+     */
     LocalDate getDateOfBirth();
 
+    /**
+     * @return the current age of the person.
+     */
     int getAge();
 
+    /**
+     * @return the registered country of this person.
+     */
     Locale getCountry();
 
+    /**
+     * @return the registered language of this person.
+     */
     Locale getLocale();
 }

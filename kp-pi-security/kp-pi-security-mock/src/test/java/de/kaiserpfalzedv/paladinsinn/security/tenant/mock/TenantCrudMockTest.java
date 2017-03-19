@@ -26,7 +26,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.paging.impl.PageRequestImpl;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantPersistenceException;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.impl.TenantBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.services.TenantService;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.services.TenantCrudService;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -36,14 +36,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-18
  */
-public class TenantMockTest {
-    private static final Logger LOG = LoggerFactory.getLogger(TenantMockTest.class);
+public class TenantCrudMockTest {
+    private static final Logger LOG = LoggerFactory.getLogger(TenantCrudMockTest.class);
 
     private static final UUID TENANT_UNIQUE_ID_1 = UUID.randomUUID();
     private static final String TENANT_KEY_1 = "TEN1";
@@ -107,7 +108,7 @@ public class TenantMockTest {
         }
     }
 
-    private TenantService service;
+    private TenantCrudService service;
 
 
     @Test
@@ -181,6 +182,10 @@ public class TenantMockTest {
         service.create(TENANT_3);
 
         Optional<Tenant> result = service.retrieve(TENANT_KEY_3);
+        if (!result.isPresent()) {
+            fail("The result is empty. Should contain a tenant!");
+        }
+
         Tenant data = result.get();
 
         assertTrue(result.isPresent());
@@ -232,6 +237,10 @@ public class TenantMockTest {
         service.create(TENANT_1);
 
         Optional<Tenant> data = service.retrieve(TENANT_UNIQUE_ID_1);
+        if (!data.isPresent()) {
+            fail("The tenant data optional is empty! Should contain the tenant data!");
+        }
+
         Tenant updateTenant = new TenantBuilder().withTenant(data.get()).withName(TENANT_NAME_1 + " updated").build();
 
         Tenant result = service.update(updateTenant);
@@ -274,6 +283,6 @@ public class TenantMockTest {
 
     @Before
     public void setUpService() throws TenantPersistenceException {
-        service = new TenantMock();
+        service = new TenantCrudMock();
     }
 }

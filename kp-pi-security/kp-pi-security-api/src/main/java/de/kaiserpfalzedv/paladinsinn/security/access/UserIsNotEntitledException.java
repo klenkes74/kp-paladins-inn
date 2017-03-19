@@ -16,21 +16,48 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access;
 
-import java.security.Principal;
-
-import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
-
 /**
+ * The userId is not entitled to use this method.
+ *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-17
  */
 public class UserIsNotEntitledException extends SecurityException {
-    public UserIsNotEntitledException(String message) {
-        super(message);
+    private static final long serialVersionUID = -6578423501660505447L;
+
+    private final String userId;
+    private final String entitlement;
+
+    /**
+     * @param message         the failure message.
+     * @param userId          the userId that is not entitled.
+     * @param entitlementName the entitlement checked.
+     */
+    public UserIsNotEntitledException(final String message, final String userId, final String entitlementName) {
+        super(String.format(message, userId, entitlementName));
+
+        this.userId = userId;
+        this.entitlement = entitlementName;
     }
 
-    public UserIsNotEntitledException(final User user, final Principal entitlement) {
-        super(String.format("User %s is not entitled for %s", user, entitlement));
+    /**
+     * @param userId          the userId that is not entitled.
+     * @param entitlementName the entitlement checked.
+     */
+    public UserIsNotEntitledException(final String userId, final String entitlementName) {
+        super(String.format("User %s is not entitled for %s", userId, entitlementName));
+
+        this.userId = userId;
+        this.entitlement = entitlementName;
+    }
+
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public String getEntitlement() {
+        return entitlement;
     }
 }

@@ -17,26 +17,34 @@
 package de.kaiserpfalzedv.paladinsinn.security.access.services;
 
 import java.util.Set;
+import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.Entitlement;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-18
  */
-public interface UserService {
-    User create(User user);
+public interface TenantEntitlementCrudService {
+    Entitlement create(Tenant tenant, Entitlement entitlement);
 
-    Set<User> retrieve();
+    Set<Entitlement> retrieve(Tenant tenant);
 
-    Page<User> retrieve(PageRequest pageRequest);
+    Page<Entitlement> retrieve(Tenant tenant, PageRequest pageRequest);
 
-    User retrieve(String userName);
+    Entitlement retrieve(Tenant tenant, UUID uniqueId);
 
-    User update(User user);
+    Entitlement retrieve(Tenant tenant, String entitlementName);
 
-    void delete(User user);
+    Entitlement update(Tenant tenant, Entitlement entitlement);
+
+    void delete(Tenant tenant, Entitlement entitlement);
+
+    void delete(Tenant tenant, UUID uniqueId);
+
+    void delete(Tenant tenant, String entitlementName);
 }

@@ -32,7 +32,7 @@ import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantPersistenceException;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantPersistenceRuntimeException;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.impl.TenantBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.services.TenantService;
+import de.kaiserpfalzedv.paladinsinn.security.tenant.services.TenantCrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,8 +42,8 @@ import org.slf4j.LoggerFactory;
  * @since 2017-03-18
  */
 @MockService
-public class TenantMock implements TenantService {
-    private static final Logger LOG = LoggerFactory.getLogger(TenantMock.class);
+public class TenantCrudMock implements TenantCrudService {
+    private static final Logger LOG = LoggerFactory.getLogger(TenantCrudMock.class);
 
     private final HashMap<UUID, Tenant> tenantsByUniqueId = new HashMap<>();
     private final HashMap<String, Tenant> tenantsByKey = new HashMap<>();

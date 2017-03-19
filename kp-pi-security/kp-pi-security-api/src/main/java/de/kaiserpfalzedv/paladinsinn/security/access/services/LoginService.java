@@ -33,19 +33,6 @@ import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
  */
 public interface LoginService {
     /**
-     * Logs a user in without tenant (or default tenant information).
-     *
-     * @param userId the user id to log in.
-     * @param password the password of the user to log in.
-     * @return the user object.
-     * @throws UserNotFoundException If there is no user with the id given.
-     * @throws PasswordFailureException The password did not match the password of the user.
-     * @throws UserIsLockedException The user is locked and can not log in.
-     */
-    User login(String userId, String password)
-            throws UserNotFoundException, PasswordFailureException, UserIsLockedException;
-
-    /**
      * Logs a user in for a special tenant.
      * 
      * @param tenant the tenant to log the user in.

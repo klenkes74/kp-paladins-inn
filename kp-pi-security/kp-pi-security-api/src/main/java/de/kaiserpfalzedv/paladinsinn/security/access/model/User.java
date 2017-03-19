@@ -63,11 +63,26 @@ public interface User extends Identifiable {
      */
     boolean isLocked();
 
+    /**
+     * @return all roles this user is in.
+     */
     Set<Role> getRoles();
 
+    /**
+     * @param role the role to be checked.
+     *
+     * @return TURE if the user is in this role.
+     */
     boolean isInRole(Role role);
 
+    /**
+     * @return a set of all entitlments of this user.
+     */
     Set<Entitlement> getEntitlements();
 
+    /**
+     * @param entitlement the entitlement to be checked.
+     * @return TRUE if the user has the entitlement.
+     */
     boolean isEntitled(Entitlement entitlement);
 }

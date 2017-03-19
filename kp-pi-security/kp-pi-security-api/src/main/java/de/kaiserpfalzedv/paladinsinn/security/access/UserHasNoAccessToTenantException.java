@@ -26,7 +26,13 @@ import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
  * @since 2017-03-14
  */
 public class UserHasNoAccessToTenantException extends UserIsNotEntitledException {
+    private static final long serialVersionUID = -5693671131425424047L;
+
+    /**
+     * @param userId The user id of the user without access.
+     * @param tenant The tenant the user has no access to.
+     */
     public UserHasNoAccessToTenantException(final String userId, final Tenant tenant) {
-        super(String.format("%s is not entitled for tenant %s.", userId, tenant.getName()));
+        super("%s is not entitled for tenant %s.", userId, tenant.getName());
     }
 }

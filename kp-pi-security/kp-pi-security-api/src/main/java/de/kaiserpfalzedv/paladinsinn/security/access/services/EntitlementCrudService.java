@@ -22,29 +22,36 @@ import java.util.UUID;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.Entitlement;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
+ * The low level CRUD services used by the business services to handle entitlements in a single-tenant environment. If
+ * you have a multi-tenant environment, please use {@link TenantEntitlementCrudService} instead.
+ * 
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2017-03-18
+ * @since 2017-03-17
  */
-public interface TenantEntitlementService {
-    Entitlement create(Tenant tenant, Entitlement entitlement);
+public interface EntitlementCrudService {
+    /**
+     * Persists the entitlement.
+     *
+     * @param entitlement the data to be persisted.
+     *
+     * @return the persisted data.
+     */
+    Entitlement create(Entitlement entitlement);
 
-    Set<Entitlement> retrieve(Tenant tenant);
+    Set<Entitlement> retrieve();
 
-    Page<Entitlement> retrieve(Tenant tenant, PageRequest pageRequest);
+    Page<Entitlement> retrieve(PageRequest pageRequest);
 
-    Entitlement retrieve(Tenant tenant, UUID uniqueId);
+    Entitlement retrieve(String entitlementName);
 
-    Entitlement retrieve(Tenant tenant, String entitlementName);
+    Entitlement update(Entitlement entitlement);
 
-    Entitlement update(Tenant tenant, Entitlement entitlement);
+    void delete(Entitlement entitlement);
 
-    void delete(Tenant tenant, Entitlement entitlement);
+    void delete(UUID uniqueId);
 
-    void delete(Tenant tenant, UUID uniqueId);
-
-    void delete(Tenant tenant, String entitlementName);
+    void delete(String entitlementName);
 }

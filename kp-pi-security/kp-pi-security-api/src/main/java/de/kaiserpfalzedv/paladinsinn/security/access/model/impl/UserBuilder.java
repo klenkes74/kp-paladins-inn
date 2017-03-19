@@ -144,6 +144,20 @@ public class UserBuilder extends IdentifiableAbstractBuilder<User> {
         withPerson(user.getPerson());
         withEmailAddress(user.getEmailAddress());
 
+        try {
+            withPassword(((UserImpl) user).getPassword());
+        } catch (ClassCastException e) {
+            // can't do anything about it.
+        }
+
+        if (user.isLocked()) {
+            locked();
+        } else {
+            unlocked();
+        }
+
+        withRoles(user.getRoles());
+
         return this;
     }
 

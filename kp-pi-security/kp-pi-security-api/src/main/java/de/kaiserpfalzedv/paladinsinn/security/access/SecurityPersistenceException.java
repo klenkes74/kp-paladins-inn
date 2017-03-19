@@ -16,40 +16,39 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access;
 
-import de.kaiserpfalzedv.paladinsinn.commons.PaladinsInnBaseException;
-
 /**
- * The abstract base class of all checked security exceptions.
+ * The security persistence exception will be thrown if there are problems with the persistence layer of the security
+ * classes.
  *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2017-03-14
+ * @since 2017-03-19
  */
-public abstract class SecurityException extends PaladinsInnBaseException {
-    private static final long serialVersionUID = 5383647166865816794L;
+public class SecurityPersistenceException extends SecurityException {
+    private static final long serialVersionUID = 1205782333687165884L;
 
     /**
-     * @param message The failure message.
+     * @param message the failure message.
      */
-    public SecurityException(String message) {
+    public SecurityPersistenceException(String message) {
         super(message);
     }
 
     /**
-     * @param message The failure message.
-     * @param cause   The failure cause.
+     * @param message the failure message.
+     * @param cause   the failure cause.
      */
-    public SecurityException(String message, Throwable cause) {
+    public SecurityPersistenceException(String message, Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * @param message The failure message.
-     * @param cause The failure cause.
+     * @param message            the failure message.
+     * @param cause              the failure cause.
      * @param enableSuppression
-     * @param writableStackTrace If the stack trace should be written.
+     * @param writableStackTrace
      */
-    public SecurityException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public SecurityPersistenceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

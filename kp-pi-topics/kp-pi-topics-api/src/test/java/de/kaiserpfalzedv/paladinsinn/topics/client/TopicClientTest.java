@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 Kaiserpfalz EDV-Service, Roland T. Lichti
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,9 +16,14 @@
 
 package de.kaiserpfalzedv.paladinsinn.topics.client;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+
 import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.UserBuilder;
 import de.kaiserpfalzedv.paladinsinn.topics.Topic;
-import org.junit.Assert;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
@@ -28,11 +33,56 @@ import static org.junit.Assert.assertEquals;
  * @since 2016-03-24
  */
 public class TopicClientTest {
+    private static final UUID USER_UNIQUE_ID = UUID.randomUUID();
+    private static final String USER_ID = "user_id";
+    private static final String PASSWORD = "password";
+    private static final User MAINTAINER = new UserBuilder()
+            .withUniqueId(USER_UNIQUE_ID)
+            .withName(USER_ID)
+            .withPassword(PASSWORD)
+            .build();
+
+    private static final Topic PARENT_TOPIC = new Topic() {
+        private UUID tenant = UUID.randomUUID();
+        private UUID uniqueId = UUID.randomUUID();
+
+        @Override
+        public String getName() {
+            return "NULL";
+        }
+
+        @Override
+        public Topic getParent() {
+            return this;
+        }
+
+        @Override
+        public List<Topic> getChildren() {
+            return new ArrayList<>();
+        }
+
+        @Override
+        public UUID getTenant() {
+            return tenant;
+        }
+
+        @Override
+        public UUID getUniqueId() {
+            return uniqueId;
+        }
+
+        @Override
+        public UUID getMaintainer() {
+            return MAINTAINER.getUniqueId();
+        }
+    };
 
     @Test
     public void createMinimalTopic() throws BuilderValidationException {
         Topic result = new TopicBuilder()
                 .setName("TestTopic")
+                .setMaintainer(MAINTAINER)
+                .setParent(PARENT_TOPIC)
                 .build();
 
         assertEquals("TestTopic", result.getName());

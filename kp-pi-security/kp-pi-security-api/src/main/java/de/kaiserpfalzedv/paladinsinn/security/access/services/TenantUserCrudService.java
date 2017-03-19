@@ -21,7 +21,7 @@ import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.Role;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
@@ -29,22 +29,22 @@ import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
  * @version 1.0.0
  * @since 2017-03-18
  */
-public interface TenantRoleService {
-    Role create(Tenant tenant, Role role);
+public interface TenantUserCrudService {
+    User create(Tenant tenant, User user);
 
-    Set<Role> retrieve(Tenant tenant);
+    Set<User> retrieve();
 
-    Page<Role> retrieve(Tenant tenant, PageRequest pageRequest);
+    Page<User> retrieve(Tenant tenant, PageRequest pageRequest);
 
-    Role retrieve(Tenant tenant, UUID uniqueId);
+    User retrieve(Tenant tenant, UUID uniqueId);
 
-    Role retrieve(Tenant tenant, String roleName);
+    User retrieve(Tenant tenant, String userName);
 
-    Role update(Tenant tenant, Role role);
+    User update(Tenant tenant, User user);
 
-    void delete(Tenant tenant, Role role);
+    void delete(Tenant tenant, User user);
 
     void delete(Tenant tenant, UUID uniqueId);
 
-    void delete(Tenant tenant, String roleName);
+    void delete(Tenant tenant, String userName);
 }

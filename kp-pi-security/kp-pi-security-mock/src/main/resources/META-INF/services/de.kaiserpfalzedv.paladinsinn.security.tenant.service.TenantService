@@ -29,5 +29,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-
-de.kaiserpfalzedv.paladinsinn.security.tenant.mock.TenantMock
+de.kaiserpfalzedv.paladinsinn.security.tenant.mock.TenantCrudMock

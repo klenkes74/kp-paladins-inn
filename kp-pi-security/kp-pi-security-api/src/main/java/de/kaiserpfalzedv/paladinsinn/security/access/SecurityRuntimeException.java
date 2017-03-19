@@ -16,40 +16,40 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access;
 
-import de.kaiserpfalzedv.paladinsinn.commons.PaladinsInnBaseException;
+import de.kaiserpfalzedv.paladinsinn.commons.PaladinsInnBaseRuntimeException;
 
 /**
- * The abstract base class of all checked security exceptions.
+ * The abstract base of all runtime exceptions of the security APIs.
  *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-14
  */
-public abstract class SecurityException extends PaladinsInnBaseException {
-    private static final long serialVersionUID = 5383647166865816794L;
+public abstract class SecurityRuntimeException extends PaladinsInnBaseRuntimeException {
+    private static final long serialVersionUID = 1223640146136848624L;
 
     /**
-     * @param message The failure message.
+     * @param message the failure message.
      */
-    public SecurityException(String message) {
+    public SecurityRuntimeException(String message) {
         super(message);
     }
 
     /**
-     * @param message The failure message.
-     * @param cause   The failure cause.
+     * @param message the failure message.
+     * @param cause   the failure cause.
      */
-    public SecurityException(String message, Throwable cause) {
+    public SecurityRuntimeException(String message, Throwable cause) {
         super(message, cause);
     }
 
     /**
-     * @param message The failure message.
-     * @param cause The failure cause.
+     * @param message            the failure message.
+     * @param cause              the failure cause.
      * @param enableSuppression
-     * @param writableStackTrace If the stack trace should be written.
+     * @param writableStackTrace
      */
-    public SecurityException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public SecurityRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
     }
 }

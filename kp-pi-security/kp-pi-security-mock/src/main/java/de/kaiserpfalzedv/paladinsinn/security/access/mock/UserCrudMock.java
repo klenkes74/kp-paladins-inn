@@ -36,7 +36,6 @@ import de.kaiserpfalzedv.paladinsinn.security.access.services.LoginService;
 import de.kaiserpfalzedv.paladinsinn.security.access.services.UserIdGenerator;
 import de.kaiserpfalzedv.paladinsinn.security.access.services.UserLoaderService;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.impl.NullTenant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,8 +47,8 @@ import org.slf4j.LoggerFactory;
  * @since 2017-03-14
  */
 @MockService
-public class UserMock implements LoginService, UserLoaderService, UserIdGenerator {
-    private static final Logger LOG = LoggerFactory.getLogger(UserMock.class);
+public class UserCrudMock implements LoginService, UserLoaderService, UserIdGenerator {
+    private static final Logger LOG = LoggerFactory.getLogger(UserCrudMock.class);
 
     private static final HashMap<Tenant, HashMap<String, User>> tenantUsers = new HashMap<>();
     private static final HashMap<String, User> users = new HashMap<>();
@@ -71,17 +70,7 @@ public class UserMock implements LoginService, UserLoaderService, UserIdGenerato
 
     
     @Override
-    public User login(String userId, String password)
-            throws UserNotFoundException, PasswordFailureException, UserIsLockedException {
-        try {
-            return login(new NullTenant(), userId, password);
-        } catch (UserHasNoAccessToTenantException e) {
-            throw new IllegalStateException(e);
-        }
-    }
-
-    @Override
-    public User login(Tenant tenant, String userId, String password)
+    public User login(final Tenant tenant, final String userId, final String password)
             throws UserNotFoundException, PasswordFailureException, UserIsLockedException,
                    UserHasNoAccessToTenantException {
         checkTenantForUser(tenant, userId);
@@ -123,29 +112,24 @@ public class UserMock implements LoginService, UserLoaderService, UserIdGenerato
 
 
     @Override
-    public void loadUsers(final Collection<User> users) {
-        loadUsersForTenant(new NullTenant(), users);
-    }
-
-    @Override
     public synchronized void loadUsersForTenant(final Tenant tenant, final Collection<User> users) {
         HashMap<String, User> newTenantUsers = new HashMap<>(users.size());
 
         users.forEach(u -> {
-            if (UserMock.users.containsKey(u.getName())) {
+            if (UserCrudMock.users.containsKey(u.getName())) {
                 throw new IllegalArgumentException("The user id '" + u.getName()
                                                            + "' is assigned multiple times. Please check!");
             }
 
-            UserMock.users.put(u.getName(), u);
+            UserCrudMock.users.put(u.getName(), u);
             newTenantUsers.put(u.getName(), u);
         });
 
-        if (UserMock.tenantUsers.containsKey(tenant)) {
-            UserMock.tenantUsers.get(tenant).clear();
-            UserMock.tenantUsers.get(tenant).putAll(newTenantUsers);
+        if (UserCrudMock.tenantUsers.containsKey(tenant)) {
+            UserCrudMock.tenantUsers.get(tenant).clear();
+            UserCrudMock.tenantUsers.get(tenant).putAll(newTenantUsers);
         } else {
-            UserMock.tenantUsers.put(tenant, newTenantUsers);
+            UserCrudMock.tenantUsers.put(tenant, newTenantUsers);
         }
 
         LOG.info("Loaded {} users for tenant {} into User Service MOCK.", users.size(), tenant);

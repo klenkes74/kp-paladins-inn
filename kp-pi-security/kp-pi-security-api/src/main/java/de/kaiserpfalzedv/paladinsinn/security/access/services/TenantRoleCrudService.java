@@ -14,16 +14,14 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.tenant.services;
+package de.kaiserpfalzedv.paladinsinn.security.access.services;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantPersistenceException;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.TenantPersistenceRuntimeException;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.Role;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
@@ -31,25 +29,22 @@ import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
  * @version 1.0.0
  * @since 2017-03-18
  */
-public interface TenantService {
-    Tenant create(Tenant tenant) throws TenantPersistenceException;
+public interface TenantRoleCrudService {
+    Role create(Tenant tenant, Role role);
 
+    Set<Role> retrieve(Tenant tenant);
 
-    Optional<Tenant> retrieve(UUID uniqueId);
+    Page<Role> retrieve(Tenant tenant, PageRequest pageRequest);
 
-    Optional<Tenant> retrieve(String tenantKey);
+    Role retrieve(Tenant tenant, UUID uniqueId);
 
-    Set<Tenant> retrieve();
+    Role retrieve(Tenant tenant, String roleName);
 
-    Page<Tenant> retrieve(PageRequest pageRequest) throws TenantPersistenceRuntimeException;
+    Role update(Tenant tenant, Role role);
 
+    void delete(Tenant tenant, Role role);
 
-    Tenant update(Tenant data) throws TenantPersistenceException;
+    void delete(Tenant tenant, UUID uniqueId);
 
-
-    void delete(Tenant data);
-
-    void delete(UUID uniqueId);
-
-    void delete(String tenantName);
+    void delete(Tenant tenant, String roleName);
 }

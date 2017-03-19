@@ -30,13 +30,6 @@ import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
  */
 public interface UserLoaderService {
     /**
-     * Loads the users into the user database.
-     *
-     * @param users the users to load for the default tenant.
-     */
-    void loadUsers(final Collection<User> users);
-
-    /**
      * Loads the users into the user database with access to the given tenant.
      *
      * @param tenant The tenant for the users.

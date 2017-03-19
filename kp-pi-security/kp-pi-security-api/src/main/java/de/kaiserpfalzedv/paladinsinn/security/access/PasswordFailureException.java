@@ -17,11 +17,19 @@
 package de.kaiserpfalzedv.paladinsinn.security.access;
 
 /**
+ * This exception is thrown if the password did not match during a login attempt. It is for software internal
+ * measurements and it is considered good practice not to give this information to the user.
+ *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-14
  */
 public class PasswordFailureException extends SecurityException {
+    private static final long serialVersionUID = -6223137068380318434L;
+
+    /**
+     * @param userId the user name of the user who tried to log in.
+     */
     public PasswordFailureException(final String userId) {
         super(String.format("Password for '%s' did not match!", userId));
     }

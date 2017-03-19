@@ -24,9 +24,7 @@ import java.util.UUID;
 import de.kaiserpfalzedv.paladinsinn.commons.Builder;
 import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.NullUser;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.impl.NullTenant;
 import de.kaiserpfalzedv.paladinsinn.topics.Topic;
 
 /**
@@ -63,15 +61,19 @@ public class TopicBuilder implements Builder<Topic> {
         }
 
         if (maintainer == null) {
-            maintainer = new NullUser().getUniqueId();
+            failures.add("You need a maintainer for this topic!");
         }
 
         if (parent == null) {
-            parent = new NullTopic();
+            failures.add("You need a parent topic!");
+        }
+
+        if (tenant == null && parent != null) {
+            tenant = parent.getTenant();
         }
 
         if (tenant == null) {
-            tenant = new NullTenant().getUniqueId();
+            failures.add("You need a tenant for this topic!");
         }
 
         if (failures.size() != 0) {

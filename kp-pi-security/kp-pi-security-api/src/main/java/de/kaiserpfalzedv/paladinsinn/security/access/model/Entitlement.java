@@ -16,11 +16,11 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.model;
 
-import java.security.Principal;
-
 import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
 
 /**
+ * A basic entitlement (in some systems called permissions).
+ * 
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-11

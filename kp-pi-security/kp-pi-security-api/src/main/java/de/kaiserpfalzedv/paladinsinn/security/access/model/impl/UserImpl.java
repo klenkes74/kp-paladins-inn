@@ -133,6 +133,15 @@ class UserImpl extends IdentifiableAbstractImpl implements User {
         return getEntitlements().contains(entitlement);
     }
 
+    /**
+     * This is an internal method needed for the copying builder.
+     *
+     * @return the password of this user.
+     */
+    String getPassword() {
+        return password;
+    }
+
     private void addRole(HashSet<Role> roles, Role role) {
         if (roles.contains(role))
             return;
