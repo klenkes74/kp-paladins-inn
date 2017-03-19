@@ -25,21 +25,30 @@ package de.kaiserpfalzedv.paladinsinn.security.access;
  * @since 2017-03-19
  */
 public class SecurityPersistenceException extends SecurityException {
-    private static final long serialVersionUID = 1205782333687165884L;
+    private static final long serialVersionUID = 5148039620770551316L;
+
+    /**
+     * The class this security exception is thrown for.
+     */
+    private final Class<?> clasz;
 
     /**
      * @param message the failure message.
      */
-    public SecurityPersistenceException(String message) {
-        super(message);
+    public SecurityPersistenceException(Class<?> clasz, String message) {
+        super(String.format("%s (Class: %s)", message, clasz.getCanonicalName()));
+
+        this.clasz = clasz;
     }
 
     /**
      * @param message the failure message.
      * @param cause   the failure cause.
      */
-    public SecurityPersistenceException(String message, Throwable cause) {
-        super(message, cause);
+    public SecurityPersistenceException(Class<?> clasz, String message, Throwable cause) {
+        super(String.format("%s (Class: %s)", message, clasz.getCanonicalName()), cause);
+
+        this.clasz = clasz;
     }
 
     /**
@@ -48,7 +57,23 @@ public class SecurityPersistenceException extends SecurityException {
      * @param enableSuppression
      * @param writableStackTrace
      */
-    public SecurityPersistenceException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public SecurityPersistenceException(
+            Class<?> clasz, String message,
+            Throwable cause,
+            boolean enableSuppression,
+            boolean writableStackTrace
+    ) {
+        super(
+                String.format("%s (Class: %s)", message, clasz.getCanonicalName()),
+                cause,
+                enableSuppression,
+                writableStackTrace
+        );
+
+        this.clasz = clasz;
+    }
+
+    public Class<?> getClasz() {
+        return clasz;
     }
 }

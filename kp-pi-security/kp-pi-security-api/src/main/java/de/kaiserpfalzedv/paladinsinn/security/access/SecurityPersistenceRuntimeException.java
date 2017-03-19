@@ -27,30 +27,52 @@ package de.kaiserpfalzedv.paladinsinn.security.access;
  * @since 2017-03-19
  */
 public class SecurityPersistenceRuntimeException extends SecurityRuntimeException {
-    private static final long serialVersionUID = -5110374932124934314L;
+    private static final long serialVersionUID = -4777561056547581529L;
+
+    private final Class<?> clasz;
 
     /**
+     * @param clasz The class this exception is thrown for.
      * @param message the failure message.
      */
-    public SecurityPersistenceRuntimeException(String message) {
-        super(message);
+    public SecurityPersistenceRuntimeException(final Class<?> clasz, final String message) {
+        super(String.format("%s (Class: %s)", message, clasz.getCanonicalName()));
+
+        this.clasz = clasz;
     }
 
     /**
+     * @param clasz The class this exception is thrown for.
      * @param message the failure message.
      * @param cause   the failure cause.
      */
-    public SecurityPersistenceRuntimeException(String message, Throwable cause) {
-        super(message, cause);
+    public SecurityPersistenceRuntimeException(final Class<?> clasz, final String message, final Throwable cause) {
+        super(String.format("%s (Class: %s)", message, clasz.getCanonicalName()), cause);
+
+        this.clasz = clasz;
     }
 
     /**
+     * @param clasz The class this exception is thrown for.
      * @param message            the failure message.
      * @param cause              the failure cause.
      * @param enableSuppression
      * @param writableStackTrace
      */
-    public SecurityPersistenceRuntimeException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
+    public SecurityPersistenceRuntimeException(
+            final Class<?> clasz,
+            final String message,
+            final Throwable cause,
+            final boolean enableSuppression,
+            final boolean writableStackTrace
+    ) {
+        super(
+                String.format("%s (Class: %s)", message, clasz.getCanonicalName()),
+                cause,
+                enableSuppression,
+                writableStackTrace
+        );
+
+        this.clasz = clasz;
     }
 }

@@ -16,11 +16,13 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.services;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.security.access.DuplicateEntityException;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 
 /**
@@ -36,7 +38,7 @@ public interface UserCrudService {
      *
      * @return the saved user data.
      */
-    User create(User user);
+    User create(User user) throws DuplicateEntityException;
 
 
     /**
@@ -46,7 +48,7 @@ public interface UserCrudService {
      *
      * @return The selected user.
      */
-    User retrieve(UUID uniqueId);
+    Optional<User> retrieve(UUID uniqueId);
 
     /**
      * Loads a single user by the user name.
@@ -55,7 +57,7 @@ public interface UserCrudService {
      *
      * @return The selected user.
      */
-    User retrieve(String userName);
+    Optional<User> retrieve(String userName);
 
     /**
      * @return all users of the system.

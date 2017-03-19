@@ -16,11 +16,13 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.services;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.security.access.DuplicateEntityException;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
@@ -30,17 +32,20 @@ import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
  * @since 2017-03-18
  */
 public interface TenantUserCrudService {
-    User create(Tenant tenant, User user);
+    User create(Tenant tenant, User user) throws DuplicateEntityException;
 
-    Set<User> retrieve();
+
+    Optional<User> retrieve(Tenant tenant, UUID uniqueId);
+
+    Optional<User> retrieve(Tenant tenant, String userName);
+
+    Set<User> retrieve(Tenant tenant);
 
     Page<User> retrieve(Tenant tenant, PageRequest pageRequest);
 
-    User retrieve(Tenant tenant, UUID uniqueId);
-
-    User retrieve(Tenant tenant, String userName);
 
     User update(Tenant tenant, User user);
+
 
     void delete(Tenant tenant, User user);
 
