@@ -16,14 +16,14 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.model;
 
-import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
-import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
-import de.kaiserpfalzedv.paladinsinn.security.access.services.PasswordFailureException;
-import de.kaiserpfalzedv.paladinsinn.security.access.services.UserIsLockedException;
-
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
+
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
+import de.kaiserpfalzedv.paladinsinn.security.access.services.PasswordFailureException;
+import de.kaiserpfalzedv.paladinsinn.security.access.services.UserIsLockedException;
 
 /**
  * Paladins Inn uses an extended principal containing some additional data of the user.

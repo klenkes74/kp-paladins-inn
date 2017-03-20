@@ -20,7 +20,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Locale;
 
-import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.Identifiable;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
 

@@ -16,7 +16,7 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.services;
 
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 
 /**
  * This exception is thrown if the user has no access to the tenant given.

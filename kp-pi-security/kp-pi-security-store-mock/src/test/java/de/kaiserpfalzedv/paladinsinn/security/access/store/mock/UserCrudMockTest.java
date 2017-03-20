@@ -16,28 +16,32 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.store.mock;
 
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.impl.PageRequestImpl;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateEntityException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.PersistenceException;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
 import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.DefaultTenant;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.PersonaBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.UserBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.access.store.DuplicateEntityException;
 import de.kaiserpfalzedv.paladinsinn.security.access.store.UserCrudService;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.impl.DefaultTenant;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
-
 import static java.lang.System.identityHashCode;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -157,7 +161,7 @@ public class UserCrudMockTest {
     }
 
     @Test
-    public void shouldUpdateTheDataWhenAnUserExist() throws DuplicateEntityException {
+    public void shouldUpdateTheDataWhenAnUserExist() throws PersistenceException {
         User user = createAnUser(0);
         UUID id = user.getUniqueId();
         user = service.create(user);
@@ -174,7 +178,7 @@ public class UserCrudMockTest {
     }
 
     @Test
-    public void shouldCreateTheUserWhenNoUserExists() {
+    public void shouldCreateTheUserWhenNoUserExists() throws PersistenceException {
         User user = createAnUser(0);
         UUID id = user.getUniqueId();
 

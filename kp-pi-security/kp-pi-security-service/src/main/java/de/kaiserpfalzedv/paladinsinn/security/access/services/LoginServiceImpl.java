@@ -16,8 +16,8 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.services;
 
+import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}

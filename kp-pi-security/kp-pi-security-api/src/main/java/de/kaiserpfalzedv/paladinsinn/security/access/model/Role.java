@@ -19,7 +19,7 @@ package de.kaiserpfalzedv.paladinsinn.security.access.model;
 import java.security.Principal;
 import java.util.Set;
 
-import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.Identifiable;
 
 /**
  * The basic role within this system. It can have entitlements and other roles attached.

@@ -16,21 +16,25 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.store.mock;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+
 import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.impl.PageBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateEntityException;
 import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
+import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.impl.UserBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.access.store.DuplicateEntityException;
 import de.kaiserpfalzedv.paladinsinn.security.access.store.SecurityPersistenceRuntimeException;
 import de.kaiserpfalzedv.paladinsinn.security.access.store.TenantUserCrudService;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.*;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}

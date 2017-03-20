@@ -16,7 +16,7 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.model;
 
-import de.kaiserpfalzedv.paladinsinn.commons.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.Identifiable;
 
 /**
  * A basic entitlement (in some systems called permissions).

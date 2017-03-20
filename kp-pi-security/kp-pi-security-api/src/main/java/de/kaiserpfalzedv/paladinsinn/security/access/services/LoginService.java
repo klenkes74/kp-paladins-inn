@@ -16,8 +16,8 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.services;
 
+import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
  * A service to log in an user. This is an internal service giving back very detailed failure information. For security

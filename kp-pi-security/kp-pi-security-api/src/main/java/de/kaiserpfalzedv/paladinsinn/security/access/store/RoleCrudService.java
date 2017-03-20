@@ -16,32 +16,12 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.store;
 
-import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
-import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.CrudService;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.Role;
-
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-18
  */
-public interface RoleCrudService {
-    Role create(Role role);
-
-    Set<Role> retrieve();
-
-    Page<Role> retrieve(PageRequest pageRequest);
-
-    Role retrieve(String roleName);
-
-    Role update(Role role);
-
-    void delete(Role role);
-
-    void delete(UUID uniqueId);
-
-    void delete(String roleName);
-}
+public interface RoleCrudService extends CrudService<Role> {}

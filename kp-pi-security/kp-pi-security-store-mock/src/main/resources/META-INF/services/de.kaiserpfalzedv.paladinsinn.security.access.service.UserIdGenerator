@@ -13,4 +13,4 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-de.kaiserpfalzedv.paladinsinn.security.access.store.mock.UserServicesMock
+de.kaiserpfalzedv.paladinsinn.security.access.services.UserServicesMock

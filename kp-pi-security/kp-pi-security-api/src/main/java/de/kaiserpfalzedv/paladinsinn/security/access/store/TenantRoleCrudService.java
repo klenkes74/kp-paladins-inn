@@ -16,35 +16,12 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.store;
 
-import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
-import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.TenantCrudService;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.Role;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
-
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-18
  */
-public interface TenantRoleCrudService {
-    Role create(Tenant tenant, Role role);
-
-    Set<Role> retrieve(Tenant tenant);
-
-    Page<Role> retrieve(Tenant tenant, PageRequest pageRequest);
-
-    Role retrieve(Tenant tenant, UUID uniqueId);
-
-    Role retrieve(Tenant tenant, String roleName);
-
-    Role update(Tenant tenant, Role role);
-
-    void delete(Tenant tenant, Role role);
-
-    void delete(Tenant tenant, UUID uniqueId);
-
-    void delete(Tenant tenant, String roleName);
-}
+public interface TenantRoleCrudService extends TenantCrudService<Role> {}

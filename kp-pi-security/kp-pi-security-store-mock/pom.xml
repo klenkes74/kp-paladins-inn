@@ -25,10 +25,10 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kp-pi-security-mock</artifactId>
+    <artifactId>kp-pi-security-store-mock</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Security MOCK</name>
+    <name>KP Paladins Inn - Security Store MOCK</name>
     <description>
         kp-pi-security mock service for development of other services.
     </description>

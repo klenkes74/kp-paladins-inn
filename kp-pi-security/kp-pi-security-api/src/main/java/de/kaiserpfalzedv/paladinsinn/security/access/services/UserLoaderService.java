@@ -18,8 +18,8 @@ package de.kaiserpfalzedv.paladinsinn.security.access.services;
 
 import java.util.Collection;
 
+import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
  * A bulk loadig interface for user data.

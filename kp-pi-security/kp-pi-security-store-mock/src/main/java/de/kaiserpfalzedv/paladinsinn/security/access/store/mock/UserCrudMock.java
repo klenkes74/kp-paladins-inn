@@ -16,20 +16,21 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.store.mock;
 
-import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
-import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
-import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
-import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
-import de.kaiserpfalzedv.paladinsinn.security.access.store.DuplicateEntityException;
-import de.kaiserpfalzedv.paladinsinn.security.access.store.TenantUserCrudService;
-import de.kaiserpfalzedv.paladinsinn.security.access.store.UserCrudService;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
-import de.kaiserpfalzedv.paladinsinn.security.tenant.model.impl.DefaultTenant;
-
-import javax.inject.Inject;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
+
+import javax.inject.Inject;
+
+import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
+import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateEntityException;
+import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
+import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.DefaultTenant;
+import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
+import de.kaiserpfalzedv.paladinsinn.security.access.store.TenantUserCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.access.store.UserCrudService;
 
 /**
  * The tenant-less version of the mock service uses the multi-tenant {@link TenantUserCrudMock} with the

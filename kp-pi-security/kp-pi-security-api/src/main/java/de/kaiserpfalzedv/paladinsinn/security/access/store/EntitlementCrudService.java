@@ -16,12 +16,8 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.store;
 
-import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
-import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.CrudService;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.Entitlement;
-
-import java.util.Set;
-import java.util.UUID;
 
 /**
  * The low level CRUD services used by the business services to handle entitlements in a single-tenant environment. If
@@ -31,27 +27,4 @@ import java.util.UUID;
  * @version 1.0.0
  * @since 2017-03-17
  */
-public interface EntitlementCrudService {
-    /**
-     * Persists the entitlement.
-     *
-     * @param entitlement the data to be persisted.
-     *
-     * @return the persisted data.
-     */
-    Entitlement create(Entitlement entitlement);
-
-    Set<Entitlement> retrieve();
-
-    Page<Entitlement> retrieve(PageRequest pageRequest);
-
-    Entitlement retrieve(String entitlementName);
-
-    Entitlement update(Entitlement entitlement);
-
-    void delete(Entitlement entitlement);
-
-    void delete(UUID uniqueId);
-
-    void delete(String entitlementName);
-}
+public interface EntitlementCrudService extends CrudService<Entitlement> {}
