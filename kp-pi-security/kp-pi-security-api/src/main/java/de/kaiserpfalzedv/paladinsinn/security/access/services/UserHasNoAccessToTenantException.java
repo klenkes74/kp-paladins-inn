@@ -16,16 +16,23 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.access.services;
 
-import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.tenant.model.Tenant;
 
 /**
- * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
- * @since 2017-03-15
+ * This exception is thrown if the user has no access to the tenant given.
+ *
+ * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 1.0.0
+ * @since 2017-03-14
  */
-public class LoginServiceImpl implements LoginService {
-    @Override
-    public User login(Tenant tenant, String userId, String password) throws UserNotFoundException, PasswordFailureException, UserIsLockedException, UserHasNoAccessToTenantException {
-        return null;
+public class UserHasNoAccessToTenantException extends UserIsNotEntitledException {
+    private static final long serialVersionUID = -5693671131425424047L;
+
+    /**
+     * @param userId The user id of the user without access.
+     * @param tenant The tenant the user has no access to.
+     */
+    public UserHasNoAccessToTenantException(final String userId, final Tenant tenant) {
+        super("%s is not entitled for tenant %s.", userId, tenant.getName());
     }
 }
