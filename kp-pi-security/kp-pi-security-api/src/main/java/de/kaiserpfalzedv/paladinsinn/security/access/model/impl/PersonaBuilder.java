@@ -68,6 +68,9 @@ public class PersonaBuilder {
     }
 
     private int calculateAge(final LocalDate dateOfBirth) {
+        if (dateOfBirth == null)
+            return -1;
+        
         return LocalDate.ofEpochDay(LocalDate.now().toEpochDay() - dateOfBirth.toEpochDay()).getYear() - 1970;
     }
 

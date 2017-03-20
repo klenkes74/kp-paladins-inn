@@ -20,8 +20,11 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.inject.Inject;
+
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
 import de.kaiserpfalzedv.paladinsinn.security.access.DuplicateEntityException;
 import de.kaiserpfalzedv.paladinsinn.security.access.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.access.services.TenantUserCrudService;
@@ -37,52 +40,72 @@ import de.kaiserpfalzedv.paladinsinn.security.tenant.model.impl.DefaultTenant;
  * @version 1.0.0
  * @since 2017-03-19
  */
+@MockService
 public class UserCrudMock implements UserCrudService {
-    private static final Tenant TENANT = new DefaultTenant();
-    private TenantUserCrudService service = new TenantUserCrudMock();
+    private final Tenant defaultTenant;
+    private final TenantUserCrudService service;
+
+
+    /**
+     * @param defaultTenant         The tenant to use when calling the multi tenant service.
+     * @param tenantUserCrudService The multi tenant user CRUD service used as backend to this single tenant
+     *                              implementation.
+     */
+    @Inject
+    public UserCrudMock(
+            final Tenant defaultTenant,
+            final TenantUserCrudService tenantUserCrudService
+    ) {
+        this.defaultTenant = defaultTenant;
+        this.service = tenantUserCrudService;
+    }
+
 
     @Override
     public User create(User user) throws DuplicateEntityException {
-        return service.create(TENANT, user);
+        return service.create(defaultTenant, user);
     }
+
 
     @Override
     public Optional<User> retrieve(UUID uniqueId) {
-        return service.retrieve(TENANT, uniqueId);
+        return service.retrieve(defaultTenant, uniqueId);
     }
 
     @Override
     public Optional<User> retrieve(String userName) {
-        return service.retrieve(TENANT, userName);
+        return service.retrieve(defaultTenant, userName);
     }
 
     @Override
     public Set<User> retrieve() {
-        return service.retrieve(TENANT);
+        return service.retrieve(defaultTenant);
     }
 
     @Override
     public Page<User> retrieve(PageRequest pageRequest) {
-        return service.retrieve(TENANT, pageRequest);
+        return service.retrieve(defaultTenant, pageRequest);
     }
+
 
     @Override
     public User update(User user) {
-        return service.update(TENANT, user);
+        return service.update(defaultTenant, user);
     }
+
 
     @Override
     public void delete(User user) {
-        service.delete(TENANT, user);
+        service.delete(defaultTenant, user);
     }
 
     @Override
     public void delete(UUID uniqueId) {
-        service.delete(TENANT, uniqueId);
+        service.delete(defaultTenant, uniqueId);
     }
 
     @Override
     public void delete(String userName) {
-        service.delete(TENANT, userName);
+        service.delete(defaultTenant, userName);
     }
 }
