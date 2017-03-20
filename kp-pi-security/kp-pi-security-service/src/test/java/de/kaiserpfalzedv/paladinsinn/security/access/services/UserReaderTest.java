@@ -55,7 +55,7 @@ public class UserReaderTest {
 
     @Before
     public void setUpService() {
-        crudService = new UserCrudMock(new DefaultTenant(), new TenantUserCrudMock());
+        crudService = new UserCrudMock(DefaultTenant.INSTANCE, new TenantUserCrudMock());
         readerService = new UserCSVReader(crudService);
     }
 }

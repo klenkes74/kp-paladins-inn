@@ -28,9 +28,12 @@ import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
  * @since 2017-03-19
  */
 public class DefaultTenant implements Tenant {
-    private static final long serialVersionUID = -3635359633241569725L;
-
+    // singleton pattern. YEAH!
+    public static final Tenant INSTANCE = new DefaultTenant();
+    private static final long serialVersionUID = 2387082762521069393L;
     private static final UUID uniqueId = UUID.fromString("736eb2d8-dacf-48bd-879a-100000000000");
+
+    private DefaultTenant() {}
 
     @Override
     public UUID getUniqueId() {

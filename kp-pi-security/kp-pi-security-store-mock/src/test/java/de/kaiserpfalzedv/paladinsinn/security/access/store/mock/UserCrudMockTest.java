@@ -41,7 +41,9 @@ import static java.lang.System.identityHashCode;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -154,7 +156,7 @@ public class UserCrudMockTest {
         assertEquals("The data element size differ!", 4, result.getData().size());
     }
 
-    private void createUsers(int number) throws DuplicateEntityException {
+    private void createUsers(@SuppressWarnings("SameParameterValue") int number) throws DuplicateEntityException {
         for (int i = 1; i <= number; i++) {
             service.create(createAnUser(i));
         }
@@ -166,15 +168,23 @@ public class UserCrudMockTest {
         UUID id = user.getUniqueId();
         user = service.create(user);
 
-        user = new UserBuilder().withUser(user).withEmailAddress(new Email("info@kaiserpfalz-edv.de")).build();
+
+        Email emailAddress = new Email("info@kaiserpfalz-edv.de");
+        user = new UserBuilder().withUser(user).withEmailAddress(emailAddress).build();
         service.update(user);
 
         Optional<User> wrappedResult = service.retrieve(id);
-        User result = wrappedResult.isPresent() ? wrappedResult.get() : null;
 
-        assertEquals("The email address is not correct", user.getEmailAddress(), result.getEmailAddress());
-        assertEquals(user, result);
-        assertNotEquals(identityHashCode(user), identityHashCode(result));
+        if (wrappedResult.isPresent()) {
+            User result = wrappedResult.get();
+
+            assertNotNull(result.getEmailAddress());
+            assertEquals("The email address is not correct", emailAddress, result.getEmailAddress());
+            assertEquals(user, result);
+            assertNotEquals(identityHashCode(user), identityHashCode(result));
+        } else {
+            fail("There is no user: " + user);
+        }
     }
 
     @Test
@@ -230,7 +240,7 @@ public class UserCrudMockTest {
     @Before
     public void setUpService() {
         service = new UserCrudMock(
-                new DefaultTenant(),
+                DefaultTenant.INSTANCE,
                 new TenantUserCrudMock()
         );
     }
