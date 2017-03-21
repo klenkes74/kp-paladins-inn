@@ -48,8 +48,7 @@
                         <Bundle-SymbolicName>kp-pi-security-impl</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.kaiserpfalzedv.paladinsinn.security.access.mock.*;version=${project.version}
-                            de.kaiserpfalzedv.paladinsinn.security.tenant.mock.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.security.store.mock.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
@@ -65,6 +64,11 @@
         <dependency>
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
             <artifactId>kp-pi-security-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-commons-store-mock</artifactId>
         </dependency>
 
 
