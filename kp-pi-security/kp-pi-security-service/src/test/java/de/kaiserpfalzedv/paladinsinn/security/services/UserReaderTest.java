@@ -24,7 +24,7 @@ import de.kaiserpfalzedv.paladinsinn.security.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.store.UserCSVReader;
 import de.kaiserpfalzedv.paladinsinn.security.store.UserCrudService;
 import de.kaiserpfalzedv.paladinsinn.security.store.mock.UserCrudMock;
-import de.kaiserpfalzedv.paladinsinn.security.store.mock.UserTenantCrudMock;
+import de.kaiserpfalzedv.paladinsinn.security.store.mock.UserMultitenantCrudMock;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -56,7 +56,7 @@ public class UserReaderTest {
 
     @Before
     public void setUpService() {
-        crudService = new UserCrudMock(DefaultTenant.INSTANCE, new UserTenantCrudMock());
+        crudService = new UserCrudMock(DefaultTenant.INSTANCE, new UserMultitenantCrudMock());
         readerService = new UserCSVReader(crudService);
     }
 }

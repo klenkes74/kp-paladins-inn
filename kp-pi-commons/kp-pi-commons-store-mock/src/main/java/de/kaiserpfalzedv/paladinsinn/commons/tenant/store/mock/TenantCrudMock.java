@@ -27,8 +27,9 @@ import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.impl.PageBuilder;
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateEntityException;
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.PersistenceException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueIdException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueKeyException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueNameException;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.PersistenceRuntimeException;
 import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
@@ -52,7 +53,7 @@ public class TenantCrudMock implements TenantCrudService {
 
 
     @Override
-    public Tenant create(final Tenant tenant) throws DuplicateEntityException {
+    public Tenant create(final Tenant tenant) throws DuplicateUniqueKeyException {
         checkDuplicateTenantUniqueId(tenant);
         checkDuplicateTenantKey(tenant);
         checkDuplicateTenantName(tenant);
@@ -74,30 +75,30 @@ public class TenantCrudMock implements TenantCrudService {
         return data;
     }
 
-    private void checkDuplicateTenantUniqueId(Tenant tenant) throws DuplicateEntityException {
+    private void checkDuplicateTenantUniqueId(Tenant tenant) throws DuplicateUniqueIdException {
         if (tenantsByUniqueId.containsKey(tenant.getUniqueId())) {
             LOG.warn("Tenant with unique id {} already exists: {}",
                      tenant.getUniqueId(), tenantsByUniqueId.get(tenant.getUniqueId())
             );
-            throw new DuplicateEntityException(Tenant.class, tenant);
+            throw new DuplicateUniqueIdException(Tenant.class, tenant);
         }
     }
 
-    private void checkDuplicateTenantKey(Tenant tenant) throws DuplicateEntityException {
+    private void checkDuplicateTenantKey(Tenant tenant) throws DuplicateUniqueKeyException {
         if (tenantsByKey.containsKey(tenant.getKey())) {
             LOG.warn("Tenant with key '{}' already exists: {}",
                      tenant.getKey(), tenantsByKey.get(tenant.getKey())
             );
-            throw new DuplicateEntityException(Tenant.class, tenant);
+            throw new DuplicateUniqueKeyException(Tenant.class, "tenant key", tenant);
         }
     }
 
-    private void checkDuplicateTenantName(Tenant tenant) throws DuplicateEntityException {
+    private void checkDuplicateTenantName(Tenant tenant) throws DuplicateUniqueNameException {
         if (tenantsByName.containsKey(tenant.getName())) {
             LOG.warn("Tenant with name '{}' already exists: {}",
                      tenant.getName(), tenantsByName.get(tenant.getName())
             );
-            throw new DuplicateEntityException(Tenant.class, tenant);
+            throw new DuplicateUniqueNameException(Tenant.class, tenant);
         }
     }
 
@@ -132,7 +133,7 @@ public class TenantCrudMock implements TenantCrudService {
 
 
     @Override
-    public Tenant update(final Tenant tenant) throws PersistenceException {
+    public Tenant update(final Tenant tenant) throws DuplicateUniqueKeyException {
         delete(tenant);
 
         return create(tenant);

@@ -16,10 +16,10 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.store.mock;
 
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.impl.AbstractTenantCrudMock;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.impl.AbstractMultitenantCrudMock;
 import de.kaiserpfalzedv.paladinsinn.security.model.Role;
 import de.kaiserpfalzedv.paladinsinn.security.model.impl.RoleBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.store.RoleTenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.store.RoleMultitenantCrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,11 +28,11 @@ import org.slf4j.LoggerFactory;
  * @version 1.0.0
  * @since 2017-03-21
  */
-public class RoleTenantCrudMock extends AbstractTenantCrudMock<Role> implements RoleTenantCrudService {
-    private static final Logger LOG = LoggerFactory.getLogger(RoleTenantCrudMock.class);
+public class RoleMultitenantCrudMock extends AbstractMultitenantCrudMock<Role> implements RoleMultitenantCrudService {
+    private static final Logger LOG = LoggerFactory.getLogger(RoleMultitenantCrudMock.class);
 
 
-    public RoleTenantCrudMock() {
+    public RoleMultitenantCrudMock() {
         super(Role.class);
     }
 

@@ -30,63 +30,63 @@ import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
  */
 public interface CrudService<T extends Identifiable> {
     /**
-     * @param user the user data to be saved.
-     *
-     * @return the saved user data.
+     * @param user the data to be saved.
+     * @return the saved data.
+     * @throws DuplicateUniqueKeyException if an unique constraint of the data structure is not met.
      */
-    T create(T user) throws DuplicateEntityException;
+    T create(T user) throws DuplicateUniqueKeyException;
 
     /**
-     * Loads a single user by an unique id.
+     * Loads a single data set by an unique id.
      *
-     * @param uniqueId the user id of the user to be loaded.
+     * @param uniqueId the unique id of the data set to be loaded.
      *
-     * @return The selected user.
+     * @return The selected data set.
      */
     Optional<T> retrieve(UUID uniqueId);
 
     /**
-     * Loads a single user by the user name.
+     * Loads a single data set by the unique name.
      *
-     * @param userName the user name of the user to be loaded.
+     * @param uniqueName the unique name of the data set to be loaded.
      *
-     * @return The selected user.
+     * @return The selected data set.
      */
     Optional<T> retrieve(String uniqueName);
 
     /**
-     * @return all users of the system.
+     * @return all data of the system (DANGEROUS).
      */
     Set<T> retrieve();
 
     /**
      * @param pageRequest the definition which part of the result to retrieve.
      *
-     * @return the sublist of users given by the page request informatio.
+     * @return the sublist of data sets given by the page request informatio.
      */
     Page<T> retrieve(PageRequest pageRequest);
 
     /**
      * changes the user data i the store.
      *
-     * @param user new user data to save.
-     *
-     * @return the saved user data.
+     * @param data new data to save.
+     * @return the saved data.
+     * @throws DuplicateUniqueKeyException if an unique constraint of the data structure is not met.
      */
-    T update(T data) throws PersistenceException;
+    T update(T data) throws DuplicateUniqueKeyException;
 
     /**
-     * @param user the user to be deleted.
+     * @param data the data set to be deleted.
      */
     void delete(T data);
 
     /**
-     * @param uniqueId the user id of the user to be deleted.
+     * @param uniqueId the unique id of the data set to be deleted.
      */
     void delete(UUID uniqueId);
 
     /**
-     * @param userName the user name of the user to be dleted.
+     * @param uniqueName the unique name of the data set to be dleted.
      */
     void delete(String uniqueName);
 }

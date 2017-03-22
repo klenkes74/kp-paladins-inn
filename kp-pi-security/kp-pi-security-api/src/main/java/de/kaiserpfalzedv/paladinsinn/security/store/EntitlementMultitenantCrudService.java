@@ -16,12 +16,12 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.store;
 
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.TenantCrudService;
-import de.kaiserpfalzedv.paladinsinn.security.model.Role;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.MultitenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.model.Entitlement;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-18
  */
-public interface RoleTenantCrudService extends TenantCrudService<Role> {}
+public interface EntitlementMultitenantCrudService extends MultitenantCrudService<Entitlement> {}

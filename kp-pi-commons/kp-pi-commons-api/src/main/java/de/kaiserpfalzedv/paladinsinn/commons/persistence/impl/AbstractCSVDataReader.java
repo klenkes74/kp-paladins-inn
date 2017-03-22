@@ -28,6 +28,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.CrudService;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.DataReader;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateEntityException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueIdException;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.Identifiable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractCSVDataReader<T extends Identifiable> implements DataReader<T> {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCSVDataReader.class);
 
-    protected CrudService<T> crudService;
+    private CrudService<T> crudService;
 
     public AbstractCSVDataReader(final CrudService<T> crudService) {
         this.crudService = crudService;
@@ -80,5 +81,5 @@ public abstract class AbstractCSVDataReader<T extends Identifiable> implements D
         }
     }
 
-    public abstract T readSingleLine(final String line) throws BuilderValidationException, DuplicateEntityException;
+    public abstract T readSingleLine(final String line) throws BuilderValidationException, DuplicateUniqueIdException;
 }

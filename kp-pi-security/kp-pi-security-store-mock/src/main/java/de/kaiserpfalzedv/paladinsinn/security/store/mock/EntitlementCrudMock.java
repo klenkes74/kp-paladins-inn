@@ -24,10 +24,10 @@ import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.DefaultTenant;
 import de.kaiserpfalzedv.paladinsinn.security.model.Entitlement;
 import de.kaiserpfalzedv.paladinsinn.security.store.EntitlementCrudService;
-import de.kaiserpfalzedv.paladinsinn.security.store.EntitlementTenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.store.EntitlementMultitenantCrudService;
 
 /**
- * The tenant-less version of the mock service uses the multi-tenant {@link UserTenantCrudMock} with the
+ * The tenant-less version of the mock service uses the multi-tenant {@link UserMultitenantCrudMock} with the
  * {@link DefaultTenant} as tenant.
  *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -39,13 +39,13 @@ public class EntitlementCrudMock extends AbstractCrudMock<Entitlement> implement
 
     /**
      * @param defaultTenant         The tenant to use when calling the multi tenant service.
-     * @param userTenantCrudService The multi tenant user CRUD service used as backend to this single tenant
+     * @param tenantCrudService The multi tenant user CRUD service used as backend to this single tenant
      *                              implementation.
      */
     @Inject
     public EntitlementCrudMock(
             final Tenant defaultTenant,
-            final EntitlementTenantCrudService tenantCrudService
+            final EntitlementMultitenantCrudService tenantCrudService
     ) {
         super(defaultTenant, tenantCrudService);
     }

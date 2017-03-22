@@ -23,14 +23,15 @@ import java.util.UUID;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.CrudService;
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateEntityException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueIdException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueNameException;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.Identifiable;
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.TenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.MultitenantCrudService;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.DefaultTenant;
 
 /**
- * The tenant-less version of the mock service uses the multi-tenant {@link TenantCrudService<T>} with the
+ * The tenant-less version of the mock service uses the multi-tenant {@link MultitenantCrudService <T>} with the
  * {@link DefaultTenant} as tenant.
  *
  * @param <T> The type of data to be persisted.
@@ -41,25 +42,25 @@ import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.DefaultTenant;
  */
 public abstract class AbstractCrudMock<T extends Identifiable> implements CrudService<T> {
     private final Tenant defaultTenant;
-    private final TenantCrudService<T> service;
+    private final MultitenantCrudService<T> service;
 
 
     /**
      * @param defaultTenant         The tenant to use when calling the multi tenant service.
-     * @param userTenantCrudService The multi tenant user CRUD service used as backend to this single tenant
+     * @param userMultitenantCrudService The multi tenant user CRUD service used as backend to this single tenant
      *                              implementation.
      */
     public AbstractCrudMock(
             final Tenant defaultTenant,
-            final TenantCrudService<T> userTenantCrudService
+            final MultitenantCrudService<T> userMultitenantCrudService
     ) {
         this.defaultTenant = defaultTenant;
-        this.service = userTenantCrudService;
+        this.service = userMultitenantCrudService;
     }
 
 
     @Override
-    public T create(T data) throws DuplicateEntityException {
+    public T create(T data) throws DuplicateUniqueIdException, DuplicateUniqueNameException {
         return service.create(defaultTenant, data);
     }
 
@@ -86,7 +87,7 @@ public abstract class AbstractCrudMock<T extends Identifiable> implements CrudSe
 
 
     @Override
-    public T update(T data) {
+    public T update(T data) throws DuplicateUniqueNameException, DuplicateUniqueIdException {
         return service.update(defaultTenant, data);
     }
 

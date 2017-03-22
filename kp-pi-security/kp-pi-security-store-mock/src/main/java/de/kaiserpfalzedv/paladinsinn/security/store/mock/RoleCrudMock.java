@@ -24,10 +24,10 @@ import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.DefaultTenant;
 import de.kaiserpfalzedv.paladinsinn.security.model.Role;
 import de.kaiserpfalzedv.paladinsinn.security.store.RoleCrudService;
-import de.kaiserpfalzedv.paladinsinn.security.store.RoleTenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.store.RoleMultitenantCrudService;
 
 /**
- * The tenant-less version of the mock service uses the multi-tenant {@link UserTenantCrudMock} with the
+ * The tenant-less version of the mock service uses the multi-tenant {@link UserMultitenantCrudMock} with the
  * {@link DefaultTenant} as tenant.
  *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -39,13 +39,13 @@ public class RoleCrudMock extends AbstractCrudMock<Role> implements RoleCrudServ
 
     /**
      * @param defaultTenant         The tenant to use when calling the multi tenant service.
-     * @param userTenantCrudService The multi tenant user CRUD service used as backend to this single tenant
+     * @param tenantCrudService The multi tenant user CRUD service used as backend to this single tenant
      *                              implementation.
      */
     @Inject
     public RoleCrudMock(
             final Tenant defaultTenant,
-            final RoleTenantCrudService tenantCrudService
+            final RoleMultitenantCrudService tenantCrudService
     ) {
         super(defaultTenant, tenantCrudService);
     }

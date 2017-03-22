@@ -23,24 +23,18 @@ package de.kaiserpfalzedv.paladinsinn.commons.persistence;
  * @version 1.0.0
  * @since 2017-03-19
  */
-public abstract class DuplicateEntityException extends PersistenceException {
-    private static final long serialVersionUID = -9094170732297294020L;
+public class DuplicateUniqueNameException extends DuplicateUniqueKeyException {
+    private static final long serialVersionUID = 9002695233045656093L;
 
-    private String key;
     private Identifiable identifiable;
 
 
     /**
-     * @param clasz The class of the entity.
-     * @param message The message of the exception to be thrown.
-     * @param key The name of the key that contains duplicates.
+     * @param clasz        The class of the entity.
      * @param identifiable The identity that should be created.
      */
-    DuplicateEntityException(final Class<?> clasz, final String message, final String key, final Identifiable identifiable) {
-        super(clasz, String.format(message, key, identifiable.getUniqueId()));
-
-        this.key = key;
-        this.identifiable = identifiable;
+    public DuplicateUniqueNameException(final Class<?> clasz, final Identifiable identifiable) {
+        super(clasz, "unique name", identifiable);
     }
 
 
@@ -49,12 +43,5 @@ public abstract class DuplicateEntityException extends PersistenceException {
      */
     public Identifiable getIdentifiable() {
         return identifiable;
-    }
-
-    /**
-     * @return The name of the key that contains the duplicate.
-     */
-    public String getKey() {
-        return key;
     }
 }

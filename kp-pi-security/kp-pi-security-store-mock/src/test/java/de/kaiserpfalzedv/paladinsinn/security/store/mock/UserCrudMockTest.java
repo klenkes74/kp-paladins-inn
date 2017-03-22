@@ -23,6 +23,9 @@ import java.util.UUID;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.impl.PageRequestImpl;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateEntityException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueIdException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueKeyException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueNameException;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.PersistenceException;
 import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
 import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
@@ -88,7 +91,7 @@ public class UserCrudMockTest {
                 .build();
     }
 
-    @Test(expected = DuplicateEntityException.class)
+    @Test(expected = DuplicateUniqueIdException.class)
     public void shouldThrowAnExceptionWhenUniqueIdIsAlreadyInTheSystem() throws DuplicateEntityException {
         User user = createDefaultUser();
         service.create(user);
@@ -96,7 +99,7 @@ public class UserCrudMockTest {
         service.create(user);
     }
 
-    @Test(expected = DuplicateEntityException.class)
+    @Test(expected = DuplicateUniqueNameException.class)
     public void shouldThrowAnExceptionWhenUserIdIsAlreadyInTheSystem() throws DuplicateEntityException {
         User user = createDefaultUser();
         service.create(user);
@@ -136,7 +139,7 @@ public class UserCrudMockTest {
     }
 
     @Test
-    public void shouldRetrieveNoDataWhenKnowUserIdIsGiven() throws DuplicateEntityException {
+    public void shouldRetrieveNoDataWhenKnowUserIdIsGiven() throws DuplicateUniqueKeyException {
         User user = createDefaultUser();
         service.create(user);
 
@@ -146,7 +149,7 @@ public class UserCrudMockTest {
     }
 
     @Test
-    public void shouldRetrievePage2WhenRequestingIt() throws DuplicateEntityException {
+    public void shouldRetrievePage2WhenRequestingIt() throws DuplicateUniqueKeyException {
         createUsers(10);
 
         Page<User> result = service.retrieve(new PageRequestImpl(2, 4));
@@ -156,7 +159,7 @@ public class UserCrudMockTest {
         assertEquals("The data element size differ!", 4, result.getData().size());
     }
 
-    private void createUsers(@SuppressWarnings("SameParameterValue") int number) throws DuplicateEntityException {
+    private void createUsers(@SuppressWarnings("SameParameterValue") int number) throws DuplicateUniqueKeyException {
         for (int i = 1; i <= number; i++) {
             service.create(createAnUser(i));
         }
@@ -200,7 +203,7 @@ public class UserCrudMockTest {
     }
 
     @Test
-    public void shouldDeleteUserWhenUserIsMatching() throws DuplicateEntityException {
+    public void shouldDeleteUserWhenUserIsMatching() throws DuplicateUniqueKeyException {
         User user = createAnUser(0);
         service.create(user);
 
@@ -211,7 +214,7 @@ public class UserCrudMockTest {
     }
 
     @Test
-    public void shouldDeleteUserWhenAUniqueIdIsMatching() throws DuplicateEntityException {
+    public void shouldDeleteUserWhenAUniqueIdIsMatching() throws DuplicateUniqueKeyException {
         User user = createAnUser(0);
         service.create(user);
 
@@ -222,7 +225,7 @@ public class UserCrudMockTest {
     }
 
     @Test
-    public void shouldDeleteUserWhenAUserIdIsMatching() throws DuplicateEntityException {
+    public void shouldDeleteUserWhenAUserIdIsMatching() throws DuplicateUniqueKeyException {
         User user = createAnUser(0);
         service.create(user);
 
@@ -233,7 +236,7 @@ public class UserCrudMockTest {
     }
 
     @Test
-    public void shouldDoNothingWhenTheUserToBeDeletedDoesNotExist() throws DuplicateEntityException {
+    public void shouldDoNothingWhenTheUserToBeDeletedDoesNotExist() throws DuplicateUniqueIdException {
         service.delete(UUID.randomUUID());
     }
 
@@ -241,7 +244,7 @@ public class UserCrudMockTest {
     public void setUpService() {
         service = new UserCrudMock(
                 DefaultTenant.INSTANCE,
-                new UserTenantCrudMock()
+                new UserMultitenantCrudMock()
         );
     }
 

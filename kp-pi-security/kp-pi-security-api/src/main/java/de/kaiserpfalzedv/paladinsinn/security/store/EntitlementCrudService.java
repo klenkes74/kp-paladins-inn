@@ -21,7 +21,7 @@ import de.kaiserpfalzedv.paladinsinn.security.model.Entitlement;
 
 /**
  * The low level CRUD services used by the business services to handle entitlements in a single-tenant environment. If
- * you have a multi-tenant environment, please use {@link EntitlementTenantCrudService} instead.
+ * you have a multi-tenant environment, please use {@link EntitlementMultitenantCrudService} instead.
  * 
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0

@@ -14,14 +14,28 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.store;
+package de.kaiserpfalzedv.paladinsinn.security.store.mock;
 
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.TenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.impl.AbstractMultitenantCrudMock;
+import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
 import de.kaiserpfalzedv.paladinsinn.security.model.User;
+import de.kaiserpfalzedv.paladinsinn.security.model.impl.UserBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.store.UserMultitenantCrudService;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2017-03-18
+ * @since 2017-03-19
  */
-public interface UserTenantCrudService extends TenantCrudService<User> {}
+@MockService
+public class UserMultitenantCrudMock extends AbstractMultitenantCrudMock<User> implements UserMultitenantCrudService {
+    public UserMultitenantCrudMock() {
+        super(User.class);
+    }
+
+
+    @Override
+    public User copy(User data) {
+        return new UserBuilder().withUser(data).build();
+    }
+}

@@ -24,10 +24,10 @@ import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.DefaultTenant;
 import de.kaiserpfalzedv.paladinsinn.security.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.store.UserCrudService;
-import de.kaiserpfalzedv.paladinsinn.security.store.UserTenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.store.UserMultitenantCrudService;
 
 /**
- * The tenant-less version of the mock service uses the multi-tenant {@link UserTenantCrudMock} with the
+ * The tenant-less version of the mock service uses the multi-tenant {@link UserMultitenantCrudMock} with the
  * {@link DefaultTenant} as tenant.
  *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -45,7 +45,7 @@ public class UserCrudMock extends AbstractCrudMock<User> implements UserCrudServ
     @Inject
     public UserCrudMock(
             final Tenant defaultTenant,
-            final UserTenantCrudService userTenantCrudService
+            final UserMultitenantCrudService userTenantCrudService
     ) {
         super(defaultTenant, userTenantCrudService);
     }

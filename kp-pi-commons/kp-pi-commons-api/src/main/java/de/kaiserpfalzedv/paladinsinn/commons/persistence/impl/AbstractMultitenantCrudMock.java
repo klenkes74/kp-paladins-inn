@@ -27,8 +27,10 @@ import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.impl.PageBuilder;
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateEntityException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueIdException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueNameException;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.MultitenantCrudService;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.PersistenceRuntimeException;
 import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
@@ -36,13 +38,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This class is the generic class to handle multi-tenant CRUD services of the {@link Identifiable} base object type
+ * within the framework.
+ * 
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-19
  */
 @MockService
-public abstract class AbstractTenantCrudMock<T extends Identifiable> implements de.kaiserpfalzedv.paladinsinn.commons.persistence.TenantCrudService<T> {
-    private static final Logger LOG = LoggerFactory.getLogger(AbstractTenantCrudMock.class);
+public abstract class AbstractMultitenantCrudMock<T extends Identifiable> implements MultitenantCrudService<T> {
+    private static final Logger LOG = LoggerFactory.getLogger(AbstractMultitenantCrudMock.class);
 
     private final HashMap<Tenant, HashSet<T>> tenantMap = new HashMap<>();
     private final HashMap<Tenant, HashMap<UUID, T>> uuidMap = new HashMap<>();
@@ -51,30 +56,42 @@ public abstract class AbstractTenantCrudMock<T extends Identifiable> implements 
     private final Class<?> clasz;
 
 
-    public AbstractTenantCrudMock(final Class<?> clasz) {
+    /**
+     * @param clasz The entity class to work on. Mostly need for creating exceptions.
+     */
+    public AbstractMultitenantCrudMock(final Class<? extends Identifiable> clasz) {
         this.clasz = clasz;
     }
 
+    /**
+     * This method has to do a deep copy of the data set.
+     *
+     * @param data the data to be copied.
+     *
+     * @return the deep copy of the data set.
+     */
     public abstract T copy(final T data);
 
     @Override
-    public T create(Tenant tenant, T user) throws DuplicateEntityException {
+    public T create(Tenant tenant, T data) throws DuplicateUniqueIdException, DuplicateUniqueNameException {
         prepareTenant(tenant);
 
-        if (uuidMap.get(tenant).containsKey(user.getUniqueId()))
-            throw new DuplicateEntityException(clasz, user);
+        if (uuidMap.get(tenant).containsKey(data.getUniqueId()))
+            throw new DuplicateUniqueIdException(clasz, data);
 
-        if (uniqueNameMap.get(tenant).containsKey(user.getName()))
-            throw new DuplicateEntityException(clasz, user);
+        if (uniqueNameMap.get(tenant).containsKey(data.getName()))
+            throw new DuplicateUniqueNameException(clasz, data);
 
 
-        T data = copy(user);
+        T result = copy(data);
 
-        tenantMap.get(tenant).add(data);
-        uuidMap.get(tenant).put(user.getUniqueId(), data);
-        uniqueNameMap.get(tenant).put(user.getName(), data);
+        tenantMap.get(tenant).add(result);
+        uuidMap.get(tenant).put(result.getUniqueId(), result);
+        uniqueNameMap.get(tenant).put(result.getName(), result);
 
-        return data;
+        LOG.debug("Saved data set: {}", result);
+
+        return copy(result);
     }
 
     private void prepareTenant(final Tenant tenant) {
@@ -105,7 +122,7 @@ public abstract class AbstractTenantCrudMock<T extends Identifiable> implements 
         }
 
         LOG.debug("Retrieving {} from tenant '{}' with unique id: {}", clasz.getSimpleName(), tenant.getKey(), uniqueId);
-        return Optional.ofNullable(uuidMap.get(tenant).get(uniqueId));
+        return Optional.ofNullable(copy(uuidMap.get(tenant).get(uniqueId)));
     }
 
     @Override
@@ -119,7 +136,7 @@ public abstract class AbstractTenantCrudMock<T extends Identifiable> implements 
         }
 
         LOG.debug("Retrieving {} from tenant '{}' with user name: {}", clasz.getSimpleName(), tenant.getKey(), userName);
-        return Optional.ofNullable(uniqueNameMap.get(tenant).get(userName));
+        return Optional.ofNullable(copy(uniqueNameMap.get(tenant).get(userName)));
     }
 
     @Override
@@ -145,35 +162,33 @@ public abstract class AbstractTenantCrudMock<T extends Identifiable> implements 
 
 
     @Override
-    public T update(Tenant tenant, T user) {
+    public T update(Tenant tenant, T data) throws DuplicateUniqueNameException, DuplicateUniqueIdException {
         prepareTenant(tenant);
 
-        delete(tenant, user);
+        delete(tenant, data);
 
-        try {
-            return create(tenant, user);
-        } catch (DuplicateEntityException e) {
-            throw new PersistenceRuntimeException(clasz, "Invalid state: can't have a duplicate here!", e);
-        }
+        return create(tenant, data);
     }
 
 
     @Override
-    public void delete(Tenant tenant, T user) {
+    public void delete(Tenant tenant, T data) {
         prepareTenant(tenant);
 
-        tenantMap.get(tenant).remove(user);
-        uuidMap.get(tenant).remove(user.getUniqueId());
-        uniqueNameMap.get(tenant).remove(user.getName());
+        tenantMap.get(tenant).remove(data);
+        uuidMap.get(tenant).remove(data.getUniqueId());
+        uniqueNameMap.get(tenant).remove(data.getName());
+
+        LOG.debug("Removed data set: {}", data);
     }
 
     @Override
     public void delete(Tenant tenant, UUID uniqueId) {
-        retrieve(tenant, uniqueId).ifPresent(u -> delete(tenant, u));
+        retrieve(tenant, uniqueId).ifPresent(d -> delete(tenant, d));
     }
 
     @Override
     public void delete(Tenant tenant, String userName) {
-        retrieve(tenant, userName).ifPresent(u -> delete(tenant, u));
+        retrieve(tenant, userName).ifPresent(d -> delete(tenant, d));
     }
 }

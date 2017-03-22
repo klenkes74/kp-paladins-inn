@@ -29,65 +29,68 @@ import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
  * @version 1.0.0
  * @since 2017-03-20
  */
-public interface TenantCrudService<T extends Identifiable> {
+public interface MultitenantCrudService<T extends Identifiable> {
     /**
-     * @param data the user data to be saved.
-     *
+     * @param data the data to be saved.
      * @return the saved user data.
+     * @throws DuplicateUniqueIdException if the ID of the data set is already persisted.
+     * @throws DuplicateUniqueNameException if the unique name of the data set is already persisted.
      */
-    T create(Tenant tenant, T data) throws DuplicateEntityException;
+    T create(Tenant tenant, T data) throws DuplicateUniqueIdException, DuplicateUniqueNameException;
 
     /**
-     * Loads a single user by an unique id.
+     * Loads a single data set by the unique id.
      *
-     * @param uniqueId the user id of the user to be loaded.
+     * @param uniqueId the unique id of the data set to be loaded.
      *
-     * @return The selected user.
+     * @return The selected data set.
      */
     Optional<T> retrieve(Tenant tenant, UUID uniqueId);
 
     /**
-     * Loads a single user by the user name.
+     * Loads a single data set by the unique name.
      *
-     * @param uniqueName the user name of the user to be loaded.
+     * @param uniqueName the unique name of the data to be loaded.
      *
-     * @return The selected user.
+     * @return The selected data.
      */
     Optional<T> retrieve(Tenant tenant, String uniqueName);
 
     /**
-     * @return all users of the system.
+     * @param tenant The tenant to retrieve all data for (DANGEROUS)
+     * @return all data of the system for the given tenant.
      */
     Set<T> retrieve(Tenant tenant);
 
     /**
      * @param pageRequest the definition which part of the result to retrieve.
      *
-     * @return the sublist of users given by the page request informatio.
+     * @return the sublist of data given by the page request informatio.
      */
     Page<T> retrieve(Tenant tenant, PageRequest pageRequest);
 
     /**
-     * changes the user data i the store.
+     * changes the data in the store.
      *
-     * @param data new data to save.
-     *
-     * @return the saved user data.
+     * @param data new data to be saved.
+     * @return the saved data set.
+     * @throws DuplicateUniqueIdException if the ID of the data set is already persisted.
+     * @throws DuplicateUniqueNameException if the unique name of the data set is already persisted.
      */
-    T update(Tenant tenant, T data);
+    T update(Tenant tenant, T data) throws DuplicateUniqueNameException, DuplicateUniqueIdException;
 
     /**
-     * @param data the user to be deleted.
+     * @param data the data set to be deleted.
      */
     void delete(Tenant tenant, T data);
 
     /**
-     * @param uniqueId the user id of the user to be deleted.
+     * @param uniqueId the unique id of the data set to be deleted.
      */
     void delete(Tenant tenant, UUID uniqueId);
 
     /**
-     * @param uniqueName the user name of the user to be dleted.
+     * @param uniqueName the unique name of the data set to be dleted.
      */
     void delete(Tenant tenant, String uniqueName);
 }
