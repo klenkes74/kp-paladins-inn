@@ -16,6 +16,6 @@
 
     <modules>
         <module>kp-pi-peers-api</module>
-        <module>kp-pi-peers-service</module>
+        <module>kp-pi-peers-impl</module>
     </modules>
 </project>

@@ -30,11 +30,13 @@ public abstract class AbstractIdentityBase implements Identifiable {
     private UUID id;
     private String name;
 
+    @SuppressWarnings("WeakerAccess")
     public AbstractIdentityBase(final String name) {
         this(name, UUID.randomUUID());
 
     }
 
+    @SuppressWarnings("WeakerAccess")
     public AbstractIdentityBase(final String name, final UUID id) {
         this.name = name;
         this.id = id;

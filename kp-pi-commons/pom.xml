@@ -16,7 +16,9 @@
 
     <modules>
         <module>kp-pi-commons-api</module>
-        <module>kp-pi-commons-service</module>
+        <module>kp-pi-commons-impl</module>
         <module>kp-pi-commons-store-mock</module>
+        <module>kp-pi-commons-server</module>
+        <module>kp-pi-commons-client</module>
     </modules>
 </project>

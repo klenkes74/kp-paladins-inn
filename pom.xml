@@ -176,7 +176,7 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-commons-service</artifactId>
+                <artifactId>kp-pi-commons-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -186,12 +186,22 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-commons-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-commons-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
                 <artifactId>kp-pi-security-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-security-service</artifactId>
+                <artifactId>kp-pi-security-impl</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -201,12 +211,37 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-security-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-security-server</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
                 <artifactId>kp-pi-events-api</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-events-service</artifactId>
+                <artifactId>kp-pi-events-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-events-store-mock</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-events-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-events-server</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -216,7 +251,22 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-peers-service</artifactId>
+                <artifactId>kp-pi-peers-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-peers-store-mock</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-peers-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-peers-server</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -226,7 +276,22 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-shops-service</artifactId>
+                <artifactId>kp-pi-shops-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-shops-store-mock</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-shops-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-shops-server</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -236,7 +301,22 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-topics-service</artifactId>
+                <artifactId>kp-pi-topics-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-topics-store-mock</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-topics-client</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-topics-server</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

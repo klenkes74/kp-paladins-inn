@@ -4,15 +4,18 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>kp-pi-shops</artifactId>
+        <artifactId>kp-pi-events</artifactId>
         <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kp-pi-shops-service</artifactId>
+    <artifactId>kp-pi-events-impl</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Shops SERVICE</name>
+    <name>KP Paladins Inn - Events IMPL</name>
+    <description>
+        kp-pi-events OSGi bundle project.
+    </description>
 
     <properties>
         <skipBehaviorTests>false</skipBehaviorTests>
@@ -28,9 +31,9 @@
                     <instructions>
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
-                        <Bundle-Activator>de.kaiserpfalzedv.paladinsinn.shops.Activator</Bundle-Activator>
+                        <Bundle-Activator>de.kaiserpfalzedv.paladinsinn.events.Activator</Bundle-Activator>
                         <Export-Package>
-                            de.kaiserpfalzedv.paladinsinn.shops.impl.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.events.impl.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
@@ -45,17 +48,17 @@
     <dependencies>
         <dependency>
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-            <artifactId>kp-pi-shops-api</artifactId>
+            <artifactId>kp-pi-events-api</artifactId>
         </dependency>
 
         <dependency>
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-            <artifactId>kp-pi-commons-service</artifactId>
+            <artifactId>kp-pi-commons-impl</artifactId>
         </dependency>
 
         <dependency>
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-            <artifactId>kp-pi-topics-service</artifactId>
+            <artifactId>kp-pi-topics-impl</artifactId>
         </dependency>
 
 

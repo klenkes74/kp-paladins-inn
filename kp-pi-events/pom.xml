@@ -16,6 +16,6 @@
 
     <modules>
         <module>kp-pi-events-api</module>
-        <module>kp-pi-events-service</module>
+        <module>kp-pi-events-impl</module>
     </modules>
 </project>

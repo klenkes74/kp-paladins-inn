@@ -16,6 +16,6 @@
 
     <modules>
         <module>kp-pi-shops-api</module>
-        <module>kp-pi-shops-service</module>
+        <module>kp-pi-shops-impl</module>
     </modules>
 </project>

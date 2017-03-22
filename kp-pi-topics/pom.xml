@@ -16,6 +16,6 @@
 
     <modules>
         <module>kp-pi-topics-api</module>
-        <module>kp-pi-topics-service</module>
+        <module>kp-pi-topics-impl</module>
     </modules>
 </project>
