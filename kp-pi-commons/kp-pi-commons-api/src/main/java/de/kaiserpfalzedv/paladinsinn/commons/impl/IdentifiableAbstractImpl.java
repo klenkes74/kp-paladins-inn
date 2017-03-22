@@ -45,6 +45,11 @@ public abstract class IdentifiableAbstractImpl implements Identifiable {
     }
 
     @Override
+    public UUID getUniqueId() {
+        return uniqueId;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Identifiable)) return false;
@@ -52,11 +57,7 @@ public abstract class IdentifiableAbstractImpl implements Identifiable {
         return Objects.equals(getUniqueId(), that.getUniqueId());
     }
 
-    @Override
-    public UUID getUniqueId() {
-        return uniqueId;
-    }
-
+    @SuppressWarnings("StringBufferReplaceableByString")
     @Override
     public String toString() {
         return new StringBuilder()

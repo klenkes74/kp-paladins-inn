@@ -14,64 +14,59 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.commons.tenant.service;
+package de.kaiserpfalzedv.paladinsinn.security.store;
 
 import java.util.Scanner;
 import java.util.UUID;
 
 import javax.inject.Inject;
 
-import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.impl.AbstractCSVDataReader;
 import de.kaiserpfalzedv.paladinsinn.commons.service.CSV;
 import de.kaiserpfalzedv.paladinsinn.commons.service.SingleTenant;
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.TenantBuilder;
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.store.TenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.model.Entitlement;
+import de.kaiserpfalzedv.paladinsinn.security.model.impl.EntitlementBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2017-03-18
+ * @since 2017-03-14
  */
-@SingleTenant
 @CSV
-public class TenantCSVReader extends AbstractCSVDataReader<Tenant> {
-    private static final Logger LOG = LoggerFactory.getLogger(TenantCSVReader.class);
+@SingleTenant
+public class EntitlementCSVReader extends AbstractCSVDataReader<Entitlement> implements EntitlementDataReader {
+    private static final Logger LOG = LoggerFactory.getLogger(EntitlementCSVReader.class);
 
 
     @Inject
-    public TenantCSVReader(final TenantCrudService crudService) {
+    public EntitlementCSVReader(final EntitlementCrudService crudService) {
         super(crudService);
     }
 
-    public Tenant readSingleLine(String line) throws BuilderValidationException {
+
+    @Override
+    public Entitlement readSingleLine(final String line) {
         LOG.trace("Reading line: {}", line);
 
         Scanner scanner = new Scanner(line);
         scanner.useDelimiter(";");
 
-        String uniqueId = scanner.hasNext() ? scanner.next() : UUID.randomUUID().toString();
+        UUID uniqueId = scanner.hasNext() ? UUID.fromString(scanner.next()) : UUID.randomUUID();
 
         if (!scanner.hasNext()) {
-            throw new IllegalArgumentException("Need to give a key for tenant: " + uniqueId);
+            throw new IllegalArgumentException("Need to give an user id for user: " + uniqueId);
         }
-        String tenantKey = scanner.next();
+        String uniqueName = scanner.next();
 
-        if (!scanner.hasNext()) {
-            throw new IllegalArgumentException("Need to give a nme for the tenant: " + uniqueId);
-        }
-        String tenantName = scanner.next();
 
-        Tenant result = new TenantBuilder()
-                .withUniqueId(UUID.fromString(uniqueId))
-                .withKey(tenantKey)
-                .withName(tenantName)
+        Entitlement result = new EntitlementBuilder()
+                .withUniqueId(uniqueId)
+                .withName(uniqueName)
                 .build();
 
-        LOG.debug("Tenant read: {} -> {}", line, result);
+        LOG.debug("Entitlement read: {} -> {}", line, result);
         return result;
     }
 }

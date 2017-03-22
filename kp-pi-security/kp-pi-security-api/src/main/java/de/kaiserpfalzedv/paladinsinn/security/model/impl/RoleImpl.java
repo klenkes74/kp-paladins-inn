@@ -85,4 +85,25 @@ public class RoleImpl extends IdentifiableAbstractImpl implements Role {
     public Set<? extends Entitlement> getEntitlements() {
         return Collections.unmodifiableSet(directEntitlements);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder()
+                .append(getClass().getSimpleName()).append('@').append(System.identityHashCode(this)).append('{')
+                .append(getUniqueId()).append(", ").append(getName());
+
+        if (roles.size() >= 1) {
+            result.append(", roles=").append(roles.size());
+        }
+
+        if (directEntitlements.size() >= 1) {
+            result
+                    .append(", entitlements=")
+                    .append(directEntitlements.size())
+                    .append("/")
+                    .append(entitlements.size());
+        }
+
+        return result.append('}').toString();
+    }
 }

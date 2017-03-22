@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractCSVDataReader<T extends Identifiable> implements DataReader<T> {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCSVDataReader.class);
 
-    private CrudService<T> crudService;
+    protected CrudService<T> crudService;
 
     public AbstractCSVDataReader(final CrudService<T> crudService) {
         this.crudService = crudService;

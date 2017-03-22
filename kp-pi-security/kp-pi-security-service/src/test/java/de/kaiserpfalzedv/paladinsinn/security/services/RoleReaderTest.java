@@ -20,19 +20,15 @@ import java.io.FileNotFoundException;
 import java.util.Set;
 
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.DefaultTenant;
-import de.kaiserpfalzedv.paladinsinn.security.model.User;
+import de.kaiserpfalzedv.paladinsinn.security.model.Role;
 import de.kaiserpfalzedv.paladinsinn.security.store.EntitlementCSVReader;
 import de.kaiserpfalzedv.paladinsinn.security.store.EntitlementCrudService;
 import de.kaiserpfalzedv.paladinsinn.security.store.RoleCSVReader;
 import de.kaiserpfalzedv.paladinsinn.security.store.RoleCrudService;
-import de.kaiserpfalzedv.paladinsinn.security.store.UserCSVReader;
-import de.kaiserpfalzedv.paladinsinn.security.store.UserCrudService;
 import de.kaiserpfalzedv.paladinsinn.security.store.mock.EntitlementCrudMock;
 import de.kaiserpfalzedv.paladinsinn.security.store.mock.EntitlementMultitenantCrudMock;
 import de.kaiserpfalzedv.paladinsinn.security.store.mock.RoleCrudMock;
 import de.kaiserpfalzedv.paladinsinn.security.store.mock.RoleMultitenantCrudMock;
-import de.kaiserpfalzedv.paladinsinn.security.store.mock.UserCrudMock;
-import de.kaiserpfalzedv.paladinsinn.security.store.mock.UserMultitenantCrudMock;
 import org.junit.Before;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -45,25 +41,23 @@ import static org.junit.Assert.assertEquals;
  * @version 1.0.0
  * @since 2017-03-15
  */
-public class UserReaderTest {
-    private static final Logger LOG = LoggerFactory.getLogger(UserReaderTest.class);
+public class RoleReaderTest {
+    private static final Logger LOG = LoggerFactory.getLogger(RoleReaderTest.class);
 
     private EntitlementCrudService entitlementCrudService;
     private EntitlementCSVReader entitlementReader;
-    private RoleCSVReader roleReader;
-    private RoleCrudService roleCrudService;
 
-    private UserCrudService crudService;
-    private UserCSVReader readerService;
+    private RoleCSVReader readerService;
+    private RoleCrudService crudService;
 
     @Test
     public void shouldReadTwoUsersFromFile() throws FileNotFoundException {
-        readerService.read("./target/test-classes/users.csv");
+        readerService.read("./target/test-classes/roles.csv");
 
-        Set<User> result = crudService.retrieve();
-        LOG.debug("Read users: {}", result);
+        Set<Role> result = crudService.retrieve();
+        LOG.debug("Read roles: {}", result);
 
-        assertEquals("Wrong number of users read", 2, result.size());
+        assertEquals("Wrong number of users read", 10, result.size());
     }
 
 
@@ -73,12 +67,7 @@ public class UserReaderTest {
         entitlementReader = new EntitlementCSVReader(entitlementCrudService);
         entitlementReader.read("./target/test-classes/entitlements.csv");
 
-        roleCrudService = new RoleCrudMock(DefaultTenant.INSTANCE, new RoleMultitenantCrudMock());
-        roleReader = new RoleCSVReader(roleCrudService, entitlementCrudService);
-        roleReader.read("./target/test-classes/roles.csv");
-
-
-        crudService = new UserCrudMock(DefaultTenant.INSTANCE, new UserMultitenantCrudMock());
-        readerService = new UserCSVReader(crudService, roleCrudService);
+        crudService = new RoleCrudMock(DefaultTenant.INSTANCE, new RoleMultitenantCrudMock());
+        readerService = new RoleCSVReader(crudService, entitlementCrudService);
     }
 }

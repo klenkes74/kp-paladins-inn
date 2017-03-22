@@ -18,9 +18,11 @@ package de.kaiserpfalzedv.paladinsinn.security.store;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.UUID;
 
 import javax.inject.Inject;
@@ -29,6 +31,8 @@ import de.kaiserpfalzedv.paladinsinn.commons.persistence.impl.AbstractCSVDataRea
 import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
 import de.kaiserpfalzedv.paladinsinn.commons.service.CSV;
+import de.kaiserpfalzedv.paladinsinn.commons.service.SingleTenant;
+import de.kaiserpfalzedv.paladinsinn.security.model.Role;
 import de.kaiserpfalzedv.paladinsinn.security.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.model.impl.PersonaBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.model.impl.UserBuilder;
@@ -41,6 +45,7 @@ import org.slf4j.LoggerFactory;
  * @since 2017-03-14
  */
 @CSV
+@SingleTenant
 public class UserCSVReader extends AbstractCSVDataReader<User> implements UserDataReader {
     private static final Logger LOG = LoggerFactory.getLogger(UserCSVReader.class);
 
@@ -61,10 +66,17 @@ public class UserCSVReader extends AbstractCSVDataReader<User> implements UserDa
         }
     }
 
+    private RoleCrudService roleCrudService;
+
 
     @Inject
-    public UserCSVReader(final UserCrudService crudService) {
+    public UserCSVReader(
+            final UserCrudService crudService,
+            final RoleCrudService roleCrudService
+    ) {
         super(crudService);
+
+        this.roleCrudService = roleCrudService;
     }
 
     @Override
@@ -109,19 +121,40 @@ public class UserCSVReader extends AbstractCSVDataReader<User> implements UserDa
 
         String locked = scanner.hasNext() ? scanner.next() : "N";
 
+        Set<Role> roles = null;
+        if (scanner.hasNext()) {
+            roles = readRoles(scanner.next());
+        }
+
         User result = buildUser(uniqueId, userId, password,
                                 sn, givenName,
                                 snPrefix, snPostfix,
                                 givenNamePrefix, givenNamePostfix,
                                 gender, dateOfBirth,
-                                country, locale, locked
+                                country, locale, locked,
+                                roles
         );
 
         LOG.debug("User read: {} -> {}", line, result);
         return result;
     }
 
-    private User buildUser(String uniqueId, String userId, String password, String sn, String givenName, String snPrefix, String snPostfix, String givenNamePrefix, String givenNamePostfix, String gender, String dateOfBirth, String country, String locale, String locked) {
+    private Set<Role> readRoles(final String data) {
+        HashSet<Role> result = new HashSet<>();
+
+        Scanner scanner = new Scanner(data);
+        scanner.useDelimiter(",");
+
+        while (scanner.hasNext()) {
+            UUID roleId = UUID.fromString(scanner.next());
+            roleCrudService.retrieve(roleId).ifPresent(result::add);
+        }
+
+        scanner.close();
+        return result;
+    }
+
+    private User buildUser(String uniqueId, String userId, String password, String sn, String givenName, String snPrefix, String snPostfix, String givenNamePrefix, String givenNamePostfix, String gender, String dateOfBirth, String country, String locale, String locked, Set<Role> roles) {
         UserBuilder result = new UserBuilder()
                 .withUniqueId(UUID.fromString(uniqueId))
                 .withName(userId)
@@ -145,7 +178,8 @@ public class UserCSVReader extends AbstractCSVDataReader<User> implements UserDa
                                 .withCountry(countries.get(country))
                                 .withLocale(languages.get(locale))
                                 .build()
-                );
+                )
+                .withRoles(roles);
 
         if ("Y".equalsIgnoreCase(locked) || "1".equals(locked) || "T".equals(locked)) {
             result.locked();
@@ -153,4 +187,5 @@ public class UserCSVReader extends AbstractCSVDataReader<User> implements UserDa
 
         return result.build();
     }
+
 }
