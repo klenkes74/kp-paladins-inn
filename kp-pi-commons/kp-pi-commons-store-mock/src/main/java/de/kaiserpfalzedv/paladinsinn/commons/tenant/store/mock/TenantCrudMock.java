@@ -32,6 +32,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueKeyExcep
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueNameException;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.PersistenceRuntimeException;
 import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
+import de.kaiserpfalzedv.paladinsinn.commons.service.SingleTenant;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.TenantBuilder;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.store.TenantCrudService;
@@ -43,6 +44,7 @@ import org.slf4j.LoggerFactory;
  * @version 1.0.0
  * @since 2017-03-18
  */
+@SingleTenant
 @MockService
 public class TenantCrudMock implements TenantCrudService {
     private static final Logger LOG = LoggerFactory.getLogger(TenantCrudMock.class);

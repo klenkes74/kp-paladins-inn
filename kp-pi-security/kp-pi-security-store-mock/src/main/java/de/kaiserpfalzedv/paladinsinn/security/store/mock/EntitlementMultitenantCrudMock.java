@@ -17,6 +17,8 @@
 package de.kaiserpfalzedv.paladinsinn.security.store.mock;
 
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.impl.AbstractMultitenantCrudMock;
+import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
+import de.kaiserpfalzedv.paladinsinn.commons.service.MultiTenant;
 import de.kaiserpfalzedv.paladinsinn.security.model.Entitlement;
 import de.kaiserpfalzedv.paladinsinn.security.model.Role;
 import de.kaiserpfalzedv.paladinsinn.security.model.impl.EntitlementBuilder;
@@ -29,6 +31,8 @@ import org.slf4j.LoggerFactory;
  * @version 1.0.0
  * @since 2017-03-21
  */
+@MockService
+@MultiTenant
 public class EntitlementMultitenantCrudMock extends AbstractMultitenantCrudMock<Entitlement> implements EntitlementMultitenantCrudService {
     private static final Logger LOG = LoggerFactory.getLogger(EntitlementMultitenantCrudMock.class);
 

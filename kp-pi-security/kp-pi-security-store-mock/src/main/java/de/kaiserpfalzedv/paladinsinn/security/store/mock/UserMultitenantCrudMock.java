@@ -18,6 +18,7 @@ package de.kaiserpfalzedv.paladinsinn.security.store.mock;
 
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.impl.AbstractMultitenantCrudMock;
 import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
+import de.kaiserpfalzedv.paladinsinn.commons.service.MultiTenant;
 import de.kaiserpfalzedv.paladinsinn.security.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.model.impl.UserBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.store.UserMultitenantCrudService;
@@ -28,6 +29,7 @@ import de.kaiserpfalzedv.paladinsinn.security.store.UserMultitenantCrudService;
  * @since 2017-03-19
  */
 @MockService
+@MultiTenant
 public class UserMultitenantCrudMock extends AbstractMultitenantCrudMock<User> implements UserMultitenantCrudService {
     public UserMultitenantCrudMock() {
         super(User.class);

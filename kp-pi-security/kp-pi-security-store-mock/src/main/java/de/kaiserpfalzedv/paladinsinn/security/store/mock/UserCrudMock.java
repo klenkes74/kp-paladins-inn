@@ -20,6 +20,7 @@ import javax.inject.Inject;
 
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.impl.AbstractCrudMock;
 import de.kaiserpfalzedv.paladinsinn.commons.service.MockService;
+import de.kaiserpfalzedv.paladinsinn.commons.service.SingleTenant;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.DefaultTenant;
 import de.kaiserpfalzedv.paladinsinn.security.model.User;
@@ -35,6 +36,7 @@ import de.kaiserpfalzedv.paladinsinn.security.store.UserMultitenantCrudService;
  * @since 2017-03-19
  */
 @MockService
+@SingleTenant
 public class UserCrudMock extends AbstractCrudMock<User> implements UserCrudService {
 
     /**
