@@ -30,6 +30,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+import javax.persistence.Version;
 
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 
@@ -39,11 +40,16 @@ import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
  * @since 2017-03-23
  */
 @Entity(name = "tenant")
-@Table(name = "TENANTS", uniqueConstraints = {
-        @UniqueConstraint(name = "TENANT_UUID_UK", columnNames = "UNIQUE_ID"),
-        @UniqueConstraint(name = "TENANT_KEY_UK", columnNames = "KEY"),
-        @UniqueConstraint(name = "TENANT_NAME_UK", columnNames = "NAME")
-})
+@Table(
+        schema = "TENANT",
+        catalog = "TENANT",
+        name = "TENANTS",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "TENANT_UUID_UK", columnNames = "UNIQUE_ID"),
+                @UniqueConstraint(name = "TENANT_KEY_UK", columnNames = "KEY"),
+                @UniqueConstraint(name = "TENANT_NAME_UK", columnNames = "NAME")
+        }
+)
 @NamedQueries({
         @NamedQuery(name = "tenant-all", query = "select t from tenant t"),
         @NamedQuery(name = "tenant-by-uniqueid", query = "select t from tenant t where t.identifier.uniqueId=:uniqueId"),
@@ -56,6 +62,9 @@ public class TenantJPA implements Tenant {
     @GeneratedValue
     @SequenceGenerator(name = "tenant_seq", allocationSize = 1)
     private Long id;
+
+    @Version
+    private Long version;
 
     @Embedded
     private PaladinsInnJPAMetaData metaData;
