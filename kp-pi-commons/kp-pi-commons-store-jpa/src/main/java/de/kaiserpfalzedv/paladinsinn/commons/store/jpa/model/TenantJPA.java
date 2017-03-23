@@ -50,8 +50,8 @@ import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 )
 @NamedQueries({
         @NamedQuery(name = "tenant-all", query = "select t from tenant t"),
-        @NamedQuery(name = "tenant-by-uniqueid", query = "select t from tenant t where t.identifier.uniqueId=:uniqueId"),
-        @NamedQuery(name = "tenant-by-name", query = "select t from tenant t where t.identifier.name=:name"),
+        @NamedQuery(name = "tenant-by-uniqueid", query = "select t from tenant t where t.uniqueId=:uniqueId"),
+        @NamedQuery(name = "tenant-by-name", query = "select t from tenant t where t.name=:name"),
         @NamedQuery(name = "tenant-by-key", query = "select t from tenant t where t.key=:key")
 })
 public class TenantJPA implements Tenant {
@@ -74,6 +74,7 @@ public class TenantJPA implements Tenant {
 
     @Embedded
     private PaladinsInnJPAMetaData metaData;
+
 
     public ZonedDateTime getCreated() {
         checkMetaData();

@@ -16,13 +16,44 @@
 
 package de.kaiserpfalzedv.paladinsinn.commons.tenant.store;
 
+import java.util.Optional;
+
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.CrudService;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.Identifiable;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 
 /**
+ * The interface for the CRUD services for Tenants within the system. For tenants exist a short string typed key.
+ *
+ * <em>For the CRUD services this {@link Tenant#getKey()}  will be used instead of the normally used
+ * {@link Identifiable#getName()} whithin this interface.</em>
+ * 
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-18
  */
 public interface TenantCrudService extends CrudService<Tenant> {
+    /**
+     * With tenants the {@link CrudService#delete(String)} method does not take the {@link Identifiable#getName()} but
+     * the {@link Tenant#getKey()} as parameter. Please keep that in mind!
+     *
+     * @param uniqueKey the {@link Tenant#getKey()} of the data set to be deleted.
+     *
+     * @return the tenant with the unique key given as parameter.
+     *
+     * @see Tenant#getKey()
+     * @see Tenant#getName()
+     */
+    Optional<? extends Tenant> retrieve(String uniqueKey);
+
+    /**
+     * With tenants the {@link CrudService#delete(String)} method does not take the {@link Identifiable#getName()} but
+     * the {@link Tenant#getKey()} as parameter. Please keep that in mind!
+     *
+     * @param uniqueKey the {@link Tenant#getKey()} of the data set to be deleted.
+     *
+     * @see Tenant#getKey()
+     * @see Tenant#getName()
+     */
+    void delete(String uniqueKey);
 }

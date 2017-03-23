@@ -52,19 +52,19 @@ public interface CrudService<T extends Identifiable> {
      *
      * @return The selected data set.
      */
-    Optional<T> retrieve(String uniqueName);
+    Optional<? extends T> retrieve(String uniqueName);
 
     /**
      * @return all data of the system (DANGEROUS).
      */
-    Set<T> retrieve();
+    Set<? extends T> retrieve();
 
     /**
      * @param pageRequest the definition which part of the result to retrieve.
      *
      * @return the sublist of data sets given by the page request informatio.
      */
-    Page<T> retrieve(PageRequest pageRequest);
+    Page<? extends T> retrieve(PageRequest pageRequest);
 
     /**
      * changes the user data i the store.
@@ -86,7 +86,7 @@ public interface CrudService<T extends Identifiable> {
     void delete(UUID uniqueId);
 
     /**
-     * @param uniqueName the unique name of the data set to be dleted.
+     * @param uniqueName the unique name of the data set to be deleted.
      */
     void delete(String uniqueName);
 }
