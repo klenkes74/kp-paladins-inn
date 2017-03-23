@@ -12,7 +12,7 @@
     <artifactId>kp-pi-shops-impl</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Shops IMPL</name>
+    <name>KP PI :: Shops :: IMPL</name>
 
     <properties>
         <skipBehaviorTests>false</skipBehaviorTests>

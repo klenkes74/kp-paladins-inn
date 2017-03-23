@@ -12,7 +12,7 @@
     <artifactId>kp-pi-commons-client</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Commons CLIENT</name>
+    <name>KP PI :: Commons :: CLIENT</name>
     <description>
         kp-pi-commons OSGi bundle project.
     </description>

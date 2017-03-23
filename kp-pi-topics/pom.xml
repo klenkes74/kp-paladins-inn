@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>kp-pi-topics</artifactId>
-    <name>KP Paladins Inn - Topics</name>
+    <name>KP PI :: Topics</name>
     <packaging>pom</packaging>
 
     <modules>

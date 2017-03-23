@@ -9,10 +9,10 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kp-pi-security-service</artifactId>
+    <artifactId>kp-pi-security-impl</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Security SERVICE</name>
+    <name>KP PI :: Security :: IMPL</name>
     <description>
         kp-pi-security OSGi bundle project.
     </description>

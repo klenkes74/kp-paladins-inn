@@ -28,7 +28,7 @@
     <artifactId>kp-pi-commons-store-jpa</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Commons Store JPA</name>
+    <name>KP PI :: Commons :: Store :: JPA</name>
 
     <properties>
         <skipBehaviorTests>false</skipBehaviorTests>

@@ -43,7 +43,7 @@ public interface CrudService<T extends Identifiable> {
      *
      * @return The selected data set.
      */
-    Optional<T> retrieve(UUID uniqueId);
+    Optional<? extends T> retrieve(UUID uniqueId);
 
     /**
      * Loads a single data set by the unique name.

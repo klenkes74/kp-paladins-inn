@@ -12,7 +12,7 @@
     <artifactId>kp-pi-peers-impl</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Peers IMPL</name>
+    <name>KP PI :: Peers :: IMPL</name>
 
     <properties>
         <skipBehaviorTests>false</skipBehaviorTests>

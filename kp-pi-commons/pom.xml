@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>kp-pi-commons</artifactId>
-    <name>KP Paladins Inn - Commons</name>
+    <name>KP PI :: Commons</name>
     <packaging>pom</packaging>
 
     <modules>

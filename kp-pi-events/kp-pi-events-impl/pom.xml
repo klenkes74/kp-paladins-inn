@@ -12,7 +12,7 @@
     <artifactId>kp-pi-events-impl</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Events IMPL</name>
+    <name>KP PI :: Events :: IMPL</name>
     <description>
         kp-pi-events OSGi bundle project.
     </description>

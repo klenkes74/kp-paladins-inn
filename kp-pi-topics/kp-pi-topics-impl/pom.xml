@@ -12,7 +12,7 @@
     <artifactId>kp-pi-topics-impl</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Topics IMPL</name>
+    <name>KP PI :: Topics :: IMPL</name>
 
     <properties>
         <skipBehaviorTests>false</skipBehaviorTests>

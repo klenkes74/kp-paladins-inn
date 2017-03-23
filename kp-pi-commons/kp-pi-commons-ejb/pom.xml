@@ -12,7 +12,7 @@
     <artifactId>kp-pi-commons-ejb</artifactId>
     <packaging>ejb</packaging>
 
-    <name>KP Paladins Inn - Commons EJB</name>
+    <name>KP PI :: Commons :: EJB</name>
     <description>
         kp-pi-commons OSGi bundle project.
     </description>

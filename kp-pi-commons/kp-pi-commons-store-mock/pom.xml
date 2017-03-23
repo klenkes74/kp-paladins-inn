@@ -28,7 +28,7 @@
     <artifactId>kp-pi-commons-store-mock</artifactId>
     <packaging>bundle</packaging>
 
-    <name>KP Paladins Inn - Commons Store MOCK</name>
+    <name>KP PI :: Commons :: Store :: MOCK</name>
 
     <properties>
         <skipBehaviorTests>false</skipBehaviorTests>

@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>kp-pi-peers</artifactId>
-    <name>KP Paladins Inn - Peers</name>
+    <name>KP PI :: Peers</name>
     <packaging>pom</packaging>
 
     <modules>

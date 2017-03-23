@@ -23,11 +23,9 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
@@ -57,51 +55,25 @@ import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
         @NamedQuery(name = "tenant-by-key", query = "select t from tenant t where t.key=:key")
 })
 public class TenantJPA implements Tenant {
+    private static final long serialVersionUID = 8991153230615920093L;
+
 
     @Id
-    @GeneratedValue
-    @SequenceGenerator(name = "tenant_seq", allocationSize = 1)
-    private Long id;
+    @Column(name = "ID", unique = true, nullable = false, updatable = false)
+    private UUID uniqueId;
+
+    @Column(name = "NAME", length = 200, unique = true, nullable = false)
+    private String name;
+
+    @Column(name = "KEY", length = 25, unique = true, nullable = false)
+    private String key;
+
 
     @Version
     private Long version;
 
     @Embedded
     private PaladinsInnJPAMetaData metaData;
-
-
-    @Embedded
-    private PaladinsInnJPAIdentifier identifier;
-
-    @Column(name = "KEY", length = 25, unique = true, nullable = false)
-    private String key;
-
-
-    @Override
-    public UUID getUniqueId() {
-        return identifier.getUniqueId();
-    }
-
-    public void setUniqueId(UUID uniqueId) {
-        checkIdentifier();
-        identifier.setUniqueId(uniqueId);
-    }
-
-    private synchronized void checkIdentifier() {
-        if (identifier == null) {
-            identifier = new PaladinsInnJPAIdentifier();
-        }
-    }
-
-    @Override
-    public String getName() {
-        checkIdentifier();
-        return identifier.getName();
-    }
-
-    public void setName(String name) {
-        identifier.setName(name);
-    }
 
     public ZonedDateTime getCreated() {
         checkMetaData();
@@ -121,30 +93,25 @@ public class TenantJPA implements Tenant {
 
     @Override
     public int hashCode() {
-        return Objects.hash(metaData, identifier, getKey());
+        return Objects.hash(getUniqueId(), getName(), getKey());
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TenantJPA)) return false;
-        TenantJPA tenantJPA = (TenantJPA) o;
-        return Objects.equals(metaData, tenantJPA.metaData) &&
-                Objects.equals(identifier, tenantJPA.identifier) &&
-                Objects.equals(getKey(), tenantJPA.getKey());
+    public UUID getUniqueId() {
+        return uniqueId;
+    }
+
+    public void setUniqueId(UUID uniqueId) {
+        this.uniqueId = uniqueId;
     }
 
     @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("TenantJPA@").append(System.identityHashCode(this)).append("{");
+    public String getName() {
+        return name;
+    }
 
-        sb
-                .append("id=").append(id)
-                .append(", metaData=").append(metaData)
-                .append(", identifier=").append(identifier)
-                .append(", key='").append(key).append('\'');
-
-        return sb.append('}').toString();
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
@@ -154,5 +121,29 @@ public class TenantJPA implements Tenant {
 
     public void setKey(String key) {
         this.key = key;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof TenantJPA)) return false;
+        TenantJPA tenantJPA = (TenantJPA) o;
+        return Objects.equals(getUniqueId(), tenantJPA.getUniqueId()) &&
+                Objects.equals(getName(), tenantJPA.getName()) &&
+                Objects.equals(getKey(), tenantJPA.getKey());
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TenantJPA@");
+
+        sb
+                .append(System.identityHashCode(this))
+                .append("{id=").append(getUniqueId())
+                .append(", name=").append(getName())
+                .append(", key='").append(getKey()).append('\'')
+                .append(", metaData=").append(metaData);
+
+        return sb.append('}').toString();
     }
 }

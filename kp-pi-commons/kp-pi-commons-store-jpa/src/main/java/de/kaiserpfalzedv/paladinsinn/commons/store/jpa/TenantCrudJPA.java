@@ -78,6 +78,7 @@ public class TenantCrudJPA implements TenantCrudService {
 
     private TenantJPA createTenantJPA(Tenant tenant) {
         TenantJPA data;
+
         try {
             data = new TenantJPABuilder().withTenant(tenant).build();
         } catch (BuilderValidationException e) {
@@ -85,15 +86,14 @@ public class TenantCrudJPA implements TenantCrudService {
 
             throw new PersistenceRuntimeException(TenantJPA.class, "Can't build the tenant to save it to the persistence store: " + tenant);
         }
+
         return data;
     }
 
 
     @Override
-    public Optional<Tenant> retrieve(final UUID uniqueId) {
-        TypedQuery<TenantJPA> query = createTenantByUuidQuery(uniqueId);
-
-        return retrieveSingleTenant(query);
+    public Optional<TenantJPA> retrieve(final UUID uniqueId) {
+        return Optional.ofNullable(em.find(TenantJPA.class, uniqueId));
     }
 
     private Optional<Tenant> retrieveSingleTenant(TypedQuery<TenantJPA> query) {
@@ -209,31 +209,27 @@ public class TenantCrudJPA implements TenantCrudService {
 
     @Override
     public Tenant update(final Tenant tenant) throws DuplicateUniqueKeyException {
-        TypedQuery<TenantJPA> query = createTenantByUuidQuery(tenant.getUniqueId());
-        TenantJPA data = retrieveTenantFromJPA(query);
+        Optional<TenantJPA> loaded = retrieve(tenant.getUniqueId());
+        if (!loaded.isPresent()) return create(tenant);
 
-        if (data == null) {
+        TenantJPA data = loaded.get();
+        data.setName(tenant.getName());
+        data.setKey(tenant.getKey());
+
+        try {
+            TenantJPA merged = em.merge(data);
+
+            LOG.info("Updated tenant data: {}", data);
+
+            return new TenantBuilder().withTenant(merged).build();
+        } catch (IllegalArgumentException e) {
             return create(tenant);
-        } else {
-            data.setUniqueId(tenant.getUniqueId());
-            data.setName(tenant.getName());
-            data.setKey(tenant.getKey());
+        } catch (TransactionRequiredException | BuilderValidationException e) {
+            LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
 
-            try {
-                TenantJPA merged = em.merge(data);
-
-                LOG.info("Updated tenant data: {}", data);
-                return new TenantBuilder().withTenant(merged).build();
-            } catch (IllegalArgumentException e) {
-                return create(tenant);
-            } catch (TransactionRequiredException | BuilderValidationException e) {
-                LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
-
-                throw new PersistenceRuntimeException(TenantJPA.class, e.getClass()
-                                                                        .getSimpleName() + " caught: " + e.getMessage());
-            }
+            throw new PersistenceRuntimeException(TenantJPA.class, e.getClass()
+                                                                    .getSimpleName() + " caught: " + e.getMessage());
         }
-
     }
 
 
@@ -283,7 +279,8 @@ public class TenantCrudJPA implements TenantCrudService {
 
 
     private TypedQuery<TenantJPA> createTenantByUuidQuery(UUID uniqueId) {
-        return createNamedQuery("tenant-get-uniqueid")
+        return
+                createNamedQuery("tenant-get-uniqueid")
                 .setParameter("uniqueid", uniqueId);
     }
 
