@@ -31,6 +31,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
  */
 public interface MultitenantCrudService<T extends Identifiable> {
     /**
+     * @param tenant the tenant to save the data for
      * @param data the data to be saved.
      * @return the saved user data.
      * @throws DuplicateUniqueIdException if the ID of the data set is already persisted.
@@ -41,6 +42,7 @@ public interface MultitenantCrudService<T extends Identifiable> {
     /**
      * Loads a single data set by the unique id.
      *
+     * @param tenant the tenant to save the data for
      * @param uniqueId the unique id of the data set to be loaded.
      *
      * @return The selected data set.
@@ -50,6 +52,7 @@ public interface MultitenantCrudService<T extends Identifiable> {
     /**
      * Loads a single data set by the unique name.
      *
+     * @param tenant the tenant to save the data for
      * @param uniqueName the unique name of the data to be loaded.
      *
      * @return The selected data.
@@ -63,6 +66,7 @@ public interface MultitenantCrudService<T extends Identifiable> {
     Set<T> retrieve(Tenant tenant);
 
     /**
+     * @param tenant the tenant to save the data for
      * @param pageRequest the definition which part of the result to retrieve.
      *
      * @return the sublist of data given by the page request informatio.
@@ -72,6 +76,7 @@ public interface MultitenantCrudService<T extends Identifiable> {
     /**
      * changes the data in the store.
      *
+     * @param tenant the tenant to save the data for
      * @param data new data to be saved.
      * @return the saved data set.
      * @throws DuplicateUniqueIdException if the ID of the data set is already persisted.
@@ -80,16 +85,19 @@ public interface MultitenantCrudService<T extends Identifiable> {
     T update(Tenant tenant, T data) throws DuplicateUniqueNameException, DuplicateUniqueIdException;
 
     /**
+     * @param tenant the tenant to save the data for
      * @param data the data set to be deleted.
      */
     void delete(Tenant tenant, T data);
 
     /**
+     * @param tenant the tenant to save the data for
      * @param uniqueId the unique id of the data set to be deleted.
      */
     void delete(Tenant tenant, UUID uniqueId);
 
     /**
+     * @param tenant the tenant to save the data for
      * @param uniqueName the unique name of the data set to be dleted.
      */
     void delete(Tenant tenant, String uniqueName);

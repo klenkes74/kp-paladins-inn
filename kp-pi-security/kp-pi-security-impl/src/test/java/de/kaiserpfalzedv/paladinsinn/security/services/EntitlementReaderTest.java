@@ -47,7 +47,7 @@ public class EntitlementReaderTest {
     public void shouldReadTwoUsersFromFile() throws FileNotFoundException {
         readerService.read("./target/test-classes/entitlements.csv");
 
-        Set<Entitlement> result = crudService.retrieve();
+        Set<? extends Entitlement> result = crudService.retrieve();
         LOG.debug("Read entitlements: {}", result);
 
         assertEquals("Wrong number of users read", 20, result.size());

@@ -31,8 +31,8 @@ import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.DefaultTenant;
 
 /**
- * The tenant-less version of the mock service uses the multi-tenant {@link MultitenantCrudService <T>} with the
- * {@link DefaultTenant} as tenant.
+ * The tenant-less version of the mock service uses the multi-tenant
+ * {@link MultitenantCrudService} with the {@link DefaultTenant} as tenant.
  *
  * @param <T> The type of data to be persisted.
  *

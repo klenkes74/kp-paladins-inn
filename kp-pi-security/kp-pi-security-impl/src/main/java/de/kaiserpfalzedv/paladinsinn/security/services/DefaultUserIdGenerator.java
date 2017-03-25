@@ -24,9 +24,9 @@ import de.kaiserpfalzedv.paladinsinn.security.model.Persona;
  * Creates a default user id by:
  *
  * <ol>
- *     <li>If last name is at least 7 letters and first name is at least 1 letter long:<br/>
+ *     <li>If last name is at least 7 letters and first name is at least 1 letter long:<br>
  *          1. letter of given name and 7 letters of last name.</li>
- *     <li>If there is no first name but last name is at least 8 letters long:<br/>
+ *     <li>If there is no first name but last name is at least 8 letters long:<br>
  *          the first 8 letters of the lastn ame.</li>
  *     <li>If the last name is smaller than 7 letters but the first name is long enough to fill up to 8 letters:
  *          the first n letters (n = 8 - length of last name) of the given name and the full last name.</li>

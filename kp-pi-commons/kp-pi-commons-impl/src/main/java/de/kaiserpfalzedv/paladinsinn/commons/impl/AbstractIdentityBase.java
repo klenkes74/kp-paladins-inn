@@ -27,6 +27,8 @@ import de.kaiserpfalzedv.paladinsinn.commons.persistence.Identifiable;
  * @since 2016-03-20
  */
 public abstract class AbstractIdentityBase implements Identifiable {
+    private static final long serialVersionUID = -8962217148724162694L;
+    
     private UUID id;
     private String name;
 

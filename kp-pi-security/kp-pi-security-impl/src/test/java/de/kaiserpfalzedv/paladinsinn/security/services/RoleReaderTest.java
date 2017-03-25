@@ -54,7 +54,7 @@ public class RoleReaderTest {
     public void shouldReadTwoUsersFromFile() throws FileNotFoundException {
         readerService.read("./target/test-classes/roles.csv");
 
-        Set<Role> result = crudService.retrieve();
+        Set<? extends Role> result = crudService.retrieve();
         LOG.debug("Read roles: {}", result);
 
         assertEquals("Wrong number of users read", 10, result.size());

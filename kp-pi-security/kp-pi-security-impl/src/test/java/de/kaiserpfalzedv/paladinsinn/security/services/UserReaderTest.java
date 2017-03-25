@@ -60,7 +60,7 @@ public class UserReaderTest {
     public void shouldReadTwoUsersFromFile() throws FileNotFoundException {
         readerService.read("./target/test-classes/users.csv");
 
-        Set<User> result = crudService.retrieve();
+        Set<? extends User> result = crudService.retrieve();
         LOG.debug("Read users: {}", result);
 
         assertEquals("Wrong number of users read", 2, result.size());

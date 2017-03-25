@@ -46,7 +46,7 @@ public class TenantReaderTest {
     public void shouldReadFiveTenantsFromFile() throws FileNotFoundException {
         service.read("./target/test-classes/tenants.csv");
 
-        Set<Tenant> result = crudService.retrieve();
+        Set<? extends Tenant> result = crudService.retrieve();
         LOG.debug("Read tenants: {}", result);
 
         assertEquals("Wrong number of tenants read", 5, result.size());

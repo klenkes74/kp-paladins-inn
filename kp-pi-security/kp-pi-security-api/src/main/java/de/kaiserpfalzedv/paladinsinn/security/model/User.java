@@ -52,7 +52,6 @@ public interface User extends Identifiable {
 
     /**
      * @param passwordToCheck The password to check against the saved password.
-     * @return if both passwords checked.
      * @throws PasswordFailureException The password did not match the password of the user.
      * @throws UserIsLockedException The user is locked and can not log in.
      */

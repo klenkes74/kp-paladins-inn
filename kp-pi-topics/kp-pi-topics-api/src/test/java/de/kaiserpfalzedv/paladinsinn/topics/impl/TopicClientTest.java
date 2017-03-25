@@ -47,13 +47,10 @@ public class TopicClientTest {
             .build();
 
     private static final Topic PARENT_TOPIC = new Topic() {
+        private static final long serialVersionUID = 0L;
+
         private UUID tenant = UUID.randomUUID();
         private UUID uniqueId = UUID.randomUUID();
-
-        @Override
-        public String getName() {
-            return "NULL";
-        }
 
         @Override
         public Topic getParent() {
@@ -84,6 +81,11 @@ public class TopicClientTest {
         @Override
         public UUID getUniqueId() {
             return uniqueId;
+        }
+
+        @Override
+        public String getName() {
+            return "NULL";
         }
 
         @Override

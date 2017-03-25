@@ -31,6 +31,7 @@ public class DuplicateUniqueKeyException extends DuplicateEntityException {
 
     /**
      * @param clasz        The class of the entity.
+     * @param key The name of the key that has the duplicate.
      * @param identifiable The identity that should be created.
      */
     public DuplicateUniqueKeyException(final Class<?> clasz, final String key, final Identifiable identifiable) {

@@ -14,19 +14,12 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.commons.persistence;
-
-import java.io.Serializable;
-import java.security.Principal;
-import java.util.UUID;
+package de.kaiserpfalzedv.paladinsinn.commons.service.commands;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2017-03-11
+ * @since 2017-03-25
  */
-public interface Identifiable extends Principal, Serializable {
-    public UUID getUniqueId();
-
-    public String getName();
+public interface CommandExecutionContext<T> {
 }

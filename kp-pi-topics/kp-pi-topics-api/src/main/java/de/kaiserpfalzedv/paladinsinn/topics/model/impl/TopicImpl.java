@@ -34,6 +34,8 @@ import de.kaiserpfalzedv.paladinsinn.topics.model.Topic;
  * @since 2016-03-20
  */
 public class TopicImpl implements Topic {
+    private static final long serialVersionUID = -6934794520130256051L;
+    
     private final ArrayList<Topic> children = new ArrayList<>();
     private UUID tenant;
     private UUID maintainer;

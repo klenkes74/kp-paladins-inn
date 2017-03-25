@@ -26,6 +26,8 @@ import de.kaiserpfalzedv.paladinsinn.commons.PaladinsInnBaseException;
  * @since 2016-03-20
  */
 public class TopicQueryException extends PaladinsInnBaseException {
+    private static final long serialVersionUID = 3469148739540197814L;
+
     private TopicQuery failedQuery;
 
     public TopicQueryException(final TopicQuery query, final String message) {

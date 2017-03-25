@@ -14,19 +14,24 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.commons.persistence;
+package de.kaiserpfalzedv.paladinsinn.commons.tenant.model;
 
-import java.io.Serializable;
-import java.security.Principal;
+import java.util.Optional;
 import java.util.UUID;
+
+import de.kaiserpfalzedv.paladinsinn.commons.service.commands.Command;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2017-03-11
+ * @since 2017-03-25
  */
-public interface Identifiable extends Principal, Serializable {
-    public UUID getUniqueId();
+public interface TenantCommand extends Command<Tenant> {
+    Optional<Tenant> getTenant();
 
-    public String getName();
+    Optional<UUID> getTenantUniqueId();
+
+    Optional<String> getTenantKey();
+
+    Optional<String> getTenantName();
 }

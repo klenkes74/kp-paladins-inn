@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.commons.persistence;
+package de.kaiserpfalzedv.paladinsinn.commons.service.commands;
 
-import java.io.Serializable;
-import java.security.Principal;
-import java.util.UUID;
+import java.time.OffsetDateTime;
+
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.Identifiable;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2017-03-11
+ * @since 2017-03-25
  */
-public interface Identifiable extends Principal, Serializable {
-    public UUID getUniqueId();
-
-    public String getName();
+public interface Command<T> extends Identifiable {
+    OffsetDateTime getCommandTimeStamp();
 }
