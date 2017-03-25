@@ -81,6 +81,11 @@ public class TenantJPA implements Tenant {
         return metaData.getCreated();
     }
 
+    void setCreated(final ZonedDateTime timeStamp) {
+        checkMetaData();
+        metaData.setCreated(timeStamp);
+    }
+
     private synchronized void checkMetaData() {
         if (metaData == null) {
             metaData = new PaladinsInnJPAMetaData();
@@ -90,6 +95,11 @@ public class TenantJPA implements Tenant {
     public ZonedDateTime getChanged() {
         checkMetaData();
         return metaData.getChanged();
+    }
+
+    void setChanged(final ZonedDateTime timeStamp) {
+        checkMetaData();
+        metaData.setChanged(timeStamp);
     }
 
     @Override
@@ -102,7 +112,7 @@ public class TenantJPA implements Tenant {
         return uniqueId;
     }
 
-    public void setUniqueId(UUID uniqueId) {
+    public void setUniqueId(final UUID uniqueId) {
         this.uniqueId = uniqueId;
     }
 
@@ -111,7 +121,7 @@ public class TenantJPA implements Tenant {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -120,12 +130,12 @@ public class TenantJPA implements Tenant {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(final String key) {
         this.key = key;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (!(o instanceof TenantJPA)) return false;
         TenantJPA tenantJPA = (TenantJPA) o;

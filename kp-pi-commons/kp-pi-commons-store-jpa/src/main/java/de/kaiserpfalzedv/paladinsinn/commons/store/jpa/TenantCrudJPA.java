@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
 import javax.persistence.NoResultException;
@@ -35,14 +36,14 @@ import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
 import de.kaiserpfalzedv.paladinsinn.commons.paging.impl.PageBuilder;
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueKeyException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateEntityException;
+import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueIdException;
 import de.kaiserpfalzedv.paladinsinn.commons.persistence.PersistenceRuntimeException;
 import de.kaiserpfalzedv.paladinsinn.commons.service.SingleTenant;
 import de.kaiserpfalzedv.paladinsinn.commons.service.WorkerService;
 import de.kaiserpfalzedv.paladinsinn.commons.store.jpa.model.TenantJPA;
 import de.kaiserpfalzedv.paladinsinn.commons.store.jpa.model.TenantJPABuilder;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.TenantBuilder;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.store.TenantCrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,28 +58,30 @@ import org.slf4j.LoggerFactory;
 public class TenantCrudJPA implements TenantCrudService {
     private static final Logger LOG = LoggerFactory.getLogger(TenantCrudJPA.class);
 
-    @PersistenceContext
+
+    @PersistenceContext(name = "TENANT_PU")
     private EntityManager em;
+
+
+    public TenantCrudJPA() {}
+
+    /**
+     * Another constructor for testing the impementation. We need to be able to inject the entity manager ...
+     *
+     * @param em The entity manager (or mock for testing purposes)
+     */
+    public TenantCrudJPA(
+            EntityManager em
+    ) {
+        this.em = em;
+    }
+
 
     @Override
     public Optional<TenantJPA> retrieve(final String tenantKey) {
         TypedQuery<TenantJPA> query = createTenantByKeyQuery(tenantKey);
 
         return retrieveSingleTenant(query);
-    }
-
-    @Override
-    public Tenant create(final Tenant tenant) throws DuplicateUniqueKeyException {
-        TenantJPA data = createTenantJPA(tenant);
-
-        em.persist(data);
-        LOG.info("Saved tenant to persistence: {} -> {}", tenant, data);
-
-        return retrieve(tenant.getUniqueId()).orElseThrow(() -> {
-            LOG.error("Could not load the newly persisted tenant: {}", data);
-
-            return new PersistenceRuntimeException(TenantJPA.class, "Could not create new Tenant: " + data);
-        });
     }
 
     @Override
@@ -93,6 +96,49 @@ public class TenantCrudJPA implements TenantCrudService {
         );
     }
 
+    @Override
+    public TenantJPA create(final Tenant tenant) throws DuplicateEntityException {
+        TenantJPA data = createTenantJPA(tenant);
+
+        try {
+            em.persist(data);
+            LOG.info("Saved tenant to persistence: {} -> {}", tenant, data);
+        } catch (EntityExistsException e) {
+            throw new DuplicateUniqueIdException(TenantJPA.class, tenant);
+        }
+
+        return retrieve(tenant.getUniqueId()).orElseThrow(() -> {
+            LOG.error("Could not load the newly persisted tenant: {}", data);
+
+            return new PersistenceRuntimeException(TenantJPA.class, "Could not create new Tenant: " + data);
+        });
+    }
+
+    private void deleteTenant(TenantJPA data, final String errorMessage, final Object errorMessageData) {
+        if (data != null) {
+            try {
+                em.remove(data);
+
+                LOG.info("Deleted tenant: {}", data);
+            } catch (IllegalArgumentException e) {
+                LOG.warn("Tried to delete tenant. But it did not exist: {}", data);
+            } catch (TransactionRequiredException e) {
+                LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
+
+                throw new PersistenceRuntimeException(
+                        TenantJPA.class,
+                        e.getClass().getSimpleName() + " caught: " + e.getMessage()
+                );
+            }
+        } else {
+            LOG.warn(errorMessage, errorMessageData);
+        }
+    }
+
+    private TypedQuery<TenantJPA> createTenantByKeyQuery(String tenantKey) {
+        return createNamedQuery("tenant-by-key").setParameter("key", tenantKey);
+    }
+
     private TenantJPA createTenantJPA(Tenant tenant) {
         TenantJPA data;
 
@@ -105,15 +151,6 @@ public class TenantCrudJPA implements TenantCrudService {
         }
 
         return data;
-    }
-
-    private TypedQuery<TenantJPA> createTenantByKeyQuery(String tenantKey) {
-        return createNamedQuery("tenant-get-key").setParameter("key", tenantKey);
-    }
-
-    @Override
-    public Optional<TenantJPA> retrieve(final UUID uniqueId) {
-        return Optional.ofNullable(em.find(TenantJPA.class, uniqueId));
     }
 
     private Optional<TenantJPA> retrieveSingleTenant(final TypedQuery<TenantJPA> query) {
@@ -138,6 +175,15 @@ public class TenantCrudJPA implements TenantCrudService {
     private TypedQuery<TenantJPA> createNamedQuery(String query) {
         return em.createNamedQuery(query, TenantJPA.class);
     }
+
+    @Override
+    public Optional<TenantJPA> retrieve(final UUID uniqueId) {
+        return Optional.ofNullable(em.find(TenantJPA.class, uniqueId));
+    }
+
+
+
+
 
     @Override
     public Set<TenantJPA> retrieve() {
@@ -192,20 +238,14 @@ public class TenantCrudJPA implements TenantCrudService {
 
 
     @Override
-    public Tenant update(final Tenant tenant) throws DuplicateUniqueKeyException {
-        Optional<TenantJPA> loaded = retrieve(tenant.getUniqueId());
-        if (!loaded.isPresent()) return create(tenant);
-
-        TenantJPA data = loaded.get();
-        data.setName(tenant.getName());
-        data.setKey(tenant.getKey());
-
+    public TenantJPA update(final Tenant tenant) throws DuplicateEntityException {
         try {
+            TenantJPA data = convertToJPAObjectIfNeeded(tenant);
+
             TenantJPA merged = em.merge(data);
 
-            LOG.info("Updated tenant data: {}", data);
-
-            return new TenantBuilder().withTenant(merged).build();
+            LOG.info("Updated tenant data: {}", merged);
+            return merged;
         } catch (IllegalArgumentException e) {
             return create(tenant);
         } catch (TransactionRequiredException | BuilderValidationException e) {
@@ -216,6 +256,26 @@ public class TenantCrudJPA implements TenantCrudService {
         }
     }
 
+    private TenantJPA convertToJPAObjectIfNeeded(final Tenant tenant) throws BuilderValidationException {
+        try {
+            return (TenantJPA) tenant;
+        } catch (ClassCastException e) {
+            Optional<TenantJPA> loaded = retrieve(tenant.getUniqueId());
+
+            TenantJPA result;
+            if (loaded.isPresent()) {
+                result = loaded.get();
+                result.setKey(tenant.getKey());
+                result.setName(tenant.getName());
+            } else {
+                result = new TenantJPABuilder()
+                        .withTenant(tenant)
+                        .build();
+            }
+
+            return result;
+        }
+    }
 
     @Override
     public void delete(final Tenant tenant) {
@@ -231,26 +291,7 @@ public class TenantCrudJPA implements TenantCrudService {
         );
     }
 
-    private void deleteTenant(TenantJPA data, final String errorMessage, final Object errorMessageData) {
-        if (data != null) {
-            try {
-                em.remove(data);
 
-                LOG.info("Deleted tenant: {}", data);
-            } catch (IllegalArgumentException e) {
-                LOG.warn("Tried to delete tenant. But it did not exist: {}", data);
-            } catch (TransactionRequiredException e) {
-                LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
-
-                throw new PersistenceRuntimeException(
-                        TenantJPA.class,
-                        e.getClass().getSimpleName() + " caught: " + e.getMessage()
-                );
-            }
-        } else {
-            LOG.warn(errorMessage, errorMessageData);
-        }
-    }
 
 
 

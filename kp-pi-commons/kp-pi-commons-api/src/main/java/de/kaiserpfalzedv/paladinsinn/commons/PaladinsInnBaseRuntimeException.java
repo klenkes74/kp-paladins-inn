@@ -27,6 +27,8 @@ import de.kaiserpfalzedv.paladinsinn.commons.persistence.Identifiable;
  * @since 2016-03-20
  */
 public abstract class PaladinsInnBaseRuntimeException extends RuntimeException implements Identifiable {
+    private static final long serialVersionUID = 3952050672933252733L;
+    
     /**
      * Unique identifier of this exception.
      */

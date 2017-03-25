@@ -24,6 +24,8 @@ import java.io.Serializable;
  * @since 2017-03-11
  */
 public class Email implements Serializable {
+    private static final long serialVersionUID = 5441622214571694870L;
+    
     private String email;
 
     public Email(final String email) {

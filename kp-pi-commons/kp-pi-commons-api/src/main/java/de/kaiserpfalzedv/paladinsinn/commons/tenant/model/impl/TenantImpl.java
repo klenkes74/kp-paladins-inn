@@ -27,6 +27,8 @@ import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
  * @since 2016-03-20
  */
 public class TenantImpl extends IdentifiableAbstractImpl implements Tenant, Identifiable {
+    private static final long serialVersionUID = 111969478658417259L;
+    
     private String key;
 
 

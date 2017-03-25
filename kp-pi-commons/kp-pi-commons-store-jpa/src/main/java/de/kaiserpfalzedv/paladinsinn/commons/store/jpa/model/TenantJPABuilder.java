@@ -16,6 +16,7 @@
 
 package de.kaiserpfalzedv.paladinsinn.commons.store.jpa.model;
 
+import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -37,6 +38,8 @@ public class TenantJPABuilder implements Builder<TenantJPA> {
     private UUID uniqueId;
     private String key;
     private String name;
+    private ZonedDateTime created;
+    private ZonedDateTime modified;
 
 
     @Override
@@ -48,6 +51,8 @@ public class TenantJPABuilder implements Builder<TenantJPA> {
         result.setUniqueId(uniqueId);
         result.setName(name);
         result.setKey(key);
+        result.setCreated(created);
+        result.setChanged(modified);
 
         return result;
     }
@@ -80,6 +85,11 @@ public class TenantJPABuilder implements Builder<TenantJPA> {
         withUniqueId(tenant.getUniqueId());
         withKey(tenant.getKey());
         withName(tenant.getName());
+
+        if (tenant instanceof TenantJPA) {
+            withCreated(((TenantJPA) tenant).getCreated());
+            withModified(((TenantJPA) tenant).getChanged());
+        }
         return this;
     }
 
@@ -96,6 +106,16 @@ public class TenantJPABuilder implements Builder<TenantJPA> {
 
     public TenantJPABuilder withName(final String name) {
         this.name = name;
+        return this;
+    }
+
+    public TenantJPABuilder withCreated(final ZonedDateTime created) {
+        this.created = created;
+        return this;
+    }
+
+    public TenantJPABuilder withModified(final ZonedDateTime modified) {
+        this.modified = modified;
         return this;
     }
 }

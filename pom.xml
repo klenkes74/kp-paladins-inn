@@ -584,6 +584,11 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>2.7.19</version>
+            </dependency>
+            <dependency>
                 <groupId>info.cukes</groupId>
                 <artifactId>cucumber-java8</artifactId>
                 <version>1.2.3</version>
@@ -660,7 +665,7 @@
                         <plugin>
                             <groupId>org.liquibase</groupId>
                             <artifactId>liquibase-maven-plugin</artifactId>
-                            <version>3.5.2</version>
+                            <version>3.5.3</version>
 
                             <configuration>
                                 <changeLogFile>${database.changelog}</changeLogFile>

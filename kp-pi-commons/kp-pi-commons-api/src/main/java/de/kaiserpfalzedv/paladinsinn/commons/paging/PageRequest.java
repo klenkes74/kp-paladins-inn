@@ -29,6 +29,8 @@ import de.kaiserpfalzedv.paladinsinn.commons.paging.impl.PageRequestImpl;
  * @since 2017-03-17
  */
 public interface PageRequest extends Serializable {
+    public static final long serialVersionUID = -8117789167434431687L;
+
     /**
      * @return the page to retrieve.
      */

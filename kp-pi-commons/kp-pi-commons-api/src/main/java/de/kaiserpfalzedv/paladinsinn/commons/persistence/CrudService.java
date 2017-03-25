@@ -32,9 +32,9 @@ public interface CrudService<T extends Identifiable> {
     /**
      * @param user the data to be saved.
      * @return the saved data.
-     * @throws DuplicateUniqueKeyException if an unique constraint of the data structure is not met.
+     * @throws DuplicateEntityException if an unique constraint of the data structure is not met.
      */
-    T create(T user) throws DuplicateUniqueKeyException;
+    T create(T user) throws DuplicateEntityException;
 
     /**
      * Loads a single data set by an unique id.
@@ -73,7 +73,7 @@ public interface CrudService<T extends Identifiable> {
      * @return the saved data.
      * @throws DuplicateUniqueKeyException if an unique constraint of the data structure is not met.
      */
-    T update(T data) throws DuplicateUniqueKeyException;
+    T update(T data) throws DuplicateEntityException;
 
     /**
      * @param data the data set to be deleted.

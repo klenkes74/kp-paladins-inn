@@ -27,6 +27,8 @@ import java.util.Set;
  * @since 2016-03-20
  */
 public class BuilderValidationException extends PaladinsInnBaseException {
+    private static final long serialVersionUID = 3972248405759625575L;
+    
     private final HashSet<String> failures = new HashSet<>();
 
 

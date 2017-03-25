@@ -31,6 +31,8 @@ import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
  * @since 2017-03-17
  */
 public class PageImpl<T extends Serializable> implements Page<T> {
+    private static final long serialVersionUID = -1245206955340210764L;
+
 
     private final ArrayList<T> data = new ArrayList<>();
 
