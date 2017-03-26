@@ -30,6 +30,10 @@
 
         <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.EntitlementJPA</class>
         <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.RoleJPA</class>
+        <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.UserJPA</class>
+        <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.PersonaJPA</class>
+        <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.EmailJPA</class>
+        <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.NameJPA</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>ALL</shared-cache-mode>

@@ -65,7 +65,7 @@ public interface User extends Identifiable {
     /**
      * @return all roles this user is in.
      */
-    Set<Role> getRoles();
+    Set<? extends Role> getRoles();
 
     /**
      * @param role the role to be checked.
@@ -77,7 +77,7 @@ public interface User extends Identifiable {
     /**
      * @return a set of all entitlments of this user.
      */
-    Set<Entitlement> getEntitlements();
+    Set<? extends Entitlement> getEntitlements();
 
     /**
      * @param entitlement the entitlement to be checked.
