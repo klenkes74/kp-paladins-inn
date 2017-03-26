@@ -29,6 +29,7 @@
         <non-jta-data-source>java:comp/env/jdbc/security</non-jta-data-source>
 
         <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.EntitlementJPA</class>
+        <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.RoleJPA</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <shared-cache-mode>ALL</shared-cache-mode>

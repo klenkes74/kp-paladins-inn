@@ -22,5 +22,7 @@
     <alternatives>
         <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.EntitlementCrudJPA</class>
         <class>de.kaiserpfalzedv.paladinsinn.security.store.mock.EntitlementMultitenantCrudJPA</class>
+        <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.RoleCrudJPA</class>
+        <class>de.kaiserpfalzedv.paladinsinn.security.store.mock.RoleMultitenantCrudJPA</class>
     </alternatives>
 </beans>

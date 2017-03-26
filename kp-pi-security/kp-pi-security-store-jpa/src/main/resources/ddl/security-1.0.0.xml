@@ -21,11 +21,11 @@
             http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd
         ">
 
-    <changeSet id="security-initial" author="klenkes74">
+    <changeSet id="entitlements-initial" author="klenkes74">
         <comment>The initial data base tables for the security JPA implementation of Paladins Inn.</comment>
 
         <createTable tableName="ENTITLEMENTS">
-            <column name="UNIQUE_ID" type="VARCHAR(40)">
+            <column name="ID" type="VARCHAR(40)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="ENTITLEMENTS_PK"/>
             </column>
 
@@ -58,6 +58,111 @@
         </rollback>
         <rollback>
             <dropTable tableName="ENTITLEMENTS"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="roles-initial" author="klenkes74">
+        <comment>The initial data base tables for the security JPA implementation of Paladins Inn.</comment>
+
+        <createTable tableName="ROLES">
+            <column name="ID" type="VARCHAR(40)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="ROLES_PK"/>
+            </column>
+
+            <column name="VERSION" type="BIGINT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="TENANT_ID" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createTable tableName="ROLES_ROLES">
+            <column name="MASTER_ID" type="VARCHAR(40)">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="ROLES_ROLES_MASTER_FK" references="ROLES(ID)"
+                />
+            </column>
+            <column name="SLAVE_ID" type="VARCHAR(40)">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="ROLES_ROLES_SLAVE_FK" references="ROLES(ID)
+"/>
+            </column>
+        </createTable>
+
+
+        <createTable tableName="ROLES_ENTITLEMENTS">
+            <column name="ROLE_ID" type="VARCHAR(40)">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="ROLES_ENTITLEMENTS_ROLE_FK" references="ROLES(ID)"
+                />
+            </column>
+            <column name="ENTITLEMENT_ID" type="VARCHAR(40)">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="ROLES_ENTITLEMENTS_ENTITLEMENT_FK" references="ENTITLEMENTS(ID)"
+                />
+            </column>
+        </createTable>
+
+        <createIndex indexName="ROLES_TENANT_ID_IDX" unique="false" tableName="ROLES">
+            <column name="TENANT_ID"/>
+        </createIndex>
+
+        <createIndex indexName="ROLES_NAME_UK" unique="true" tableName="ROLES">
+            <column name="NAME"/>
+        </createIndex>
+
+        <createIndex indexName="ROLES_ROLES_MASTER_IDX" tableName="ROLES_ROLES">
+            <column name="MASTER_ID"/>
+        </createIndex>
+
+        <createIndex indexName="ROLES_ROLES_SLAVE_IDX" tableName="ROLES_ROLES">
+            <column name="SLAVE_ID"/>
+        </createIndex>
+
+        <createIndex indexName="ROLES_ENTITLEMENTS_ROLE_IDX" tableName="ROLES_ENTITLEMENTS">
+            <column name="ROLE_ID"/>
+        </createIndex>
+
+        <createIndex indexName="ROLES_ENTITLEMENTS_ENTITLEMENT_IDX" tableName="ROLES_ENTITLEMENTS">
+            <column name="ENTITLEMENT_ID"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="ROLES_ENTITLEMENTS" indexName="ROLES_ENTITLEMENTS_ENTITLEMENT_IDX"/>
+        </rollback>
+        <rollback>
+            <dropIndex tableName="ROLES_ENTITLEMENTS" indexName="ROLES_ENTITLEMENTS_ROLE_IDX"/>
+        </rollback>
+        <rollback>
+            <dropIndex tableName="ROLES_ROLES" indexName="ROLES_ROLES_SLAVE_IDX"/>
+        </rollback>
+        <rollback>
+            <dropIndex tableName="ROLES_ROLES" indexName="ROLES_ROLES_MASTER_IDX"/>
+        </rollback>
+        <rollback>
+            <dropIndex indexName="ROLES_NAME_UK" tableName="ROLES"/>
+        </rollback>
+        <rollback>
+            <dropIndex indexName="ROLES_TENANT_ID_IDX" tableName="ROLES"/>
+        </rollback>
+        <rollback>
+            <dropTable tableName="ROLES_ENTITLEMENTS"/>
+        </rollback>
+        <rollback>
+            <dropTable tableName="ROLES_ROLES"/>
+        </rollback>
+        <rollback>
+            <dropTable tableName="ROLES"/>
         </rollback>
     </changeSet>
 </databaseChangeLog>

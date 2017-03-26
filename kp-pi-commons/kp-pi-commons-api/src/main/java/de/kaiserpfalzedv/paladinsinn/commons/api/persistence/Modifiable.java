@@ -39,5 +39,5 @@ public interface Modifiable {
     /**
      * @return The timestamp this record has been lastly changed.
      */
-    OffsetDateTime getChanged();
+    OffsetDateTime getModified();
 }

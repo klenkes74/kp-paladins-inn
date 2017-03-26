@@ -48,7 +48,7 @@ public class EntitlementJPABuilder extends IdentifiableAbstractBuilder<Entitleme
         result.setTenantId(tenantId);
         result.setName(name);
         result.setCreated(created);
-        result.setChanged(changed);
+        result.setModified(changed);
 
         return result;
     }
@@ -93,11 +93,16 @@ public class EntitlementJPABuilder extends IdentifiableAbstractBuilder<Entitleme
         withName(data.getName());
 
         if (data instanceof EntitlementJPA) {
-            withCreated(((EntitlementJPA) data).getCreated());
-            withModified(((EntitlementJPA) data).getChanged());
             withTenantId(((EntitlementJPA) data).getTenantId());
+            withCreated(((EntitlementJPA) data).getCreated());
+            withModified(((EntitlementJPA) data).getModified());
         }
 
+        return this;
+    }
+
+    public EntitlementJPABuilder withTenantId(final UUID tenantId) {
+        this.tenantId = tenantId;
         return this;
     }
 
@@ -108,11 +113,6 @@ public class EntitlementJPABuilder extends IdentifiableAbstractBuilder<Entitleme
 
     public EntitlementJPABuilder withModified(final OffsetDateTime changed) {
         this.changed = changed;
-        return this;
-    }
-
-    public EntitlementJPABuilder withTenantId(final UUID tenantId) {
-        this.tenantId = tenantId;
         return this;
     }
 

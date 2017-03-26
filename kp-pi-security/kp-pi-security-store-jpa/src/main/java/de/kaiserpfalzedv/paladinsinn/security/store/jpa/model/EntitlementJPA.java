@@ -24,7 +24,6 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.LockModeType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrePersist;
@@ -45,18 +44,16 @@ import de.kaiserpfalzedv.paladinsinn.security.api.model.Entitlement;
 @NamedQueries({
         @NamedQuery(
                 name = "entitlement-by-name",
-                query = "SELECT e FROM entitlement e WHERE e.tenantId=:tenant AND e.name=:name",
-                lockMode = LockModeType.READ
+                query = "SELECT e FROM entitlement e WHERE e.tenantId=:tenant AND e.name=:name"
         ),
         @NamedQuery(
                 name = "entitlements",
-                query = "SELECT e FROM entitlement e WHERE e.tenantId=:tenant",
-                lockMode = LockModeType.READ
+                query = "SELECT e FROM entitlement e WHERE e.tenantId=:tenant"
         )
 })
 public class EntitlementJPA implements Entitlement, MultiTenantable, Modifiable {
     public static final ZoneId UTC = ZoneId.of("UTC");
-    private static final long serialVersionUID = -3923846511922278191L;
+    private static final long serialVersionUID = -221758201749168512L;
     @Id
     @Column(name = "ID", unique = true, nullable = false, updatable = false)
     private UUID uniqueId;
@@ -75,7 +72,7 @@ public class EntitlementJPA implements Entitlement, MultiTenantable, Modifiable 
     @Column(name = "CREATED", nullable = false)
     private OffsetDateTime created = OffsetDateTime.now(UTC);
     @Column(name = "MODIFIED", nullable = false)
-    private OffsetDateTime changed = created;
+    private OffsetDateTime modified = created;
 
     @Override
     public long getVersion() {
@@ -87,14 +84,13 @@ public class EntitlementJPA implements Entitlement, MultiTenantable, Modifiable 
         return created;
     }
 
-    @Override
-    public OffsetDateTime getChanged() {
-        return changed;
+    public OffsetDateTime getModified() {
+        return modified;
     }
 
     @Deprecated
-    public void setChanged(final OffsetDateTime changed) {
-        this.changed = changed;
+    public void setModified(final OffsetDateTime modified) {
+        this.modified = modified;
     }
 
     @Deprecated
@@ -114,7 +110,7 @@ public class EntitlementJPA implements Entitlement, MultiTenantable, Modifiable 
     @Deprecated
     @PrePersist
     public void updateChanged() {
-        changed = OffsetDateTime.now(UTC);
+        modified = OffsetDateTime.now(UTC);
     }
 
     @Override
@@ -128,26 +124,6 @@ public class EntitlementJPA implements Entitlement, MultiTenantable, Modifiable 
         if (!(o instanceof EntitlementJPA)) return false;
         EntitlementJPA that = (EntitlementJPA) o;
         return Objects.equals(getUniqueId(), that.getUniqueId());
-    }
-
-    @Override
-    public UUID getUniqueId() {
-        return uniqueId;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Deprecated
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    @Deprecated
-    public void setUniqueId(final UUID uniqueId) {
-        this.uniqueId = uniqueId;
     }
 
     @Override
@@ -170,10 +146,30 @@ public class EntitlementJPA implements Entitlement, MultiTenantable, Modifiable 
                 .append(name)
                 .append(", created=").append(created);
 
-        if (!created.equals(changed)) {
-            sb.append(", changed=").append(changed);
+        if (!created.equals(modified)) {
+            sb.append(", modified=").append(modified);
         }
 
         return sb.append('}').toString();
+    }
+
+    @Override
+    public UUID getUniqueId() {
+        return uniqueId;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Deprecated
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    @Deprecated
+    public void setUniqueId(final UUID uniqueId) {
+        this.uniqueId = uniqueId;
     }
 }

@@ -201,7 +201,7 @@ public class EntitlementCrudJPATest {
                         System.identityHashCode(ENTITLEMENT_1_JPA), System.identityHashCode(result)
         );
         assertEquals("Creation time should not differ", ENTITLEMENT_1_JPA.getCreated(), result.getCreated());
-        assertNotEquals("Modification time should differ", ENTITLEMENT_1_JPA.getChanged(), result.getChanged());
+        assertNotEquals("Modification time should differ", ENTITLEMENT_1_JPA.getModified(), result.getModified());
     }
 
     @Test
@@ -220,7 +220,7 @@ public class EntitlementCrudJPATest {
                         System.identityHashCode(ENTITLEMENT_1_JPA), System.identityHashCode(result)
         );
         assertNotEquals("Creation time should differ", ENTITLEMENT_1_JPA.getCreated(), result.getCreated());
-        assertNotEquals("Modification time should differ", ENTITLEMENT_1_JPA.getChanged(), result.getChanged());
+        assertNotEquals("Modification time should differ", ENTITLEMENT_1_JPA.getModified(), result.getModified());
     }
 
     @Test
