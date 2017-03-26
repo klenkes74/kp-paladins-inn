@@ -4,17 +4,17 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>kp-pi-commons</artifactId>
+        <artifactId>kp-pi-security</artifactId>
         <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>kp-pi-commons-ejb</artifactId>
+    <artifactId>kp-pi-security-ejb</artifactId>
     <packaging>ejb</packaging>
 
-    <name>KP PI :: Commons :: EJB</name>
+    <name>KP PI :: Security :: EJB</name>
     <description>
-        kp-pi-commons OSGi bundle project.
+        EJB Integration of the security integration.
     </description>
 
     <properties>
@@ -24,11 +24,6 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-ejb-plugin</artifactId>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
@@ -41,23 +36,22 @@
         </plugins>
     </build>
 
+
     <dependencies>
         <dependency>
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-            <artifactId>kp-pi-commons-impl</artifactId>
+            <artifactId>kp-pi-security-impl</artifactId>
         </dependency>
 
         <dependency>
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-            <artifactId>kp-pi-commons-store-jpa</artifactId>
+            <artifactId>kp-pi-security-store-jpa</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
         </dependency>
-
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -67,16 +61,12 @@
 
         <dependency>
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-            <artifactId>kp-pi-commons-store-mock</artifactId>
+            <artifactId>kp-pi-security-store-mock</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>

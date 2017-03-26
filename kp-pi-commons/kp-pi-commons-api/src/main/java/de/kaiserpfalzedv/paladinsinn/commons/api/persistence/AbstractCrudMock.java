@@ -61,12 +61,12 @@ public abstract class AbstractCrudMock<T extends Identifiable> implements CrudSe
 
 
     @Override
-    public Optional<T> retrieve(UUID uniqueId) {
+    public Optional<? extends T> retrieve(UUID uniqueId) {
         return service.retrieve(defaultTenant, uniqueId);
     }
 
     @Override
-    public Optional<T> retrieve(String uniqueName) {
+    public Optional<? extends T> retrieve(String uniqueName) {
         return service.retrieve(defaultTenant, uniqueName);
     }
 

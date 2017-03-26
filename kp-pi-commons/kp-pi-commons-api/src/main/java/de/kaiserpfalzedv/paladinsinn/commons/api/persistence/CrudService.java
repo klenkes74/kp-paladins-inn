@@ -30,11 +30,11 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageRequest;
  */
 public interface CrudService<T extends Identifiable> {
     /**
-     * @param user the data to be saved.
+     * @param data the data to be saved.
      * @return the saved data.
      * @throws DuplicateEntityException if an unique constraint of the data structure is not met.
      */
-    T create(T user) throws DuplicateEntityException;
+    T create(T data) throws DuplicateEntityException;
 
     /**
      * Loads a single data set by an unique id.

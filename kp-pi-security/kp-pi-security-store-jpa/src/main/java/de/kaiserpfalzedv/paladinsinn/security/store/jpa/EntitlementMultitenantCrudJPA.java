@@ -1,0 +1,302 @@
+/*
+ * Copyright 2017 Kaiserpfalz EDV-Service, Roland T. Lichti
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+package de.kaiserpfalzedv.paladinsinn.security.store.jpa;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
+import java.util.UUID;
+
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Alternative;
+import javax.inject.Inject;
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
+import javax.persistence.TransactionRequiredException;
+import javax.persistence.TypedQuery;
+
+import de.kaiserpfalzedv.paladinsinn.commons.api.BuilderValidationException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.paging.Page;
+import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateUniqueIdException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateUniqueNameException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.PersistenceRuntimeException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.SingleTenant;
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.WorkerService;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.security.api.model.Entitlement;
+import de.kaiserpfalzedv.paladinsinn.security.api.store.EntitlementMultitenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.EntitlementJPA;
+import de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.EntitlementJPABuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
+ * @version 1.0.0
+ * @since 2017-03-26
+ */
+@Alternative
+@RequestScoped
+@SingleTenant
+@WorkerService
+public class EntitlementMultitenantCrudJPA implements EntitlementMultitenantCrudService {
+    private static final Logger LOG = LoggerFactory.getLogger(EntitlementMultitenantCrudJPA.class);
+
+
+    @PersistenceContext(name = "SECURITY_PU")
+    private EntityManager em;
+
+
+    @SuppressWarnings("unused")
+    public EntitlementMultitenantCrudJPA() {}
+
+    /**
+     * Another constructor for testing the impementation. We need to be able to inject the entity manager ...
+     *
+     * @param em The entity manager (or mock for testing purposes)
+     */
+    @Inject
+    public EntitlementMultitenantCrudJPA(
+            final EntityManager em
+    ) {
+        this.em = em;
+    }
+
+    @Override
+    public EntitlementJPA create(final Tenant tenant, final Entitlement entitlement) throws DuplicateUniqueIdException, DuplicateUniqueNameException {
+        Entitlement data = createEntitlementJPA(tenant, entitlement);
+
+        try {
+            em.persist(data);
+
+            return em.find(EntitlementJPA.class, entitlement.getUniqueId());
+        } catch (EntityExistsException e) {
+            LOG.warn(e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+
+            throw new DuplicateUniqueIdException(EntitlementJPA.class, entitlement);
+        } catch (IllegalArgumentException | TransactionRequiredException e) {
+            LOG.warn(e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+
+            throw new PersistenceRuntimeException(EntitlementJPA.class, e.getMessage(), e);
+        }
+    }
+
+    private EntitlementJPA createEntitlementJPA(final Tenant tenant, final Entitlement entitlement) {
+        EntitlementJPA result;
+
+        try {
+            result = (EntitlementJPA) entitlement;
+        } catch (ClassCastException e) {
+            result = new EntitlementJPABuilder()
+                    .withEntitlement(entitlement)
+                    .withTenant(tenant)
+                    .build();
+        }
+
+        return result;
+    }
+
+    @Override
+    public Optional<EntitlementJPA> retrieve(final Tenant tenant, final UUID uniqueId) {
+        EntitlementJPA result;
+
+        try {
+            result = em.find(EntitlementJPA.class, uniqueId);
+        } catch (IllegalArgumentException e) {
+            LOG.warn(e.getClass().getSimpleName() + ": " + e.getMessage(), e);
+
+            throw new PersistenceRuntimeException(EntitlementJPA.class, e.getMessage(), e);
+        }
+
+        if (result != null && result.getTenantId().equals(tenant.getUniqueId())) {
+            return Optional.of(result);
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<EntitlementJPA> retrieve(final Tenant tenant, final String uniqueName) {
+        EntitlementJPA result = null;
+
+        try {
+            result = em
+                    .createNamedQuery("entitlement-by-name", EntitlementJPA.class)
+                    .setParameter("tenant", tenant.getUniqueId())
+                    .setParameter("name", uniqueName)
+                    .getSingleResult();
+        } catch (NoResultException | NonUniqueResultException | IllegalStateException e) {
+            LOG.warn(e.getClass().getSimpleName() + " during retrieval: " + e.getMessage(), e);
+
+            // Do nothing. Will return null.
+        } catch (PersistenceException e) {
+            LOG.error(e.getClass().getSimpleName() + " during retrieval: " + e.getMessage(), e);
+
+            throw new PersistenceRuntimeException(EntitlementJPA.class, "Caught a " + e.getClass()
+                                                                                       .getSimpleName() + ": " + e
+                    .getMessage());
+        }
+
+        return Optional.ofNullable(result);
+    }
+
+    @Override
+    public Set<Entitlement> retrieve(final Tenant tenant) {
+        final HashSet<Entitlement> result = new HashSet<>();
+
+        try {
+            em
+                    .createNamedQuery("entitlements", EntitlementJPA.class)
+                    .setParameter("tenant", tenant.getUniqueId())
+                    .getResultList()
+                    .forEach(result::add);
+        } catch (IllegalStateException e) {
+            LOG.warn(e.getClass().getSimpleName() + " during retrieval: " + e.getMessage(), e);
+
+            // do nothing more. Will return an empty result.
+        } catch (PersistenceException e) {
+            LOG.error(e.getClass().getSimpleName() + " during retrieval: " + e.getMessage(), e);
+
+            throw new PersistenceRuntimeException(EntitlementJPA.class, "Caught a " + e.getClass()
+                                                                                       .getSimpleName() + ": " + e
+                    .getMessage());
+        }
+
+        //noinspection unchecked
+        return result;
+    }
+
+    @Override
+    public Page<Entitlement> retrieve(final Tenant tenant, final PageRequest pageRequest) {
+        final ArrayList<Entitlement> result = new ArrayList<>((int) pageRequest.getPageSize());
+
+        TypedQuery<EntitlementJPA> query = em
+                .createNamedQuery("entitlements", EntitlementJPA.class)
+                .setParameter("tenant", tenant.getUniqueId());
+
+        int elementCount = query.getMaxResults();
+
+        if (elementCount > 0) {
+            retrieveResultsFromJPA(tenant, pageRequest, result);
+        }
+
+        try {
+            return new PageBuilder<Entitlement>()
+                    .withData(result)
+                    .withRequest(pageRequest)
+                    .withTotalElements(elementCount)
+                    .build();
+
+        } catch (BuilderValidationException e) {
+            LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
+
+            throw new PersistenceRuntimeException(EntitlementJPA.class, e.getClass()
+                                                                         .getSimpleName() + " caught: " + e.getMessage());
+        }
+    }
+
+    private void retrieveResultsFromJPA(final Tenant tenant, final PageRequest pageRequest, ArrayList<Entitlement> result) {
+        try {
+            em
+                    .createNamedQuery("entitlements", EntitlementJPA.class)
+                    .setParameter("tenant", tenant.getUniqueId())
+                    .setFirstResult(calculateStartPosition(pageRequest))
+                    .setMaxResults((int) pageRequest.getPageSize())
+                    .setLockMode(LockModeType.NONE)
+                    .getResultList()
+                    .forEach(result::add);
+        } catch (IllegalStateException e) {
+            LOG.warn(e.getClass().getSimpleName() + " during retrieval: " + e.getMessage(), e);
+
+            // do nothing more. Will return an empty result.
+        } catch (PersistenceException e) {
+            LOG.error(e.getClass().getSimpleName() + " during retrieval: " + e.getMessage(), e);
+
+            throw new PersistenceRuntimeException(EntitlementJPA.class, "Caught a " + e.getClass()
+                                                                                       .getSimpleName() + ": " + e
+                    .getMessage());
+        }
+    }
+
+    private int calculateStartPosition(final PageRequest pageRequest) {
+        return (int) ((pageRequest.getPageNumber() - 1) * pageRequest.getPageSize());
+    }
+
+    @Override
+    public EntitlementJPA update(final Tenant tenant, Entitlement data) throws DuplicateUniqueNameException, DuplicateUniqueIdException {
+        return update(tenant, createEntitlementJPA(tenant, data));
+    }
+
+
+    private EntitlementJPA update(final Tenant tenant, EntitlementJPA data) throws DuplicateUniqueNameException, DuplicateUniqueIdException {
+        try {
+            return em.merge(data);
+        } catch (IllegalArgumentException e) {
+            return create(tenant, data);
+        } catch (TransactionRequiredException e) {
+            LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
+
+            throw new PersistenceRuntimeException(EntitlementJPA.class, e.getClass()
+                                                                         .getSimpleName() + " caught: " + e.getMessage());
+        }
+    }
+
+    @Override
+    public void delete(final Tenant tenant, Entitlement data) {
+        delete(tenant, data.getUniqueId());
+    }
+
+
+    @Override
+    public void delete(final Tenant tenant, UUID uniqueId) {
+        retrieve(tenant, uniqueId).ifPresent(data -> delete(data, data.getUniqueId()));
+    }
+
+    private void delete(EntitlementJPA data, final Object errorMessageData) {
+        if (data != null) {
+            try {
+                em.remove(data);
+
+                LOG.info("Deleted entitlement: {}", data);
+            } catch (IllegalArgumentException e) {
+                LOG.warn("Tried to delete entitlement. But it did not exist: {}", data);
+            } catch (TransactionRequiredException e) {
+                LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
+
+                throw new PersistenceRuntimeException(
+                        EntitlementJPA.class,
+                        e.getClass().getSimpleName() + " caught: " + e.getMessage()
+                );
+            }
+        } else {
+            LOG.warn("Tried to delete entitlement. But its unique id is not in the database: {}", errorMessageData);
+        }
+    }
+
+    @Override
+    public void delete(final Tenant tenant, String uniqueName) {
+        retrieve(tenant, uniqueName).ifPresent(data -> delete(data, data.getUniqueId()));
+    }
+}

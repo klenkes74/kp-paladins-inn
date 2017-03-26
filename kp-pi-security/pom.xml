@@ -17,6 +17,8 @@
     <modules>
         <module>kp-pi-security-api</module>
         <module>kp-pi-security-impl</module>
+        <module>kp-pi-security-ejb</module>
         <module>kp-pi-security-store-mock</module>
+        <module>kp-pi-security-store-jpa</module>
     </modules>
 </project>

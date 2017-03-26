@@ -89,11 +89,11 @@ public class TenantCommandService
         return service.create(tenant);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void changeKey(UUID uniqueId, String key) throws EntityNotFoundException {
         TenantImpl data = loadTenantFromCrudService(uniqueId);
 
-        //noinspection deprecation
         data.setKey(key);
 
         saveTenantWithCrudService(data);
@@ -131,11 +131,11 @@ public class TenantCommandService
         }
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void changeName(UUID uniqueId, String name) throws EntityNotFoundException {
         TenantImpl data = loadTenantFromCrudService(uniqueId);
 
-        //noinspection deprecation
         data.setName(name);
 
         saveTenantWithCrudService(data);

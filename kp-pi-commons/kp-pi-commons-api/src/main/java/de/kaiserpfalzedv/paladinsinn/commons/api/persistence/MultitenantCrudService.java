@@ -47,7 +47,7 @@ public interface MultitenantCrudService<T extends Identifiable> {
      *
      * @return The selected data set.
      */
-    Optional<T> retrieve(Tenant tenant, UUID uniqueId);
+    Optional<? extends T> retrieve(Tenant tenant, UUID uniqueId);
 
     /**
      * Loads a single data set by the unique name.
@@ -57,7 +57,7 @@ public interface MultitenantCrudService<T extends Identifiable> {
      *
      * @return The selected data.
      */
-    Optional<T> retrieve(Tenant tenant, String uniqueName);
+    Optional<? extends T> retrieve(Tenant tenant, String uniqueName);
 
     /**
      * @param tenant The tenant to retrieve all data for (DANGEROUS)
