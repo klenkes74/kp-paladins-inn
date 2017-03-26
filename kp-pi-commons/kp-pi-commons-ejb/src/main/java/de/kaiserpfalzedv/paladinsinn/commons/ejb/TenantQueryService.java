@@ -38,6 +38,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * This is the EJB that encapsulates the {@link TenantCrudService} for accessing tenant data. Together with the
+ * {@link TenantCommandService} it implements the Query-and-Command-Segregation pattern for managing {@link Tenant}
+ * data.
+ *
+ * This is the read-only interface part of the managing services.
+ *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-25
@@ -88,7 +94,8 @@ public class TenantQueryService
     public Optional<Tenant> retrieve(String key) {
         Optional<? extends Tenant> result = service.retrieve(key);
 
-        return (result.isPresent()) ? Optional.of(result.get()) : Optional.empty();
+        // repackaging as Optional<Tenant> instad of Optional<? extends Tenant>
+        return result.isPresent() ? Optional.of(result.get()) : Optional.empty();
     }
 
     @Override

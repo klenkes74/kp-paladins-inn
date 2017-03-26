@@ -24,6 +24,7 @@ import javax.annotation.PreDestroy;
 import javax.ejb.PostActivate;
 import javax.ejb.PrePassivate;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import javax.inject.Inject;
 
 import de.kaiserpfalzedv.paladinsinn.commons.api.BuilderValidationException;
@@ -36,12 +37,20 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.store.TenantCrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static javax.ejb.TransactionAttributeType.SUPPORTS;
+
 /**
+ * This is the EJB that encapsulates the {@link TenantCrudService} for changing tenant data. Together with the
+ * {@link TenantQueryService} it implements the Query-and-Command-Segregation pattern for managing {@link Tenant} data.
+ *
+ * This is the writing interface part of the managing services.
+ *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-26
  */
-@Stateless
+@Stateless(description = "Service for modifying the tenant data.")
+@TransactionAttribute(SUPPORTS)
 public class TenantCommandService
         implements de.kaiserpfalzedv.paladinsinn.commons.api.tenant.service.TenantCommandService {
     private static final Logger LOG = LoggerFactory.getLogger(TenantCommandService.class);
