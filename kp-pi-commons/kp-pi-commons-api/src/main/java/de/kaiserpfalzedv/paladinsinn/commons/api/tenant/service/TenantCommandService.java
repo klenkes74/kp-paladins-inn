@@ -23,16 +23,39 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.EntityNotFoundExcep
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 
 /**
+ * The writing part of the tenant command-and-query-separated interfaces. The reading interface is
+ * {@link TenantQueryService}.
+ *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-26
  */
 public interface TenantCommandService {
+    /**
+     * @param tenant The tenant to be created.
+     *
+     * @return The created tenant
+     *
+     * @throws DuplicateEntityException If the entity already existed.
+     */
     Tenant create(Tenant tenant) throws DuplicateEntityException;
 
+    /**
+     * @param uniqueId The unique id of the tenant to be changed.
+     * @param key The new key for the tenant.
+     * @throws EntityNotFoundException If there is no such tenant.
+     */
     void changeKey(UUID uniqueId, String key) throws EntityNotFoundException;
 
+    /**
+     * @param uniqueId The unique id of the tenant to be changed.
+     * @param name The new name for the tenant.
+     * @throws EntityNotFoundException If there is no such tenant.
+     */
     void changeName(UUID uniqueId, String name) throws EntityNotFoundException;
 
+    /**
+     * @param uniqueId The unique id of the tenant to be deleted.
+     */
     void delete(UUID uniqueId);
 }

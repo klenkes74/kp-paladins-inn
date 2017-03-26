@@ -24,14 +24,32 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageRequest;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 
 /**
+ * The read only service definition of the command and query seperation pattern for tenants. The writing interface is
+ * {@link TenantCommandService}.
+ *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-25
  */
 public interface TenantQueryService {
+    /**
+     * @param uniqueId The unique id of the tenant to be retrieved.
+     *
+     * @return The tenant or {@link Optional#empty()}.
+     */
     Optional<? extends Tenant> retrieve(UUID uniqueId);
 
+
+    /**
+     * @param key The unique key of the tenant to be retrieved.
+     * @return The tenant or {@link Optional#empty()}.
+     */
     Optional<? extends Tenant> retrieve(String key);
 
+
+    /**
+     * @param pageRequest The page definition of the data page of tenants to be retrieved.
+     * @return The data page requested.
+     */
     Page<? extends Tenant> retrieve(PageRequest pageRequest);
 }
