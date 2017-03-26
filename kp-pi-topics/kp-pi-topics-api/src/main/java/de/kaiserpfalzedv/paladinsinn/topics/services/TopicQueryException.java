@@ -16,7 +16,7 @@
 
 package de.kaiserpfalzedv.paladinsinn.topics.services;
 
-import de.kaiserpfalzedv.paladinsinn.commons.PaladinsInnBaseException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.PaladinsInnBaseException;
 
 /**
  * A failure occured while working on the {@link TopicQuery}. The failed query can be retrieved from the exception by

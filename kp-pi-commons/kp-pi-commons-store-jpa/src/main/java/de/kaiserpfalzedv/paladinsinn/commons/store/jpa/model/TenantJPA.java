@@ -30,7 +30,7 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.persistence.Version;
 
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}

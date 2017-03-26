@@ -19,12 +19,12 @@ package de.kaiserpfalzedv.paladinsinn.security.services;
 import java.io.FileNotFoundException;
 import java.util.Set;
 
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.DefaultTenant;
-import de.kaiserpfalzedv.paladinsinn.security.model.Role;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.DefaultTenant;
+import de.kaiserpfalzedv.paladinsinn.security.api.model.Role;
+import de.kaiserpfalzedv.paladinsinn.security.api.store.EntitlementCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.api.store.RoleCrudService;
 import de.kaiserpfalzedv.paladinsinn.security.store.EntitlementCSVReader;
-import de.kaiserpfalzedv.paladinsinn.security.store.EntitlementCrudService;
 import de.kaiserpfalzedv.paladinsinn.security.store.RoleCSVReader;
-import de.kaiserpfalzedv.paladinsinn.security.store.RoleCrudService;
 import de.kaiserpfalzedv.paladinsinn.security.store.mock.EntitlementCrudMock;
 import de.kaiserpfalzedv.paladinsinn.security.store.mock.EntitlementMultitenantCrudMock;
 import de.kaiserpfalzedv.paladinsinn.security.store.mock.RoleCrudMock;

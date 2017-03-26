@@ -20,10 +20,10 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.commons.Builder;
-import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.TenantImpl;
+import de.kaiserpfalzedv.paladinsinn.commons.api.Builder;
+import de.kaiserpfalzedv.paladinsinn.commons.api.BuilderValidationException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.TenantImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

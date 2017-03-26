@@ -19,8 +19,8 @@ package de.kaiserpfalzedv.paladinsinn.commons.tenant.service;
 import java.io.FileNotFoundException;
 import java.util.Set;
 
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.store.TenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.store.TenantCrudService;
 import de.kaiserpfalzedv.paladinsinn.commons.tenant.store.mock.TenantCrudMock;
 import org.junit.After;
 import org.junit.Before;

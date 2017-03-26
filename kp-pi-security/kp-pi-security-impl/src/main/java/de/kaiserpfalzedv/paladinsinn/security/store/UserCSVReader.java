@@ -27,15 +27,18 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.impl.AbstractCSVDataReader;
-import de.kaiserpfalzedv.paladinsinn.commons.person.Gender;
-import de.kaiserpfalzedv.paladinsinn.commons.person.impl.NameBuilder;
-import de.kaiserpfalzedv.paladinsinn.commons.service.CSV;
-import de.kaiserpfalzedv.paladinsinn.commons.service.SingleTenant;
-import de.kaiserpfalzedv.paladinsinn.security.model.Role;
-import de.kaiserpfalzedv.paladinsinn.security.model.User;
-import de.kaiserpfalzedv.paladinsinn.security.model.impl.PersonaBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.model.impl.UserBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.AbstractCSVDataReader;
+import de.kaiserpfalzedv.paladinsinn.commons.api.person.Gender;
+import de.kaiserpfalzedv.paladinsinn.commons.api.person.NameBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.CSV;
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.SingleTenant;
+import de.kaiserpfalzedv.paladinsinn.security.api.model.PersonaBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.api.model.Role;
+import de.kaiserpfalzedv.paladinsinn.security.api.model.User;
+import de.kaiserpfalzedv.paladinsinn.security.api.model.UserBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.api.store.RoleCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.api.store.UserCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.api.store.UserDataReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

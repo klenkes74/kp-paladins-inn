@@ -211,7 +211,7 @@
                             <id>attach-javadoc</id>
                             <phase>post-integration-test</phase>
                             <goals>
-                                <goal>javadoc</goal>
+                                <goal>jar</goal>
                             </goals>
                         </execution>
                     </executions>

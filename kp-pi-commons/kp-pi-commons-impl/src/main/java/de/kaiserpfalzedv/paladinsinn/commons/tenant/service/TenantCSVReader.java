@@ -21,13 +21,13 @@ import java.util.UUID;
 
 import javax.inject.Inject;
 
-import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.impl.AbstractCSVDataReader;
-import de.kaiserpfalzedv.paladinsinn.commons.service.CSV;
-import de.kaiserpfalzedv.paladinsinn.commons.service.SingleTenant;
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.impl.TenantBuilder;
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.store.TenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.commons.api.BuilderValidationException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.AbstractCSVDataReader;
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.CSV;
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.SingleTenant;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.TenantBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.store.TenantCrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

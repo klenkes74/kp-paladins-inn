@@ -22,6 +22,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
 import javax.persistence.LockModeType;
@@ -32,19 +34,19 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TransactionRequiredException;
 import javax.persistence.TypedQuery;
 
-import de.kaiserpfalzedv.paladinsinn.commons.BuilderValidationException;
-import de.kaiserpfalzedv.paladinsinn.commons.paging.Page;
-import de.kaiserpfalzedv.paladinsinn.commons.paging.PageRequest;
-import de.kaiserpfalzedv.paladinsinn.commons.paging.impl.PageBuilder;
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateEntityException;
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.DuplicateUniqueIdException;
-import de.kaiserpfalzedv.paladinsinn.commons.persistence.PersistenceRuntimeException;
-import de.kaiserpfalzedv.paladinsinn.commons.service.SingleTenant;
-import de.kaiserpfalzedv.paladinsinn.commons.service.WorkerService;
+import de.kaiserpfalzedv.paladinsinn.commons.api.BuilderValidationException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.paging.Page;
+import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateEntityException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateUniqueIdException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.PersistenceRuntimeException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.SingleTenant;
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.WorkerService;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.store.TenantCrudService;
 import de.kaiserpfalzedv.paladinsinn.commons.store.jpa.model.TenantJPA;
 import de.kaiserpfalzedv.paladinsinn.commons.store.jpa.model.TenantJPABuilder;
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.store.TenantCrudService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,6 +55,8 @@ import org.slf4j.LoggerFactory;
  * @version 1.0.0
  * @since 2017-03-18
  */
+@Alternative
+@RequestScoped
 @SingleTenant
 @WorkerService
 public class TenantCrudJPA implements TenantCrudService {
@@ -96,24 +100,6 @@ public class TenantCrudJPA implements TenantCrudService {
         );
     }
 
-    @Override
-    public TenantJPA create(final Tenant tenant) throws DuplicateEntityException {
-        TenantJPA data = createTenantJPA(tenant);
-
-        try {
-            em.persist(data);
-            LOG.info("Saved tenant to persistence: {} -> {}", tenant, data);
-        } catch (EntityExistsException e) {
-            throw new DuplicateUniqueIdException(TenantJPA.class, tenant);
-        }
-
-        return retrieve(tenant.getUniqueId()).orElseThrow(() -> {
-            LOG.error("Could not load the newly persisted tenant: {}", data);
-
-            return new PersistenceRuntimeException(TenantJPA.class, "Could not create new Tenant: " + data);
-        });
-    }
-
     private void deleteTenant(TenantJPA data, final String errorMessage, final Object errorMessageData) {
         if (data != null) {
             try {
@@ -135,22 +121,26 @@ public class TenantCrudJPA implements TenantCrudService {
         }
     }
 
-    private TypedQuery<TenantJPA> createTenantByKeyQuery(String tenantKey) {
-        return createNamedQuery("tenant-by-key").setParameter("key", tenantKey);
-    }
-
-    private TenantJPA createTenantJPA(Tenant tenant) {
-        TenantJPA data;
+    @Override
+    public TenantJPA create(final Tenant tenant) throws DuplicateEntityException {
+        TenantJPA data = createTenantJPA(tenant);
 
         try {
-            data = new TenantJPABuilder().withTenant(tenant).build();
-        } catch (BuilderValidationException e) {
-            LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
-
-            throw new PersistenceRuntimeException(TenantJPA.class, "Can't build the tenant to save it to the persistence store: " + tenant);
+            em.persist(data);
+            LOG.info("Saved tenant to persistence: {} -> {}", tenant, data);
+        } catch (EntityExistsException e) {
+            throw new DuplicateUniqueIdException(TenantJPA.class, tenant);
         }
 
-        return data;
+        return retrieve(tenant.getUniqueId()).orElseThrow(() -> {
+            LOG.error("Could not load the newly persisted tenant: {}", data);
+
+            return new PersistenceRuntimeException(TenantJPA.class, "Could not create new Tenant: " + data);
+        });
+    }
+
+    private TypedQuery<TenantJPA> createTenantByKeyQuery(String tenantKey) {
+        return createNamedQuery("tenant-by-key").setParameter("key", tenantKey);
     }
 
     private Optional<TenantJPA> retrieveSingleTenant(final TypedQuery<TenantJPA> query) {
@@ -175,6 +165,21 @@ public class TenantCrudJPA implements TenantCrudService {
     private TypedQuery<TenantJPA> createNamedQuery(String query) {
         return em.createNamedQuery(query, TenantJPA.class);
     }
+
+    private TenantJPA createTenantJPA(Tenant tenant) {
+        TenantJPA data;
+
+        try {
+            data = new TenantJPABuilder().withTenant(tenant).build();
+        } catch (BuilderValidationException e) {
+            LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
+
+            throw new PersistenceRuntimeException(TenantJPA.class, "Can't build the tenant to save it to the persistence store: " + tenant);
+        }
+
+        return data;
+    }
+
 
     @Override
     public Optional<TenantJPA> retrieve(final UUID uniqueId) {

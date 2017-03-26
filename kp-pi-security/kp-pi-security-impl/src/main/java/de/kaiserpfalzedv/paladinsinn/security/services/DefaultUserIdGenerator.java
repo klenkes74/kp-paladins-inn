@@ -16,9 +16,10 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.services;
 
-import de.kaiserpfalzedv.paladinsinn.commons.person.Email;
-import de.kaiserpfalzedv.paladinsinn.commons.person.Name;
-import de.kaiserpfalzedv.paladinsinn.security.model.Persona;
+import de.kaiserpfalzedv.paladinsinn.commons.api.person.Email;
+import de.kaiserpfalzedv.paladinsinn.commons.api.person.Name;
+import de.kaiserpfalzedv.paladinsinn.security.api.model.Persona;
+import de.kaiserpfalzedv.paladinsinn.security.api.services.UserIdGenerator;
 
 /**
  * Creates a default user id by:

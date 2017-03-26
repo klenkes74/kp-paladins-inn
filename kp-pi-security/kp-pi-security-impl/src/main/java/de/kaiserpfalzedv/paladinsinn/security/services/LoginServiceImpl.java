@@ -16,8 +16,13 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.services;
 
-import de.kaiserpfalzedv.paladinsinn.commons.tenant.model.Tenant;
-import de.kaiserpfalzedv.paladinsinn.security.model.User;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.security.api.model.User;
+import de.kaiserpfalzedv.paladinsinn.security.api.services.LoginService;
+import de.kaiserpfalzedv.paladinsinn.security.api.services.PasswordFailureException;
+import de.kaiserpfalzedv.paladinsinn.security.api.services.UserHasNoAccessToTenantException;
+import de.kaiserpfalzedv.paladinsinn.security.api.services.UserIsLockedException;
+import de.kaiserpfalzedv.paladinsinn.security.api.services.UserNotFoundException;
 
 /**
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}

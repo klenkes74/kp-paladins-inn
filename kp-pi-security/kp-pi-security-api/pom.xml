@@ -27,7 +27,8 @@
                         <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
                         <Bundle-Version>${project.version}</Bundle-Version>
                         <Export-Package>
-                            de.kaiserpfalzedv.paladinsinn.security.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.security.api.model.*;version=${project.version}
+                            de.kaiserpfalzedv.paladinsinn.security.api.services.*;version=${project.version}
                         </Export-Package>
                         <Import-Package>
                             *
