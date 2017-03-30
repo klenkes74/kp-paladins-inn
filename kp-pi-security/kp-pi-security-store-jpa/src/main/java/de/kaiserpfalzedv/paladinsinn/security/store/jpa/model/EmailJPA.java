@@ -37,8 +37,9 @@ public class EmailJPA extends Email {
         super(null);
     }
 
-    public EmailJPA(String email) {
-        super(email);
+    public EmailJPA(final String address) {
+        super(null);
+        this.address = address;
     }
 
     @Override

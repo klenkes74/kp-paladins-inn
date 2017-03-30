@@ -16,6 +16,8 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.store.jpa.model;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
@@ -45,13 +47,40 @@ public class NameJPA implements Name {
     private String snPostfix;
 
     @Override
+    public int hashCode() {
+        return Objects.hash(getGivenNamePrefix(), getGivenName(), getGivenNamePostfix(), getSnPrefix(), getSn(), getSnPostfix());
+    }
+
+    @Override
     public String getGivenNamePrefix() {
         return givenNamePrefix;
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NameJPA)) return false;
+        NameJPA nameJPA = (NameJPA) o;
+        return Objects.equals(getGivenNamePrefix(), nameJPA.getGivenNamePrefix()) &&
+                Objects.equals(getGivenName(), nameJPA.getGivenName()) &&
+                Objects.equals(getGivenNamePostfix(), nameJPA.getGivenNamePostfix()) &&
+                Objects.equals(getSnPrefix(), nameJPA.getSnPrefix()) &&
+                Objects.equals(getSn(), nameJPA.getSn()) &&
+                Objects.equals(getSnPostfix(), nameJPA.getSnPostfix());
+    }
+
+    @Override
     public String getGivenName() {
         return givenName;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("NameJPA{");
+        sb.append("givenName='").append(givenName).append('\'');
+        sb.append(", sn='").append(sn).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
     @Override
@@ -113,4 +142,6 @@ public class NameJPA implements Name {
     public void setSnPostfix(String snPostfix) {
         this.snPostfix = snPostfix;
     }
+
+
 }

@@ -57,7 +57,7 @@ import de.kaiserpfalzedv.paladinsinn.security.api.model.Persona;
 })
 public class PersonaJPA implements Persona {
     public static final ZoneId UTC = ZoneId.of("UTC");
-    private static final long serialVersionUID = 4358285403335206658L;
+    private static final long serialVersionUID = -1207740809890577050L;
     @Id
     @Column(name = "ID", unique = true, nullable = false, updatable = false)
     private UUID uniqueId;
@@ -190,5 +190,13 @@ public class PersonaJPA implements Persona {
 
     public void setLocale(final Locale locale) {
         this.language = locale;
+    }
+
+    public Set<UserJPA> getUsers() {
+        return this.users;
+    }
+
+    public void setUsers(final Set<UserJPA> users) {
+        this.users = users;
     }
 }

@@ -17,6 +17,7 @@
 package de.kaiserpfalzedv.paladinsinn.commons.api.person;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -24,7 +25,7 @@ import java.io.Serializable;
  * @since 2017-03-11
  */
 public class Email implements Serializable {
-    private static final long serialVersionUID = 5441622214571694870L;
+    private static final long serialVersionUID = 331049522892668133L;
     
     private String email;
 
@@ -32,7 +33,25 @@ public class Email implements Serializable {
         this.email = email;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(getAddress());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Email)) return false;
+        Email email1 = (Email) o;
+        return Objects.equals(getAddress(), email1.getAddress());
+    }
+
     public String getAddress() {
         return email;
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder("Email{").append(getAddress()).append('}').toString();
     }
 }
