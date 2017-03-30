@@ -21,14 +21,14 @@ import java.time.OffsetDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-25
  */
-public interface CommandResult<T> extends Identifiable {
+public interface CommandResult<T> extends Nameable {
     public static final long serialVersionUID = 0L;
 
     /**

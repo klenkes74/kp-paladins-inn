@@ -27,7 +27,7 @@ import java.net.URI;
  * @version 1.0.0
  * @since 2017-03-18
  */
-public interface DataReader<T extends Identifiable> {
+public interface DataReader<T extends Nameable> {
     void read(URI uri) throws IOException;
 
     void read(InputStream stream);

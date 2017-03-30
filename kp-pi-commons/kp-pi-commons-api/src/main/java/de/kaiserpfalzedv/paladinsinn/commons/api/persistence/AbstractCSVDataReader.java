@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * @version 1.0.0
  * @since 2017-03-20
  */
-public abstract class AbstractCSVDataReader<T extends Identifiable> implements DataReader<T> {
+public abstract class AbstractCSVDataReader<T extends Nameable> implements DataReader<T> {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractCSVDataReader.class);
 
     protected CrudService<T> crudService;

@@ -16,21 +16,18 @@
 
 package de.kaiserpfalzedv.paladinsinn.commons.store.jpa.model;
 
-import java.time.ZonedDateTime;
-import java.util.Objects;
+import java.time.OffsetDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-import javax.persistence.Version;
 
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.commons.jpa.NamedMetaData;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -39,11 +36,9 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
  */
 @Entity(name = "tenant")
 @Table(
-        schema = "TENANT",
-        catalog = "TENANT",
         name = "TENANTS",
         uniqueConstraints = {
-                @UniqueConstraint(name = "TENANT_UUID_UK", columnNames = "UNIQUE_ID"),
+                @UniqueConstraint(name = "TENANT_UUID_UK", columnNames = "ID"),
                 @UniqueConstraint(name = "TENANT_KEY_UK", columnNames = "KEY"),
                 @UniqueConstraint(name = "TENANT_NAME_UK", columnNames = "NAME")
         }
@@ -54,76 +49,26 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
         @NamedQuery(name = "tenant-by-name", query = "select t from tenant t where t.name=:name"),
         @NamedQuery(name = "tenant-by-key", query = "select t from tenant t where t.key=:key")
 })
-public class TenantJPA implements Tenant {
-    private static final long serialVersionUID = 8991153230615920093L;
+public class TenantJPA extends NamedMetaData implements Tenant {
+    private static final long serialVersionUID = -7394966656438554619L;
 
-
-    @Id
-    @Column(name = "ID", unique = true, nullable = false, updatable = false)
-    private UUID uniqueId;
-
-    @Column(name = "NAME", length = 200, unique = true, nullable = false)
-    private String name;
-
-    @Column(name = "KEY", length = 25, unique = true, nullable = false)
+    @Column(name = "KEY", length = 5, unique = true, nullable = false)
     private String key;
 
 
-    @Version
-    private Long version;
+    @Deprecated
+    public TenantJPA() {}
 
-    @Embedded
-    private PaladinsInnJPAMetaData metaData;
+    public TenantJPA(
+            final UUID id, final Long version,
+            final String key, final String name,
+            final OffsetDateTime created, final OffsetDateTime modified
+    ) {
+        super(id, version, name, created, modified);
 
-
-    public ZonedDateTime getCreated() {
-        checkMetaData();
-        return metaData.getCreated();
+        setKey(key);
     }
 
-    void setCreated(final ZonedDateTime timeStamp) {
-        checkMetaData();
-        metaData.setCreated(timeStamp);
-    }
-
-    private synchronized void checkMetaData() {
-        if (metaData == null) {
-            metaData = new PaladinsInnJPAMetaData();
-        }
-    }
-
-    public ZonedDateTime getChanged() {
-        checkMetaData();
-        return metaData.getChanged();
-    }
-
-    void setChanged(final ZonedDateTime timeStamp) {
-        checkMetaData();
-        metaData.setChanged(timeStamp);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getUniqueId(), getName(), getKey());
-    }
-
-    @Override
-    public UUID getUniqueId() {
-        return uniqueId;
-    }
-
-    public void setUniqueId(final UUID uniqueId) {
-        this.uniqueId = uniqueId;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
-    }
 
     @Override
     public String getKey() {
@@ -134,27 +79,14 @@ public class TenantJPA implements Tenant {
         this.key = key;
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (!(o instanceof TenantJPA)) return false;
-        TenantJPA tenantJPA = (TenantJPA) o;
-        return Objects.equals(getUniqueId(), tenantJPA.getUniqueId()) &&
-                Objects.equals(getName(), tenantJPA.getName()) &&
-                Objects.equals(getKey(), tenantJPA.getKey());
-    }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("TenantJPA@");
+        return new StringBuilder("TenantJPA@").append(System.identityHashCode(this)).append('{')
 
-        sb
-                .append(System.identityHashCode(this))
-                .append("{id=").append(getUniqueId())
-                .append(", name=").append(getName())
-                .append(", key='").append(getKey()).append('\'')
-                .append(", metaData=").append(metaData);
+                                              .append(super.toString())
+                                              .append(", key='").append(getKey()).append('\'')
 
-        return sb.append('}').toString();
+                                              .append('}').toString();
     }
 }

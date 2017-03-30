@@ -18,7 +18,7 @@ package de.kaiserpfalzedv.paladinsinn.commons.api;
 
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 
 /**
  * The base exception for all checked exceptions of the Paladin's Inn Topic Hub.
@@ -26,7 +26,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public abstract class PaladinsInnBaseException extends Exception implements Identifiable {
+public abstract class PaladinsInnBaseException extends Exception implements Nameable {
     private static final long serialVersionUID = 440941513834134320L;
     
     /**

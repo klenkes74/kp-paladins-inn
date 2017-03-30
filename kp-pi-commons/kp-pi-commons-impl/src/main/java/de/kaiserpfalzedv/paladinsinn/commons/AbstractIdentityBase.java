@@ -18,7 +18,7 @@ package de.kaiserpfalzedv.paladinsinn.commons;
 
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 
 /**
  * A base implementation for all identifable classes (including writable interface).
@@ -26,7 +26,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public abstract class AbstractIdentityBase implements Identifiable {
+public abstract class AbstractIdentityBase implements Nameable {
     private static final long serialVersionUID = -8962217148724162694L;
     
     private UUID id;

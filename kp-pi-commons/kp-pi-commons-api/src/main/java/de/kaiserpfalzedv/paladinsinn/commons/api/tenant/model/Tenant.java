@@ -18,7 +18,7 @@ package de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model;
 
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 
 /**
  * The tenant of a data node in the database.
@@ -26,7 +26,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public interface Tenant extends Identifiable {
+public interface Tenant extends Nameable {
     /**
      * The default tenant id for non-multitenant systems.
      */

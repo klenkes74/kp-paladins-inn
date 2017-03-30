@@ -26,22 +26,22 @@ package de.kaiserpfalzedv.paladinsinn.commons.api.persistence;
 public class DuplicateUniqueNameException extends DuplicateUniqueKeyException {
     private static final long serialVersionUID = 9002695233045656093L;
 
-    private Identifiable identifiable;
+    private Nameable nameable;
 
 
     /**
      * @param clasz        The class of the entity.
-     * @param identifiable The identity that should be created.
+     * @param nameable The identity that should be created.
      */
-    public DuplicateUniqueNameException(final Class<?> clasz, final Identifiable identifiable) {
-        super(clasz, "unique name", identifiable);
+    public DuplicateUniqueNameException(final Class<?> clasz, final Nameable nameable) {
+        super(clasz, "unique name", nameable);
     }
 
 
     /**
      * @return The identity that should have been created.
      */
-    public Identifiable getIdentifiable() {
-        return identifiable;
+    public Nameable getNameable() {
+        return nameable;
     }
 }

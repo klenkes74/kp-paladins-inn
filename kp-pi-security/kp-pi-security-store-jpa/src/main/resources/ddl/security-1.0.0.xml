@@ -28,55 +28,40 @@
             <column name="ID" type="VARCHAR(40)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="ENTITLEMENTS_PK"/>
             </column>
-
             <column name="VERSION" type="BIGINT" defaultValue="0">
                 <constraints nullable="false"/>
             </column>
-
+            <column name="CREATED" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MODIFIED" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
             <column name="TENANT_ID" type="VARCHAR(40)">
                 <constraints nullable="false"/>
             </column>
-
             <column name="NAME" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
-        <createIndex indexName="TENANTS_TENANT_ID_IDX" unique="false" tableName="ENTITLEMENTS">
-            <column name="TENANT_ID"/>
-        </createIndex>
-
-        <createIndex indexName="TENANTS_NAME_UK" unique="true" tableName="ENTITLEMENTS">
-            <column name="NAME"/>
-        </createIndex>
-
-        <rollback>
-            <dropIndex indexName="TENANTS_NAME_UK" tableName="ENTITLEMENTS"/>
-        </rollback>
-        <rollback>
-            <dropIndex indexName="TENANTS_TENANT_ID_IDX" tableName="ENTITLEMENTS"/>
-        </rollback>
-        <rollback>
-            <dropTable tableName="ENTITLEMENTS"/>
-        </rollback>
-    </changeSet>
-
-    <changeSet id="roles-initial" author="klenkes74">
-        <comment>The initial data base tables for the security JPA implementation of Paladins Inn.</comment>
 
         <createTable tableName="ROLES">
             <column name="ID" type="VARCHAR(40)">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="ROLES_PK"/>
             </column>
-
             <column name="VERSION" type="BIGINT" defaultValue="0">
                 <constraints nullable="false"/>
             </column>
-
+            <column name="CREATED" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MODIFIED" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
             <column name="TENANT_ID" type="VARCHAR(40)">
                 <constraints nullable="false"/>
             </column>
-
             <column name="NAME" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
@@ -92,8 +77,8 @@
             <column name="SLAVE_ID" type="VARCHAR(40)">
                 <constraints
                         nullable="false"
-                        foreignKeyName="ROLES_ROLES_SLAVE_FK" references="ROLES(ID)
-"/>
+                        foreignKeyName="ROLES_ROLES_SLAVE_FK" references="ROLES(ID)"
+                />
             </column>
         </createTable>
 
@@ -113,29 +98,175 @@
             </column>
         </createTable>
 
-        <createIndex indexName="ROLES_TENANT_ID_IDX" unique="false" tableName="ROLES">
+
+        <createTable tableName="PERSONAS">
+            <column name="ID" type="VARCHAR(40)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="PERSONAS_PK"/>
+            </column>
+            <column name="VERSION" type="BIGINT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MODIFIED" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TENANT_ID" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="GIVENNAME_PREFIX" type="VARCHAR(50)"/>
+            <column name="GIVENNAME" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="GIVENNAME_POSTFIX" type="VARCHAR(50)"/>
+            <column name="SN_PREFIX" type="VARCHAR(50)"/>
+            <column name="SN" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SN_POSTFIX" type="VARCHAR(50)"/>
+
+            <column name="GENDER" type="VARCHAR(50)"/>
+            <column name="BIRTHDATE" type="TIMESTAMP"/>
+            <column name="COUNTRY" type="VARCHAR(3)" defaultValue="DEU"/>
+            <column name="LANGUAGE" type="VARCHAR(3)" defaultValue="deu"/>
+        </createTable>
+
+
+        <createTable tableName="USERS">
+            <column name="ID" type="VARCHAR(40)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="USERS_PK"/>
+            </column>
+            <column name="VERSION" type="BIGINT" defaultValue="0">
+                <constraints nullable="false"/>
+            </column>
+            <column name="CREATED" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MODIFIED" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TENANT_ID" type="VARCHAR(40)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="PERSONA_ID" type="VARCHAR(40)">
+                <constraints
+                        nullable="false"
+                        foreignKeyName="USERS_PERSONA_FK" references="PERSONAS(ID)"
+                />
+            </column>
+
+            <column name="EMAIL_ADDRESS" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="PASSWORD" type="VARCHAR(200)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="LOCKED" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+
+        <createIndex tableName="ENTITLEMENTS" indexName="ENTITLEMENTS_TENANT_ID_IDX" unique="false">
             <column name="TENANT_ID"/>
         </createIndex>
-
-        <createIndex indexName="ROLES_NAME_UK" unique="true" tableName="ROLES">
+        <createIndex tableName="ENTITLEMENTS" indexName="ENTITLEMENTS_UUID_UK" unique="true">
+            <column name="ID"/>
+        </createIndex>
+        <createIndex tableName="ENTITLEMENTS" indexName="ENTITLEMENTS_NAME_UK" unique="true">
+            <column name="TENANT_ID"/>
             <column name="NAME"/>
         </createIndex>
 
-        <createIndex indexName="ROLES_ROLES_MASTER_IDX" tableName="ROLES_ROLES">
-            <column name="MASTER_ID"/>
+        <createIndex tableName="ROLES" indexName="ROLES_TENANT_ID_IDX" unique="false">
+            <column name="TENANT_ID"/>
+        </createIndex>
+        <createIndex tableName="ROLES" indexName="ROLES_UUID_UK" unique="true">
+            <column name="ID"/>
+        </createIndex>
+        <createIndex tableName="ROLES" indexName="ROLES_NAME_UK" unique="true">
+            <column name="TENANT_ID"/>
+            <column name="NAME"/>
         </createIndex>
 
-        <createIndex indexName="ROLES_ROLES_SLAVE_IDX" tableName="ROLES_ROLES">
+        <createIndex tableName="ROLES_ROLES" indexName="ROLES_ROLES_MASTER_IDX">
+            <column name="MASTER_ID"/>
+        </createIndex>
+        <createIndex tableName="ROLES_ROLES" indexName="ROLES_ROLES_SLAVE_IDX">
             <column name="SLAVE_ID"/>
         </createIndex>
 
-        <createIndex indexName="ROLES_ENTITLEMENTS_ROLE_IDX" tableName="ROLES_ENTITLEMENTS">
+        <createIndex tableName="ROLES_ENTITLEMENTS" indexName="ROLES_ENTITLEMENTS_ROLE_IDX">
             <column name="ROLE_ID"/>
         </createIndex>
-
-        <createIndex indexName="ROLES_ENTITLEMENTS_ENTITLEMENT_IDX" tableName="ROLES_ENTITLEMENTS">
+        <createIndex tableName="ROLES_ENTITLEMENTS" indexName="ROLES_ENTITLEMENTS_ENTITLEMENT_IDX">
             <column name="ENTITLEMENT_ID"/>
         </createIndex>
+
+        <createIndex tableName="PERSONAS" indexName="PERSONAS_TENANT_IDX">
+            <column name="TENANT_ID"/>
+        </createIndex>
+        <createIndex tableName="PERSONAS" indexName="PERSONAS_UUID_UK" unique="true">
+            <column name="ID"/>
+        </createIndex>
+        <createIndex tableName="PERSONAS" indexName="PERSONAS_NAME_UK" unique="true">
+            <column name="TENANT_ID"/>
+            <column name="NAME"/>
+        </createIndex>
+
+        <createIndex tableName="USERS" indexName="USERS_UUID_UK" unique="true">
+            <column name="ID"/>
+        </createIndex>
+        <createIndex tableName="USERS" indexName="USERS_NAME_UK" unique="true">
+            <column name="TENANT_ID"/>
+            <column name="NAME"/>
+        </createIndex>
+        <createIndex tableName="USERS" indexName="USERS_TENANT_IDX">
+            <column name="TENANT_ID"/>
+        </createIndex>
+        <createIndex tableName="USERS" indexName="USERS_PERSONAS_IDX">
+            <column name="PERSONA_ID"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex tableName="USERS" indexName="USERS_PERSONAS_IDX"/>
+        </rollback>
+        <rollback>
+            <dropIndex tableName="USERS" indexName="USERS_NAME_UK"/>
+        </rollback>
+        <rollback>
+            <dropIndex tableName="USERS" indexName="USERS_UUID_UK"/>
+        </rollback>
+        <rollback>
+            <dropIndex tableName="USERS" indexName="USERS_TENANT_IDX"/>
+        </rollback>
+        <rollback>
+            <dropTable tableName="USERS"/>
+        </rollback>
+
+        <rollback>
+            <dropIndex tableName="PERSONAS" indexName="PERSONAS_NAME_UK"/>
+        </rollback>
+        <rollback>
+            <dropIndex tableName="PERSONAS" indexName="PERSONAS_UUID_UK"/>
+        </rollback>
+        <rollback>
+            <dropIndex tableName="PERSONAS" indexName="PERSONAS_TENANT_IDX"/>
+        </rollback>
+        <rollback>
+            <dropTable tableName="PERSONAS"/>
+        </rollback>
 
         <rollback>
             <dropIndex tableName="ROLES_ENTITLEMENTS" indexName="ROLES_ENTITLEMENTS_ENTITLEMENT_IDX"/>
@@ -144,25 +275,44 @@
             <dropIndex tableName="ROLES_ENTITLEMENTS" indexName="ROLES_ENTITLEMENTS_ROLE_IDX"/>
         </rollback>
         <rollback>
+            <dropTable tableName="ROLES_ENTITLEMENTS"/>
+        </rollback>
+
+        <rollback>
             <dropIndex tableName="ROLES_ROLES" indexName="ROLES_ROLES_SLAVE_IDX"/>
         </rollback>
         <rollback>
             <dropIndex tableName="ROLES_ROLES" indexName="ROLES_ROLES_MASTER_IDX"/>
         </rollback>
         <rollback>
-            <dropIndex indexName="ROLES_NAME_UK" tableName="ROLES"/>
-        </rollback>
-        <rollback>
-            <dropIndex indexName="ROLES_TENANT_ID_IDX" tableName="ROLES"/>
-        </rollback>
-        <rollback>
-            <dropTable tableName="ROLES_ENTITLEMENTS"/>
-        </rollback>
-        <rollback>
             <dropTable tableName="ROLES_ROLES"/>
+        </rollback>
+
+        <rollback>
+            <dropIndex tableName="ROLES" indexName="ROLES_NAME_UK"/>
+        </rollback>
+        <rollback>
+            <dropIndex tableName="ROLES" indexName="ROLES_UUID_UK"/>
+        </rollback>
+        <rollback>
+            <dropIndex tableName="ROLES" indexName="ROLES_TENANT_ID_IDX"/>
         </rollback>
         <rollback>
             <dropTable tableName="ROLES"/>
         </rollback>
+
+        <rollback>
+            <dropIndex tableName="ENTITLEMENTS" indexName="TENANTS_NAME_UK"/>
+        </rollback>
+        <rollback>
+            <dropIndex tableName="ENTITLEMENTS" indexName="TENANTS_TENANT_ID_IDX"/>
+        </rollback>
+        <rollback>
+            <dropTable tableName="ENTITLEMENTS"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="security-initial-tag" author="klenkes74">
+        <tagDatabase tag="security-tables-created"/>
     </changeSet>
 </databaseChangeLog>

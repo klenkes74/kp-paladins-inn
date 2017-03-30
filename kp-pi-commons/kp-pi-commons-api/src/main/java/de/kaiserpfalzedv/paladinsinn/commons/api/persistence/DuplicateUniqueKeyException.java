@@ -26,23 +26,23 @@ package de.kaiserpfalzedv.paladinsinn.commons.api.persistence;
 public class DuplicateUniqueKeyException extends DuplicateEntityException {
     private static final long serialVersionUID = 9002695233045656093L;
 
-    private Identifiable identifiable;
+    private Nameable nameable;
 
 
     /**
      * @param clasz        The class of the entity.
      * @param key The name of the key that has the duplicate.
-     * @param identifiable The identity that should be created.
+     * @param nameable The identity that should be created.
      */
-    public DuplicateUniqueKeyException(final Class<?> clasz, final String key, final Identifiable identifiable) {
-        super(clasz, "Entity already exists with unique %s of %s", key, identifiable);
+    public DuplicateUniqueKeyException(final Class<?> clasz, final String key, final Nameable nameable) {
+        super(clasz, "Entity already exists with unique %s of %s", key, nameable);
     }
 
 
     /**
      * @return The identity that should have been created.
      */
-    public Identifiable getIdentifiable() {
-        return identifiable;
+    public Nameable getNameable() {
+        return nameable;
     }
 }

@@ -16,7 +16,7 @@
 
 package de.kaiserpfalzedv.paladinsinn.commons.store.jpa.model;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -24,8 +24,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.Builder;
 import de.kaiserpfalzedv.paladinsinn.commons.api.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.TenantImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import de.kaiserpfalzedv.paladinsinn.commons.jpa.MetaData;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -33,13 +32,12 @@ import org.slf4j.LoggerFactory;
  * @since 2017-03-18
  */
 public class TenantJPABuilder implements Builder<TenantJPA> {
-    private static final Logger LOG = LoggerFactory.getLogger(TenantJPABuilder.class);
-
     private UUID uniqueId;
+    private Long version;
     private String key;
     private String name;
-    private ZonedDateTime created;
-    private ZonedDateTime modified;
+    private OffsetDateTime created;
+    private OffsetDateTime modified;
 
 
     @Override
@@ -47,14 +45,7 @@ public class TenantJPABuilder implements Builder<TenantJPA> {
         calculateDefaults();
         validate();
 
-        TenantJPA result = new TenantJPA();
-        result.setUniqueId(uniqueId);
-        result.setName(name);
-        result.setKey(key);
-        result.setCreated(created);
-        result.setChanged(modified);
-
-        return result;
+        return new TenantJPA(uniqueId, version, key, name, created, modified);
     }
 
     private void calculateDefaults() {
@@ -64,6 +55,14 @@ public class TenantJPABuilder implements Builder<TenantJPA> {
 
         if (key == null && name != null) {
             key = name.substring(0, 5).toUpperCase();
+        }
+
+        if (created == null) {
+            created = OffsetDateTime.now(MetaData.ZONE_ID);
+        }
+
+        if (modified == null) {
+            modified = created;
         }
     }
 
@@ -87,8 +86,11 @@ public class TenantJPABuilder implements Builder<TenantJPA> {
         withName(tenant.getName());
 
         if (tenant instanceof TenantJPA) {
-            withCreated(((TenantJPA) tenant).getCreated());
-            withModified(((TenantJPA) tenant).getChanged());
+            TenantJPA data = (TenantJPA) tenant;
+
+            withVersion(data.getVersion());
+            withCreated(data.getCreated());
+            withModified(data.getModified());
         }
         return this;
     }
@@ -96,6 +98,11 @@ public class TenantJPABuilder implements Builder<TenantJPA> {
 
     public TenantJPABuilder withUniqueId(final UUID uniqueId) {
         this.uniqueId = uniqueId;
+        return this;
+    }
+
+    public TenantJPABuilder withVersion(final Long version) {
+        this.version = version;
         return this;
     }
 
@@ -109,12 +116,12 @@ public class TenantJPABuilder implements Builder<TenantJPA> {
         return this;
     }
 
-    public TenantJPABuilder withCreated(final ZonedDateTime created) {
+    public TenantJPABuilder withCreated(final OffsetDateTime created) {
         this.created = created;
         return this;
     }
 
-    public TenantJPABuilder withModified(final ZonedDateTime modified) {
+    public TenantJPABuilder withModified(final OffsetDateTime modified) {
         this.modified = modified;
         return this;
     }

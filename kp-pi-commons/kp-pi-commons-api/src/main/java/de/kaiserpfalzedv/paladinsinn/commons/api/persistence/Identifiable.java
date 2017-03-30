@@ -17,16 +17,13 @@
 package de.kaiserpfalzedv.paladinsinn.commons.api.persistence;
 
 import java.io.Serializable;
-import java.security.Principal;
 import java.util.UUID;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
- * @since 2017-03-11
+ * @since 2017-03-30
  */
-public interface Identifiable extends Principal, Serializable {
-    public UUID getUniqueId();
-
-    public String getName();
+public interface Identifiable extends Serializable {
+    UUID getUniqueId();
 }

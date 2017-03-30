@@ -28,6 +28,10 @@
 
         <non-jta-data-source>java:comp/env/jdbc/security</non-jta-data-source>
 
+        <class>de.kaiserpfalzedv.paladinsinn.commons.jpa.MetaData</class>
+        <class>de.kaiserpfalzedv.paladinsinn.commons.jpa.NamedMetaData</class>
+        <class>de.kaiserpfalzedv.paladinsinn.commons.jpa.TenantMetaData</class>
+        <class>de.kaiserpfalzedv.paladinsinn.commons.jpa.NamedTenantMetaData</class>
         <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.EntitlementJPA</class>
         <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.RoleJPA</class>
         <class>de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.UserJPA</class>

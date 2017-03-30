@@ -16,7 +16,7 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.api.model;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 
 /**
  * A basic entitlement (in some systems called permissions).
@@ -25,5 +25,5 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public interface Entitlement extends Identifiable {
+public interface Entitlement extends Nameable {
 }

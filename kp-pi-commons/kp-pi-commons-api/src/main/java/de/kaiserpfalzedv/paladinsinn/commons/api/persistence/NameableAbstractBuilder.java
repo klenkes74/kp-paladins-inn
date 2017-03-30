@@ -16,6 +16,8 @@
 
 package de.kaiserpfalzedv.paladinsinn.commons.api.persistence;
 
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -24,10 +26,15 @@ import java.util.UUID;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public abstract class IdentifiableAbstractBuilder<T extends Identifiable> {
+public abstract class NameableAbstractBuilder<T extends Nameable> {
     protected final ArrayList<String> validationErrors = new ArrayList<>(5);
     protected UUID uniqueId;
+    protected Long version;
     protected String name;
+
+    protected OffsetDateTime created;
+    protected OffsetDateTime modified;
+
 
     public abstract T build();
 
@@ -41,17 +48,40 @@ public abstract class IdentifiableAbstractBuilder<T extends Identifiable> {
         if (name == null || name.isEmpty()) {
             name = uniqueId.toString();
         }
+
+        if (created == null) {
+            created = OffsetDateTime.now(ZoneId.of("UTC"));
+        }
+
+        if (modified == null) {
+            modified = created;
+        }
     }
 
     public abstract boolean validate();
 
-    public IdentifiableAbstractBuilder<T> withUniqueId(final UUID uniqueId) {
+    public NameableAbstractBuilder<T> withUniqueId(final UUID uniqueId) {
         this.uniqueId = uniqueId;
         return this;
     }
 
-    public IdentifiableAbstractBuilder<T> withName(final String name) {
+    public NameableAbstractBuilder<T> withName(final String name) {
         this.name = name;
+        return this;
+    }
+
+    public NameableAbstractBuilder<T> withVersion(final Long version) {
+        this.version = version;
+        return this;
+    }
+
+    public NameableAbstractBuilder<T> withCreated(final OffsetDateTime created) {
+        this.created = created;
+        return this;
+    }
+
+    public NameableAbstractBuilder<T> withModified(final OffsetDateTime modified) {
+        this.modified = modified;
         return this;
     }
 }

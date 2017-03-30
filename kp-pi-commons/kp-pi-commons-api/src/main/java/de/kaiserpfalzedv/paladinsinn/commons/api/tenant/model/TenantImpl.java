@@ -18,14 +18,14 @@ package de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model;
 
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.IdentifiableAbstractImpl;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 
 /**
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public class TenantImpl extends IdentifiableAbstractImpl implements Tenant, Identifiable {
+public class TenantImpl extends IdentifiableAbstractImpl implements Tenant, Nameable {
     private static final long serialVersionUID = 111969478658417259L;
     
     private String key;

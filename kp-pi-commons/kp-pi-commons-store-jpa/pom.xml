@@ -72,6 +72,10 @@
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
             <artifactId>kp-pi-commons-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-commons-jpa</artifactId>
+        </dependency>
 
 
         <dependency>
@@ -79,8 +83,8 @@
             <artifactId>javax.inject</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.1-api</artifactId>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
         </dependency>
 
 

@@ -20,7 +20,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 import de.kaiserpfalzedv.paladinsinn.commons.api.person.Email;
 import de.kaiserpfalzedv.paladinsinn.security.api.services.PasswordFailureException;
 import de.kaiserpfalzedv.paladinsinn.security.api.services.UserIsLockedException;
@@ -34,7 +34,7 @@ import de.kaiserpfalzedv.paladinsinn.security.api.services.UserIsLockedException
  * @version 1.0.0
  * @since 2017-03-11
  */
-public interface User extends Identifiable {
+public interface User extends Nameable {
     /**
      * @return the person of the user.
      */

@@ -30,21 +30,34 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.person.Name;
  */
 @Embeddable
 public class NameJPA implements Name {
-    private static final long serialVersionUID = 3251136825872440349L;
+    private static final long serialVersionUID = 8374124626037087707L;
 
-    @Column(name = "GIVEN_PREFIX", length = 50)
+    @Column(name = "GIVENNAME_PREFIX", length = 50)
     private String givenNamePrefix;
-    @Column(name = "GIVEN", length = 200)
+
+    @Column(name = "GIVENNAME", length = 200)
     private String givenName;
-    @Column(name = "GIVEN_POSTFIX", length = 50)
+
+    @Column(name = "GIVENNAME_POSTFIX", length = 50)
     private String givenNamePostfix;
+
 
     @Column(name = "SN_PREFIX", length = 50)
     private String snPrefix;
+
     @Column(name = "SN", length = 200)
     private String sn;
+
     @Column(name = "SN_POSTFIX", length = 50)
     private String snPostfix;
+
+
+    public NameJPA() {}
+
+    public NameJPA(final String givenName, final String sn) {
+        setGivenName(givenName);
+        setSn(sn);
+    }
 
     @Override
     public int hashCode() {
@@ -69,9 +82,8 @@ public class NameJPA implements Name {
                 Objects.equals(getSnPostfix(), nameJPA.getSnPostfix());
     }
 
-    @Override
-    public String getGivenName() {
-        return givenName;
+    public void setGivenNamePrefix(String givenNamePrefix) {
+        this.givenNamePrefix = givenNamePrefix;
     }
 
     @Override
@@ -84,13 +96,31 @@ public class NameJPA implements Name {
     }
 
     @Override
+    public String getGivenName() {
+        return givenName;
+    }
+
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
+    }
+
+    @Override
     public String getGivenNamePostfix() {
         return givenNamePostfix;
     }
 
+    public void setGivenNamePostfix(String givenNamePostfix) {
+        this.givenNamePostfix = givenNamePostfix;
+    }
+
+
     @Override
     public String getSnPrefix() {
         return snPrefix;
+    }
+
+    public void setSnPrefix(String snPrefix) {
+        this.snPrefix = snPrefix;
     }
 
     @Override
@@ -98,10 +128,19 @@ public class NameJPA implements Name {
         return sn;
     }
 
+    public void setSn(String sn) {
+        this.sn = sn;
+    }
+
     @Override
     public String getSnPostfix() {
         return snPostfix;
     }
+
+    public void setSnPostfix(String snPostfix) {
+        this.snPostfix = snPostfix;
+    }
+
 
     @Override
     public String getFormalSn() {
@@ -117,30 +156,6 @@ public class NameJPA implements Name {
     public String getFormalFullName() {
         return getGivenNamePrefix() + ' ' + getGivenName() + ' ' + getGivenNamePostfix()
                 + getSnPrefix() + ' ' + getSn() + ' ' + getSnPostfix();
-    }
-
-    public void setGivenNamePrefix(String givenNamePrefix) {
-        this.givenNamePrefix = givenNamePrefix;
-    }
-
-    public void setGivenName(String givenName) {
-        this.givenName = givenName;
-    }
-
-    public void setGivenNamePostfix(String givenNamePostfix) {
-        this.givenNamePostfix = givenNamePostfix;
-    }
-
-    public void setSnPrefix(String snPrefix) {
-        this.snPrefix = snPrefix;
-    }
-
-    public void setSn(String sn) {
-        this.sn = sn;
-    }
-
-    public void setSnPostfix(String snPostfix) {
-        this.snPostfix = snPostfix;
     }
 
 

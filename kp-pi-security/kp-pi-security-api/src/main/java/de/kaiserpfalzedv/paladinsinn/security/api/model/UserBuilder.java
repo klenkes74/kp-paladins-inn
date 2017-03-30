@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.ServiceLoader;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.IdentifiableAbstractBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.NameableAbstractBuilder;
 import de.kaiserpfalzedv.paladinsinn.commons.api.person.Email;
 import de.kaiserpfalzedv.paladinsinn.security.api.services.UserIdGenerator;
 
@@ -36,7 +36,7 @@ import de.kaiserpfalzedv.paladinsinn.security.api.services.UserIdGenerator;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public class UserBuilder extends IdentifiableAbstractBuilder<User> {
+public class UserBuilder extends NameableAbstractBuilder<User> {
     private final HashSet<Role> roles = new HashSet<>();
     /**
      * A list of errors during validation.
@@ -153,6 +153,7 @@ public class UserBuilder extends IdentifiableAbstractBuilder<User> {
             unlocked();
         }
 
+
         withRoles(user.getRoles());
 
         return this;
@@ -183,7 +184,7 @@ public class UserBuilder extends IdentifiableAbstractBuilder<User> {
         return this;
     }
 
-    public UserBuilder withRoles(final Collection<Role> roles) {
+    public UserBuilder withRoles(final Collection<? extends Role> roles) {
         if (roles != null) {
             this.roles.addAll(roles);
         }

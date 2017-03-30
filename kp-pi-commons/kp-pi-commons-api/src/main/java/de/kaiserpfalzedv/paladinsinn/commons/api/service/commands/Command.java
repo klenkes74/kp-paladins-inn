@@ -18,13 +18,13 @@ package de.kaiserpfalzedv.paladinsinn.commons.api.service.commands;
 
 import java.time.OffsetDateTime;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-25
  */
-public interface Command<T> extends Identifiable {
+public interface Command<T> extends Nameable {
     OffsetDateTime getCommandTimeStamp();
 }

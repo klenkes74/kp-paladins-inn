@@ -18,19 +18,17 @@ package de.kaiserpfalzedv.paladinsinn.security.store.jpa.model;
 
 import java.security.Principal;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ForeignKey;
-import javax.persistence.Id;
 import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -38,13 +36,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.persistence.Version;
+import javax.persistence.UniqueConstraint;
 
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Modifiable;
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.MultiTenantable;
+import de.kaiserpfalzedv.paladinsinn.commons.jpa.NamedTenantMetaData;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.Entitlement;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.Role;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.User;
@@ -57,7 +55,13 @@ import de.kaiserpfalzedv.paladinsinn.security.api.services.UserIsLockedException
  * @since 2017-03-26
  */
 @Entity(name = "user")
-@Table(name = "USERS")
+@Table(
+        name = "USERS",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "USERS_UUID_UK", columnNames = {"ID"}),
+                @UniqueConstraint(name = "USERS_NAME_UK", columnNames = {"TENANT_ID", "NAME"}),
+        }
+)
 @NamedQueries({
         @NamedQuery(
                 name = "user-by-name",
@@ -68,43 +72,21 @@ import de.kaiserpfalzedv.paladinsinn.security.api.services.UserIsLockedException
                 query = "SELECT u FROM user u WHERE u.tenantId=:tenant"
         )
 })
-public class UserJPA implements User, MultiTenantable, Modifiable {
-    public static final ZoneId UTC = ZoneId.of("UTC");
-    private static final long serialVersionUID = 3051192195680467875L;
+public class UserJPA extends NamedTenantMetaData implements User, MultiTenantable, Modifiable {
+    private static final long serialVersionUID = 6705906221399853461L;
     @Transient
-    final HashSet<Principal> allEntitlements = new HashSet<>();
+    private final HashSet<Principal> allEntitlements = new HashSet<>();
     @Transient
     private final HashSet<Role> allRoles = new HashSet<>();
-
-    @Id
-    @Column(name = "ID", unique = true, nullable = false, updatable = false)
-    private UUID uniqueId;
-    @Column(name = "TENANT_ID", nullable = false)
-    private UUID tenantId;
-    @SuppressWarnings("unused") // managd by JPA
-    @Version
-    @Column(name = "VERSION", nullable = false)
-    private long version;
-    @Column(name = "NAME", length = 200, unique = true, nullable = false)
-    private String name;
-
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "PERSONA_ID", nullable = false)
     private PersonaJPA persona;
-
     @Embedded
     private EmailJPA email;
-
     @Column(name = "LOCKED", nullable = false)
     private boolean locked;
     @Column(name = "PASSWORD", length = 200, nullable = false)
     private String password;
-
-
-    @Column(name = "CREATED", nullable = false)
-    private OffsetDateTime created = OffsetDateTime.now(UTC);
-    @Column(name = "MODIFIED", nullable = false)
-    private OffsetDateTime modified = created;
     @ManyToMany
     @JoinTable(
             name = "USERS_ROLES",
@@ -120,8 +102,7 @@ public class UserJPA implements User, MultiTenantable, Modifiable {
                     @Index(name = "USERS_ROLES_ROLE_IDX", columnList = "ROLE_ID")
             }
     )
-    private Set<RoleJPA> roles;
-
+    private volatile Set<RoleJPA> roles;
     @ManyToMany
     @JoinTable(
             name = "USERS_ENTITLEMENTS",
@@ -137,149 +118,30 @@ public class UserJPA implements User, MultiTenantable, Modifiable {
                     @Index(name = "USERS_ENTITLEMENTS_ENTITLEMENT_IDX", columnList = "ENTITLEMENT_ID")
             }
     )
-    private Set<EntitlementJPA> entitlements;
+    private volatile Set<EntitlementJPA> entitlements;
 
-    @Override
-    public long getVersion() {
-        return version;
-    }
-
-    @Override
-    public OffsetDateTime getCreated() {
-        return created;
-    }
-
-    public OffsetDateTime getModified() {
-        return modified;
-    }
 
     @Deprecated
-    public void setModified(final OffsetDateTime modified) {
-        this.modified = modified;
+    public UserJPA() {}
+
+    public UserJPA(
+            final UUID uniqueId, final Long version,
+            final UUID tenantId,
+            final String name, final String password,
+            final PersonaJPA fullName,
+            final EmailJPA emailAddress, final boolean locked,
+            final OffsetDateTime created, final OffsetDateTime modified
+    ) {
+        super(uniqueId, version, tenantId, name, created, modified);
+
+        setPassword(password);
+        setPerson(fullName);
+        setEmailAddress(emailAddress);
+        setLocked(locked);
     }
 
-    @Deprecated
-    public void setCreated(final OffsetDateTime created) {
-        this.created = created;
-    }
-
-    public UUID getTenantId() {
-        return tenantId;
-    }
-
-    @Deprecated
-    public void setTenantId(final UUID tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    @Deprecated
-    @PrePersist
-    public void updateChanged() {
-        modified = OffsetDateTime.now(UTC);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getUniqueId());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof UserJPA)) return false;
-        UserJPA that = (UserJPA) o;
-        return Objects.equals(getUniqueId(), that.getUniqueId());
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("EntitlementJPA@")
-                .append(System.identityHashCode(this)).append('{');
-
-        sb
-                .append(uniqueId);
-
-        if (version != 0) {
-            sb.append('/').append(version);
-        }
-
-        if (tenantId != null) {
-            sb.append(", tenant=").append(tenantId);
-        }
-
-        sb
-                .append(name)
-                .append(", created=").append(created);
-
-        if (!created.equals(modified)) {
-            sb.append(", changed=").append(modified);
-        }
-
-        return sb.append('}').toString();
-    }
-
-    @Override
-    public UUID getUniqueId() {
-        return uniqueId;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Deprecated
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    @Deprecated
-    public void setUniqueId(final UUID uniqueId) {
-        this.uniqueId = uniqueId;
-    }
-
-    public void addRole(final RoleJPA role) {
-        prepareRoleSet();
-
-        this.roles.add(role);
-    }
-
-    public void removeRole(final UserJPA role) {
-        prepareRoleSet();
-
-        this.roles.remove(role);
-    }
-
-    private void addEntitlement(final EntitlementJPA entitlement) {
-        prepareEntitlementSet();
-
-        this.entitlements.add(entitlement);
-    }
-
-    private synchronized void prepareEntitlementSet() {
-        if (this.entitlements == null) {
-            this.entitlements = new HashSet<>();
-        }
-    }
-
-    private void removeEntitlement(final Entitlement entitlement) {
-        prepareEntitlementSet();
-
-        this.entitlements.remove(entitlement);
-    }
-
-    private void addRoleToAllRoles(final Role role) {
-        allRoles.add(role);
-
-        role.getIncludedRoles().forEach(this::addRoleToAllRoles);
-    }
-
-    private void addEntitlementFromRoleToAllEntitlements(final Role role) {
-        if (!role.getEntitlements().isEmpty()) {
-            allEntitlements.addAll(role.getEntitlements());
-        }
-
-        role.getIncludedRoles().forEach(this::addEntitlementFromRoleToAllEntitlements);
+    private void setPassword(final String password) {
+        this.password = password;
     }
 
     @Override
@@ -296,23 +158,19 @@ public class UserJPA implements User, MultiTenantable, Modifiable {
         return persona.getLocale();
     }
 
-    public void setLocale(final Locale locale) {
-        persona.setLocale(locale);
-    }
-
     @Override
     public EmailJPA getEmailAddress() {
         return email;
     }
 
     @Override
-    public void login(String passwordToCheck) throws PasswordFailureException, UserIsLockedException {
+    public void login(final String passwordToCheck) throws PasswordFailureException, UserIsLockedException {
         if (!password.equals(passwordToCheck)) {
-            throw new PasswordFailureException(name);
+            throw new PasswordFailureException(getName());
         }
 
         if (locked) {
-            throw new UserIsLockedException(name);
+            throw new UserIsLockedException(getName());
         }
     }
 
@@ -321,26 +179,13 @@ public class UserJPA implements User, MultiTenantable, Modifiable {
         return locked;
     }
 
+    private void setLocked(final boolean locked) {
+        this.locked = locked;
+    }
+
     @Override
     public Set<? extends Role> getRoles() {
         return Collections.unmodifiableSet(roles);
-    }
-
-    @Deprecated
-    public void setRoles(final Set<RoleJPA> roles) {
-        prepareRoleSet();
-
-        this.roles.clear();
-
-        if (roles != null) {
-            this.roles.addAll(roles);
-        }
-    }
-
-    private synchronized void prepareRoleSet() {
-        if (this.roles == null) {
-            this.roles = new HashSet<>();
-        }
     }
 
     @Override
@@ -399,5 +244,96 @@ public class UserJPA implements User, MultiTenantable, Modifiable {
         if (entitlements != null) {
             this.entitlements.addAll(entitlements);
         }
+    }
+
+    private void prepareEntitlementSet() {
+        Set<EntitlementJPA> tmp = entitlements;
+        if (tmp == null) {
+            synchronized (this) {
+                tmp = entitlements;
+                if (tmp == null) {
+                    entitlements = new HashSet<>();
+                }
+            }
+        }
+    }
+
+    @Deprecated
+    public void setRoles(final Set<RoleJPA> roles) {
+        prepareRoleSet();
+
+        this.roles.clear();
+
+        if (roles != null) {
+            this.roles.addAll(roles);
+        }
+    }
+
+    public void setEmailAddress(final EmailJPA emailAddress) {
+        this.email = emailAddress;
+    }
+
+    public void setLocale(final Locale locale) {
+        persona.setLocale(locale);
+    }
+
+    public void addRole(final RoleJPA role) {
+        prepareRoleSet();
+
+        this.roles.add(role);
+    }
+
+    private void prepareRoleSet() {
+        Set<RoleJPA> tmp = roles;
+        if (tmp == null) {
+            synchronized (this) {
+                tmp = roles;
+                if (tmp == null) {
+                    roles = new HashSet<>();
+                }
+            }
+        }
+    }
+
+    public void removeRole(final UserJPA role) {
+        prepareRoleSet();
+
+        this.roles.remove(role);
+    }
+
+    private void addRoleToAllRoles(final Role role) {
+        allRoles.add(role);
+        role.getIncludedRoles().forEach(this::addRoleToAllRoles);
+    }
+
+    private void addEntitlement(final EntitlementJPA entitlement) {
+        prepareEntitlementSet();
+
+        this.entitlements.add(entitlement);
+    }
+
+    private void removeEntitlement(final Entitlement entitlement) {
+        prepareEntitlementSet();
+
+        this.entitlements.remove(entitlement);
+    }
+
+    private void addEntitlementFromRoleToAllEntitlements(final Role role) {
+        if (!role.getEntitlements().isEmpty()) {
+            allEntitlements.addAll(role.getEntitlements());
+        }
+
+        role.getIncludedRoles().forEach(this::addEntitlementFromRoleToAllEntitlements);
+    }
+
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("UserJPA@")
+                .append(System.identityHashCode(this)).append('{');
+
+        sb.append(super.toString());
+
+        return sb.append('}').toString();
     }
 }

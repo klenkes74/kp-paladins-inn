@@ -33,7 +33,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class is the generic class to handle multi-tenant CRUD services of the {@link Identifiable} base object type
+ * This class is the generic class to handle multi-tenant CRUD services of the {@link Nameable} base object type
  * within the framework.
  * 
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @since 2017-03-19
  */
 @MockService
-public abstract class AbstractMultitenantCrudMock<T extends Identifiable> implements MultitenantCrudService<T> {
+public abstract class AbstractMultitenantCrudMock<T extends Nameable> implements MultitenantCrudService<T> {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractMultitenantCrudMock.class);
 
     private final HashMap<Tenant, HashSet<T>> tenantMap = new HashMap<>();
@@ -54,7 +54,7 @@ public abstract class AbstractMultitenantCrudMock<T extends Identifiable> implem
     /**
      * @param clasz The entity class to work on. Mostly need for creating exceptions.
      */
-    public AbstractMultitenantCrudMock(final Class<? extends Identifiable> clasz) {
+    public AbstractMultitenantCrudMock(final Class<? extends Nameable> clasz) {
         this.clasz = clasz;
     }
 

@@ -29,7 +29,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
  * @version 1.0.0
  * @since 2017-03-20
  */
-public interface MultitenantCrudService<T extends Identifiable> {
+public interface MultitenantCrudService<T extends Nameable> {
     /**
      * @param tenant the tenant to save the data for
      * @param data the data to be saved.

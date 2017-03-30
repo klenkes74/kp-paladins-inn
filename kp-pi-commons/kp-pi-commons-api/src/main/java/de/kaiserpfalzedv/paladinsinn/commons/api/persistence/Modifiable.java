@@ -29,7 +29,7 @@ public interface Modifiable {
     /**
      * @return The JPA managed version number of this record.
      */
-    long getVersion();
+    Long getVersion();
 
     /**
      * @return The date this record has been created.

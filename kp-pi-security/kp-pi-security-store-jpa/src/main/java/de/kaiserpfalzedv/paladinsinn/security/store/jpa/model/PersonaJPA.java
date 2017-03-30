@@ -18,7 +18,7 @@ package de.kaiserpfalzedv.paladinsinn.security.store.jpa.model;
 
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
@@ -28,14 +28,14 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.UniqueConstraint;
 
 import de.kaiserpfalzedv.paladinsinn.commons.api.person.Gender;
+import de.kaiserpfalzedv.paladinsinn.commons.jpa.NamedTenantMetaData;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.Persona;
 
 /**
@@ -44,7 +44,13 @@ import de.kaiserpfalzedv.paladinsinn.security.api.model.Persona;
  * @since 2017-03-26
  */
 @Entity(name = "persona")
-@Table(name = "PERSONAS")
+@Table(
+        name = "PERSONAS",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "PERSONAS_UUID_UK", columnNames = {"ID"}),
+                @UniqueConstraint(name = "PERSONAS_NAME_UK", columnNames = {"TENANT_ID", "NAME"}),
+        }
+)
 @NamedQueries({
         @NamedQuery(
                 name = "persona-by-name",
@@ -55,31 +61,19 @@ import de.kaiserpfalzedv.paladinsinn.security.api.model.Persona;
                 query = "SELECT p FROM persona p WHERE p.tenantId=:tenant"
         )
 })
-public class PersonaJPA implements Persona {
-    public static final ZoneId UTC = ZoneId.of("UTC");
-    private static final long serialVersionUID = -1207740809890577050L;
-    @Id
-    @Column(name = "ID", unique = true, nullable = false, updatable = false)
-    private UUID uniqueId;
-    @Column(name = "TENANT_ID", nullable = false)
-    private UUID tenantId;
-    @SuppressWarnings("unused") // managd by JPA
-    @Version
-    @Column(name = "VERSION", nullable = false)
-    private long version;
-    @Column(name = "CREATED", nullable = false)
-    private OffsetDateTime created = OffsetDateTime.now(UTC);
-    @Column(name = "MODIFIED", nullable = false)
-    private OffsetDateTime modified = created;
-    @Column(name = "NAME", length = 200, unique = true, nullable = false)
-    private String name;
+public class PersonaJPA extends NamedTenantMetaData implements Persona {
+    private static final long serialVersionUID = -7301902434340985965L;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "GENDER", length = 50)
     private Gender gender;
+
     @Column(name = "BIRTHDATE")
     private LocalDate birthDate;
+
     @Column(name = "LANGUAGE")
     private Locale language;
+
     @Column(name = "COUNTRY")
     private Locale country;
 
@@ -87,57 +81,32 @@ public class PersonaJPA implements Persona {
     private NameJPA fullName;
 
     @OneToMany(mappedBy = "PERSONA_ID", orphanRemoval = true)
-    private Set<UserJPA> users;
+    private volatile Set<UserJPA> users;
 
-    @Override
-    public UUID getUniqueId() {
-        return uniqueId;
+
+    @Deprecated
+    public PersonaJPA() {}
+
+
+    public PersonaJPA(
+            final UUID uniqueId, final Long version,
+            final UUID tenantId,
+            final String name,
+            final OffsetDateTime created, final OffsetDateTime modified,
+            final NameJPA fullName,
+            final Gender gender,
+            final LocalDate dateOfBirth,
+            final Locale country, final Locale language
+    ) {
+        super(uniqueId, version, tenantId, name, created, modified);
+
+        setFullName(fullName);
+        setGender(gender);
+        setDateOfBirth(dateOfBirth);
+        setCountry(country);
+        setLocale(language);
     }
 
-    public void setUniqueId(UUID uniqueId) {
-        this.uniqueId = uniqueId;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public UUID getTenantId() {
-        return tenantId;
-    }
-
-    public void setTenantId(UUID tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    public long getVersion() {
-        return version;
-    }
-
-    public void setVersion(long version) {
-        this.version = version;
-    }
-
-    public OffsetDateTime getCreated() {
-        return created;
-    }
-
-    public void setCreated(OffsetDateTime created) {
-        this.created = created;
-    }
-
-    public OffsetDateTime getModified() {
-        return modified;
-    }
-
-    public void setModified(OffsetDateTime modified) {
-        this.modified = modified;
-    }
 
     @Override
     public NameJPA getFullName() {
@@ -148,6 +117,7 @@ public class PersonaJPA implements Persona {
         this.fullName = fullName;
     }
 
+
     @Override
     public Gender getGender() {
         return this.gender;
@@ -156,6 +126,7 @@ public class PersonaJPA implements Persona {
     public void setGender(final Gender gender) {
         this.gender = gender;
     }
+
 
     @Override
     public LocalDate getDateOfBirth() {
@@ -168,11 +139,12 @@ public class PersonaJPA implements Persona {
 
     @Override
     public int getAge() {
-        if (birthDate == null)
+        if (getDateOfBirth() == null)
             return -1;
 
-        return LocalDate.ofEpochDay(LocalDate.now().toEpochDay() - birthDate.toEpochDay()).getYear() - 1970;
+        return LocalDate.ofEpochDay(LocalDate.now().toEpochDay() - getDateOfBirth().toEpochDay()).getYear() - 1970;
     }
+
 
     @Override
     public Locale getCountry() {
@@ -183,6 +155,7 @@ public class PersonaJPA implements Persona {
         this.country = country;
     }
 
+
     @Override
     public Locale getLocale() {
         return language;
@@ -192,8 +165,21 @@ public class PersonaJPA implements Persona {
         this.language = locale;
     }
 
+
     public Set<UserJPA> getUsers() {
-        return this.users;
+        Set<UserJPA> tmp = users;
+
+        if (tmp == null) {
+            synchronized (this) {
+                tmp = users;
+
+                if (tmp == null) {
+                    users = tmp = new HashSet<>();
+                }
+            }
+        }
+
+        return tmp;
     }
 
     public void setUsers(final Set<UserJPA> users) {

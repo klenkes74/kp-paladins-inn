@@ -24,7 +24,7 @@ import java.util.UUID;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public abstract class IdentifiableAbstractImpl implements Identifiable {
+public abstract class IdentifiableAbstractImpl implements Nameable {
     private static final long serialVersionUID = -6746639967151130899L;
 
     
@@ -60,8 +60,8 @@ public abstract class IdentifiableAbstractImpl implements Identifiable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Identifiable)) return false;
-        Identifiable that = (Identifiable) o;
+        if (!(o instanceof Nameable)) return false;
+        Nameable that = (Nameable) o;
         return Objects.equals(getUniqueId(), that.getUniqueId());
     }
 

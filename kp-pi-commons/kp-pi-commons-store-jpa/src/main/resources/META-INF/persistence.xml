@@ -28,7 +28,8 @@
 
         <non-jta-data-source>java:comp/env/jdbc/tenants</non-jta-data-source>
 
-        <class>de.kaiserpfalzedv.paladinsinn.commons.store.jpa.model.PaladinsInnJPAMetaData</class>
+        <class>de.kaiserpfalzedv.paladinsinn.commons.jpa.MetaData</class>
+        <class>de.kaiserpfalzedv.paladinsinn.commons.jpa.NamedMetaData</class>
         <class>de.kaiserpfalzedv.paladinsinn.commons.store.jpa.model.TenantJPA</class>
 
         <exclude-unlisted-classes>true</exclude-unlisted-classes>

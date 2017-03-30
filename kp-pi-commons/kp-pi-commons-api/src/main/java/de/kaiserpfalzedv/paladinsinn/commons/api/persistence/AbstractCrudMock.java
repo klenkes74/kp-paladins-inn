@@ -35,7 +35,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
  * @version 1.0.0
  * @since 2017-03-19
  */
-public abstract class AbstractCrudMock<T extends Identifiable> implements CrudService<T> {
+public abstract class AbstractCrudMock<T extends Nameable> implements CrudService<T> {
     private final Tenant defaultTenant;
     private final MultitenantCrudService<T> service;
 

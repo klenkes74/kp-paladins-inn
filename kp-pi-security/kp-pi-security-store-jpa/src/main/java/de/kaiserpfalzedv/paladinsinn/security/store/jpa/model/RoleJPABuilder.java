@@ -16,12 +16,11 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.store.jpa.model;
 
-import java.time.OffsetDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.IdentifiableAbstractBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.NameableAbstractBuilder;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.DefaultTenant;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.Entitlement;
@@ -32,11 +31,10 @@ import de.kaiserpfalzedv.paladinsinn.security.api.model.Role;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public class RoleJPABuilder extends IdentifiableAbstractBuilder<RoleJPA> {
+public class RoleJPABuilder extends NameableAbstractBuilder<RoleJPA> {
     private final HashSet<Role> roles = new HashSet<>();
     private final HashSet<Entitlement> entitlements = new HashSet<>();
-    private OffsetDateTime created;
-    private OffsetDateTime changed;
+
     private Tenant tenant;
     private UUID tenantId;
 
@@ -46,12 +44,13 @@ public class RoleJPABuilder extends IdentifiableAbstractBuilder<RoleJPA> {
         setDefaultsIfNeeded();
         validate();
 
-        RoleJPA result = new RoleJPA();
-        result.setUniqueId(uniqueId);
-        result.setTenantId(tenantId);
-        result.setName(name);
-        result.setCreated(created);
-        result.setModified(changed);
+        RoleJPA result = new RoleJPA(
+                uniqueId, version,
+                tenantId,
+                name,
+                created, modified
+        );
+
         result.setRoles(convertRoles());
         result.setEntitlements(convertEntitlements());
 
@@ -63,15 +62,8 @@ public class RoleJPABuilder extends IdentifiableAbstractBuilder<RoleJPA> {
         validate();
     }
 
-    @Override
-    public boolean validate() {
-        if (created == null) {
-            created = OffsetDateTime.now(EntitlementJPA.UTC);
-        }
-
-        if (changed == null) {
-            changed = created;
-        }
+    protected void setDefaultsIfNeeded() {
+        super.setDefaultsIfNeeded();
 
         if (tenant == null) {
             tenant = DefaultTenant.INSTANCE;
@@ -80,7 +72,10 @@ public class RoleJPABuilder extends IdentifiableAbstractBuilder<RoleJPA> {
         if (tenantId == null) {
             tenantId = tenant.getUniqueId();
         }
+    }
 
+    @Override
+    public boolean validate() {
         return true;
     }
 
@@ -130,16 +125,6 @@ public class RoleJPABuilder extends IdentifiableAbstractBuilder<RoleJPA> {
             withModified(((RoleJPA) data).getModified());
         }
 
-        return this;
-    }
-
-    public RoleJPABuilder withCreated(final OffsetDateTime created) {
-        this.created = created;
-        return this;
-    }
-
-    public RoleJPABuilder withModified(final OffsetDateTime changed) {
-        this.changed = changed;
         return this;
     }
 

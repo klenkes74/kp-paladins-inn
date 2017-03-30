@@ -17,21 +17,17 @@
 package de.kaiserpfalzedv.paladinsinn.security.store.jpa.model;
 
 import java.time.OffsetDateTime;
-import java.time.ZoneId;
-import java.util.Objects;
 import java.util.UUID;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.PrePersist;
 import javax.persistence.Table;
-import javax.persistence.Version;
+import javax.persistence.UniqueConstraint;
 
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Modifiable;
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.MultiTenantable;
+import de.kaiserpfalzedv.paladinsinn.commons.jpa.NamedTenantMetaData;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.Entitlement;
 
 /**
@@ -40,7 +36,13 @@ import de.kaiserpfalzedv.paladinsinn.security.api.model.Entitlement;
  * @since 2017-03-26
  */
 @Entity(name = "entitlement")
-@Table(name = "ENTITLEMENTS")
+@Table(
+        name = "ENTITLEMENTS",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "ENTITLEMENTS_UUID_UK", columnNames = {"ID"}),
+                @UniqueConstraint(name = "ENTITLEMENTS_NAME_UK", columnNames = {"TENANT_ID", "NAME"})
+        }
+)
 @NamedQueries({
         @NamedQuery(
                 name = "entitlement-by-name",
@@ -51,125 +53,18 @@ import de.kaiserpfalzedv.paladinsinn.security.api.model.Entitlement;
                 query = "SELECT e FROM entitlement e WHERE e.tenantId=:tenant"
         )
 })
-public class EntitlementJPA implements Entitlement, MultiTenantable, Modifiable {
-    public static final ZoneId UTC = ZoneId.of("UTC");
-    private static final long serialVersionUID = -221758201749168512L;
-    @Id
-    @Column(name = "ID", unique = true, nullable = false, updatable = false)
-    private UUID uniqueId;
-
-    @Column(name = "TENANT_ID", nullable = false)
-    private UUID tenantId;
-
-    @SuppressWarnings("unused") // managd by JPA
-    @Version
-    @Column(name = "VERSION", nullable = false)
-    private long version;
-
-    @Column(name = "NAME", length = 200, unique = true, nullable = false)
-    private String name;
-
-    @Column(name = "CREATED", nullable = false)
-    private OffsetDateTime created = OffsetDateTime.now(UTC);
-    @Column(name = "MODIFIED", nullable = false)
-    private OffsetDateTime modified = created;
-
-    @Override
-    public long getVersion() {
-        return version;
-    }
-
-    @Override
-    public OffsetDateTime getCreated() {
-        return created;
-    }
-
-    public OffsetDateTime getModified() {
-        return modified;
-    }
+public class EntitlementJPA extends NamedTenantMetaData implements Entitlement, MultiTenantable, Modifiable {
+    private static final long serialVersionUID = -8358581565252632682L;
 
     @Deprecated
-    public void setModified(final OffsetDateTime modified) {
-        this.modified = modified;
-    }
+    public EntitlementJPA() {}
 
-    @Deprecated
-    public void setCreated(final OffsetDateTime created) {
-        this.created = created;
-    }
-
-    public UUID getTenantId() {
-        return tenantId;
-    }
-
-    @Deprecated
-    public void setTenantId(final UUID tenantId) {
-        this.tenantId = tenantId;
-    }
-
-    @Deprecated
-    @PrePersist
-    public void updateChanged() {
-        modified = OffsetDateTime.now(UTC);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(getUniqueId());
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof EntitlementJPA)) return false;
-        EntitlementJPA that = (EntitlementJPA) o;
-        return Objects.equals(getUniqueId(), that.getUniqueId());
-    }
-
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder("EntitlementJPA@")
-                .append(System.identityHashCode(this)).append('{');
-
-        sb
-                .append(uniqueId);
-
-        if (version != 0) {
-            sb.append('/').append(version);
-        }
-
-        if (tenantId != null) {
-            sb.append(", tenant=").append(tenantId);
-        }
-
-        sb
-                .append(name)
-                .append(", created=").append(created);
-
-        if (!created.equals(modified)) {
-            sb.append(", modified=").append(modified);
-        }
-
-        return sb.append('}').toString();
-    }
-
-    @Override
-    public UUID getUniqueId() {
-        return uniqueId;
-    }
-
-    @Override
-    public String getName() {
-        return name;
-    }
-
-    @Deprecated
-    public void setName(final String name) {
-        this.name = name;
-    }
-
-    @Deprecated
-    public void setUniqueId(final UUID uniqueId) {
-        this.uniqueId = uniqueId;
+    public EntitlementJPA(
+            final UUID uniqueId, final Long version,
+            final UUID tenantId,
+            final String name,
+            final OffsetDateTime created, final OffsetDateTime modified
+    ) {
+        super(uniqueId, version, tenantId, name, created, modified);
     }
 }

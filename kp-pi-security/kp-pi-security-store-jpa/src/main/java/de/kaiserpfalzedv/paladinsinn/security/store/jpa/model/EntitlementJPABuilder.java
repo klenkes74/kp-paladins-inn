@@ -16,10 +16,9 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.store.jpa.model;
 
-import java.time.OffsetDateTime;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.IdentifiableAbstractBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.NameableAbstractBuilder;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.DefaultTenant;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.Entitlement;
@@ -29,10 +28,7 @@ import de.kaiserpfalzedv.paladinsinn.security.api.model.Entitlement;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public class EntitlementJPABuilder extends IdentifiableAbstractBuilder<EntitlementJPA> {
-    private OffsetDateTime created;
-    private OffsetDateTime changed;
-
+public class EntitlementJPABuilder extends NameableAbstractBuilder<EntitlementJPA> {
     private Tenant tenant;
     private UUID tenantId;
 
@@ -43,31 +39,23 @@ public class EntitlementJPABuilder extends IdentifiableAbstractBuilder<Entitleme
         setDefaultsIfNeeded();
         validate();
 
-        EntitlementJPA result = new EntitlementJPA();
-        result.setUniqueId(uniqueId);
-        result.setTenantId(tenantId);
-        result.setName(name);
-        result.setCreated(created);
-        result.setModified(changed);
+        EntitlementJPA result = new EntitlementJPA(
+                uniqueId, version,
+                tenantId,
+                name,
+                created, modified
+        );
 
         return result;
     }
-
 
     @Override
     public void validateDuringBuild() {
         validate();
     }
 
-    @Override
-    public boolean validate() {
-        if (created == null) {
-            created = OffsetDateTime.now(EntitlementJPA.UTC);
-        }
-
-        if (changed == null) {
-            changed = created;
-        }
+    protected void setDefaultsIfNeeded() {
+        super.setDefaultsIfNeeded();
 
         if (tenant == null) {
             tenant = DefaultTenant.INSTANCE;
@@ -76,7 +64,10 @@ public class EntitlementJPABuilder extends IdentifiableAbstractBuilder<Entitleme
         if (tenantId == null) {
             tenantId = tenant.getUniqueId();
         }
+    }
 
+    @Override
+    public boolean validate() {
         return true;
     }
 
@@ -93,9 +84,12 @@ public class EntitlementJPABuilder extends IdentifiableAbstractBuilder<Entitleme
         withName(data.getName());
 
         if (data instanceof EntitlementJPA) {
-            withTenantId(((EntitlementJPA) data).getTenantId());
-            withCreated(((EntitlementJPA) data).getCreated());
-            withModified(((EntitlementJPA) data).getModified());
+            EntitlementJPA e = (EntitlementJPA) data;
+
+            withVersion(e.getVersion());
+            withTenantId(e.getTenantId());
+            withCreated(e.getCreated());
+            withModified(e.getModified());
         }
 
         return this;
@@ -103,16 +97,6 @@ public class EntitlementJPABuilder extends IdentifiableAbstractBuilder<Entitleme
 
     public EntitlementJPABuilder withTenantId(final UUID tenantId) {
         this.tenantId = tenantId;
-        return this;
-    }
-
-    public EntitlementJPABuilder withCreated(final OffsetDateTime created) {
-        this.created = created;
-        return this;
-    }
-
-    public EntitlementJPABuilder withModified(final OffsetDateTime changed) {
-        this.changed = changed;
         return this;
     }
 

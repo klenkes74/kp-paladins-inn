@@ -28,7 +28,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageRequest;
  * @version 1.0.0
  * @since 2017-03-20
  */
-public interface CrudService<T extends Identifiable> {
+public interface CrudService<T extends Nameable> {
     /**
      * @param data the data to be saved.
      * @return the saved data.

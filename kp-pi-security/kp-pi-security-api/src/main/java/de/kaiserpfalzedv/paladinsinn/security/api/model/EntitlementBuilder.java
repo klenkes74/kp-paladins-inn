@@ -18,14 +18,14 @@ package de.kaiserpfalzedv.paladinsinn.security.api.model;
 
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.IdentifiableAbstractBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.NameableAbstractBuilder;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-11
  */
-public class EntitlementBuilder extends IdentifiableAbstractBuilder<Entitlement> {
+public class EntitlementBuilder extends NameableAbstractBuilder<Entitlement> {
 
     @Override
     public EntitlementImpl build() {

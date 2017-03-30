@@ -16,7 +16,7 @@
 
 package de.kaiserpfalzedv.paladinsinn.commons.store.jpa;
 
-import java.time.ZonedDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
@@ -34,6 +34,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateEntityExce
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.PersistenceException;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.TenantBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.jpa.MetaData;
 import de.kaiserpfalzedv.paladinsinn.commons.store.jpa.model.TenantJPA;
 import de.kaiserpfalzedv.paladinsinn.commons.store.jpa.model.TenantJPABuilder;
 import org.junit.Assert;
@@ -65,23 +66,23 @@ public class TenantCrudJPATest {
     private static final UUID TENANT_UNIQUE_ID_1 = UUID.randomUUID();
     private static final String TENANT_KEY_1 = "TEN1";
     private static final String TENANT_NAME_1 = "tenant 1";
-    private static final ZonedDateTime TENANT_CREATED_1 = ZonedDateTime.parse("2017-01-01T00:00:00+01:00[Europe/Berlin]");
-    private static final ZonedDateTime TENANT_MODIFIED_1 = ZonedDateTime.parse("2017-01-01T00:00:00+01:00[Europe/Berlin]");
+    private static final OffsetDateTime TENANT_CREATED_1 = OffsetDateTime.parse("2017-01-01T00:00:00+01:00");
+    private static final OffsetDateTime TENANT_MODIFIED_1 = OffsetDateTime.parse("2017-01-01T00:00:00+01:00");
     private static final Tenant TENANT_1;
     private static final TenantJPA TENANT_1_JPA;
 
     private static final UUID TENANT_UNIQUE_ID_2 = UUID.randomUUID();
     private static final String TENANT_KEY_2 = "TEN2";
     private static final String TENANT_NAME_2 = "tenant 2";
-    private static final ZonedDateTime TENANT_CREATED_2 = ZonedDateTime.parse("2017-01-02T00:00:00+01:00[Europe/Berlin]");
-    private static final ZonedDateTime TENANT_MODIFIED_2 = ZonedDateTime.parse("2017-01-03T14:00:00+01:00[Europe/Berlin]");
+    private static final OffsetDateTime TENANT_CREATED_2 = OffsetDateTime.parse("2017-01-02T00:00:00+01:00");
+    private static final OffsetDateTime TENANT_MODIFIED_2 = OffsetDateTime.parse("2017-01-03T14:00:00+01:00");
     private static final TenantJPA TENANT_2_JPA;
 
     private static final UUID TENANT_UNIQUE_ID_3 = UUID.randomUUID();
     private static final String TENANT_KEY_3 = "TEN3";
     private static final String TENANT_NAME_3 = "tenant 3";
-    private static final ZonedDateTime TENANT_CREATED_3 = ZonedDateTime.parse("2017-01-03T14:00:00+01:00[Europe/Berlin]");
-    private static final ZonedDateTime TENANT_MODIFIED_3 = ZonedDateTime.parse("2017-01-03T14:00:00+01:00[Europe/Berlin]");
+    private static final OffsetDateTime TENANT_CREATED_3 = OffsetDateTime.parse("2017-01-03T14:00:00+01:00");
+    private static final OffsetDateTime TENANT_MODIFIED_3 = OffsetDateTime.parse("2017-01-03T14:00:00+01:00");
     private static final TenantJPA TENANT_3_JPA;
 
     static {
@@ -235,7 +236,7 @@ public class TenantCrudJPATest {
 
         when(em.merge(any())).thenReturn(
                 new TenantJPABuilder().withTenant(TENANT_1_JPA)
-                                      .withModified(ZonedDateTime.now())
+                                      .withModified(OffsetDateTime.now(MetaData.ZONE_ID))
                                       .build()
         );
 
@@ -246,7 +247,7 @@ public class TenantCrudJPATest {
                         System.identityHashCode(TENANT_1_JPA), System.identityHashCode(result)
         );
         assertEquals("Creation time should not differ", TENANT_1_JPA.getCreated(), result.getCreated());
-        assertNotEquals("Modification time should differ", TENANT_1_JPA.getChanged(), result.getChanged());
+        assertNotEquals("Modification time should differ", TENANT_1_JPA.getModified(), result.getModified());
     }
 
     @Test
@@ -256,8 +257,8 @@ public class TenantCrudJPATest {
 
         when(em.merge(any())).thenReturn(
                 new TenantJPABuilder().withTenant(TENANT_1_JPA)
-                                      .withCreated(ZonedDateTime.now())
-                                      .withModified(ZonedDateTime.now())
+                                      .withCreated(OffsetDateTime.now(MetaData.ZONE_ID))
+                                      .withModified(OffsetDateTime.now(MetaData.ZONE_ID))
                                       .build()
         );
 
@@ -268,7 +269,7 @@ public class TenantCrudJPATest {
                         System.identityHashCode(TENANT_1_JPA), System.identityHashCode(result)
         );
         assertNotEquals("Creation time should differ", TENANT_1_JPA.getCreated(), result.getCreated());
-        assertNotEquals("Modification time should differ", TENANT_1_JPA.getChanged(), result.getChanged());
+        assertNotEquals("Modification time should differ", TENANT_1_JPA.getModified(), result.getModified());
     }
 
     @Test

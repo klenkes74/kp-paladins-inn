@@ -20,14 +20,14 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.IdentifiableAbstractBuilder;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.NameableAbstractBuilder;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-11
  */
-public class RoleBuilder extends IdentifiableAbstractBuilder<Role> {
+public class RoleBuilder extends NameableAbstractBuilder<Role> {
     private final HashSet<Role> roles = new HashSet<>();
     private final HashSet<Entitlement> entitlements = new HashSet<>();
 

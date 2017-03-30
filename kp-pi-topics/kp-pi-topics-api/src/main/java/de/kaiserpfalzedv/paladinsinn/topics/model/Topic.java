@@ -21,7 +21,7 @@ import java.util.List;
 
 import de.kaiserpfalzedv.paladinsinn.commons.api.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageRequest;
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Maintainable;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.TenantHolding;
 
@@ -30,7 +30,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.TenantHolding;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-18
  */
-public interface Topic extends Identifiable, TenantHolding, Maintainable, Serializable {
+public interface Topic extends Nameable, TenantHolding, Maintainable, Serializable {
     /**
      * @return The parent topic.
      */

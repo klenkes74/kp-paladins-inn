@@ -31,32 +31,46 @@
             <column name="VERSION" type="BIGINT" defaultValue="0">
                 <constraints nullable="false"/>
             </column>
-
+            <column name="CREATED" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+            <column name="MODIFIED" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
             <column name="NAME" type="VARCHAR(100)">
                 <constraints nullable="false"/>
             </column>
 
-            <column name="KEY" type="VARCHAR(50)">
+            <column name="KEY" type="VARCHAR(5)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
 
-        <createIndex indexName="TENANTS_NAME_UK" unique="true" tableName="TENANTS">
+        <createIndex tableName="TENANTS" indexName="TENANTS_UUID_UK" unique="true">
+            <column name="UNIQUE_ID"/>
+        </createIndex>
+        <createIndex tableName="TENANTS" indexName="TENANTS_NAME_UK" unique="true">
             <column name="NAME"/>
         </createIndex>
-
-        <createIndex indexName="TENANTS_KEY_UK" unique="true" tableName="TENANTS">
+        <createIndex tableName="TENANTS" indexName="TENANTS_KEY_UK" unique="true">
             <column name="KEY"/>
         </createIndex>
 
         <rollback>
-            <dropIndex indexName="TENANTS_NAME_UK" tableName="TENANTS"/>
+            <dropIndex tableName="TENANTS" indexName="TENANTS_UUID_UK"/>
         </rollback>
         <rollback>
-            <dropIndex indexName="TENANTS_KEY_UK" tableName="TENANTS"/>
+            <dropIndex tableName="TENANTS" indexName="TENANTS_NAME_UK"/>
+        </rollback>
+        <rollback>
+            <dropIndex tableName="TENANTS" indexName="TENANTS_KEY_UK"/>
         </rollback>
         <rollback>
             <dropTable tableName="TENANTS"/>
         </rollback>
+    </changeSet>
+
+    <changeSet id="tenant-tag" author="klenkes74">
+        <tagDatabase tag="tenant-table-created"/>
     </changeSet>
 </databaseChangeLog>

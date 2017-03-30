@@ -122,7 +122,8 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Database Handling -->
-        <database.changelog>${project.build.testOutputDirectory}/ddl/changelog-test.xml</database.changelog>
+        <startDatabase>false</startDatabase>
+        <database.changelog>${project.build.testOutputDirectory}/ddl/changelog-master.xml</database.changelog>
         <db.schema>undefined</db.schema>
         <jdbc.dbunit.dataTypeFactoryName>org.dbunit.ext.h2.H2DataTypeFactory</jdbc.dbunit.dataTypeFactoryName>
         <jdbc.url>jdbc:log4jdbc:h2:tcp://localhost:${h2port}/testdb;AUTO_RECONNECT=TRUE;DB_CLOSE_DELAY=-1</jdbc.url>
@@ -131,6 +132,7 @@
         <jdbc.password>password</jdbc.password>
         <jdbc.driver>net.sf.log4jdbc.DriverSpy</jdbc.driver>
         <jdbc.dialect>org.hibernate.dialect.H2Dialect</jdbc.dialect>
+        <h2port>9092</h2port>
     </properties>
 
     <build>
@@ -298,6 +300,11 @@
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
                 <artifactId>kp-pi-commons-impl</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-commons-jpa</artifactId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
@@ -659,191 +666,145 @@
 
             <activation>
                 <file>
-                    <exists>src/main/resources/ddl/changelog-master.xml</exists>
+                    <exists>${basedir}/src/test/resources/ddl/changelog-master.xml</exists>
                 </file>
             </activation>
 
             <build>
-                <pluginManagement>
-                    <plugins>
-                        <plugin>
-                            <groupId>com.edugility</groupId>
-                            <artifactId>h2-maven-plugin</artifactId>
-                            <version>1.0</version>
-                            <configuration>
-                                <!--suppress MavenModelInspection --><!-- Will be set by the build-helper -->
-                                <port>${h2port}</port>
-                                <allowOthers>true</allowOthers>
-                                <baseDirectory>${project.basedir}/target/data</baseDirectory>
-                                <shutdownAllServers>true</shutdownAllServers>
-                                <trace>true</trace>
-                            </configuration>
-                            <executions>
-                                <execution>
-                                    <id>Spawn a new H2 TCP server</id>
-                                    <phase>pre-integration-test</phase>
-                                    <goals>
-                                        <goal>spawn</goal>
-                                    </goals>
-                                </execution>
-                                <execution>
-                                    <id>Stop a spawned H2 TCP server</id>
-                                    <phase>post-integration-test</phase>
-                                    <goals>
-                                        <goal>stop</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
+                <plugins>
+                    <plugin>
+                        <groupId>com.edugility</groupId>
+                        <artifactId>h2-maven-plugin</artifactId>
+                        <version>1.0</version>
+                        <configuration>
+                            <!--suppress MavenModelInspection --><!-- Will be set by the build-helper -->
+                            <port>${h2port}</port>
+                            <allowOthers>true</allowOthers>
+                            <baseDirectory>${project.basedir}/target/data</baseDirectory>
+                            <shutdownAllServers>true</shutdownAllServers>
+                            <trace>true</trace>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>Spawn a new H2 TCP server</id>
+                                <phase>pre-integration-test</phase>
+                                <goals>
+                                    <goal>spawn</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>Stop a spawned H2 TCP server</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>stop</goal>
+                                </goals>
+                            </execution>
+                        </executions>
 
-                            <dependencies>
-                                <dependency>
-                                    <groupId>com.h2database</groupId>
-                                    <artifactId>h2</artifactId>
-                                </dependency>
-                            </dependencies>
-                        </plugin>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.h2database</groupId>
+                                <artifactId>h2</artifactId>
+                                <version>1.4.192</version>
+                            </dependency>
+                        </dependencies>
+                    </plugin>
 
-                        <plugin>
-                            <groupId>org.liquibase</groupId>
-                            <artifactId>liquibase-maven-plugin</artifactId>
-                            <version>3.5.3</version>
+                    <plugin>
+                        <groupId>org.liquibase</groupId>
+                        <artifactId>liquibase-maven-plugin</artifactId>
+                        <version>3.5.3</version>
 
-                            <configuration>
-                                <changeLogFile>${database.changelog}</changeLogFile>
-                                <driver>${jdbc.driver}</driver>
-                                <url>${jdbc.url}</url>
-                                <username>${jdbc.user}</username>
-                                <password>${jdbc.password}</password>
-                                <verbose>true</verbose>
-                                <logging>warning</logging>
-                                <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-                                <dropFirst>false</dropFirst>
-                            </configuration>
-                            <dependencies>
-                                <dependency>
-                                    <groupId>com.h2database</groupId>
-                                    <artifactId>h2</artifactId>
-                                </dependency>
-                                <dependency>
-                                    <groupId>org.slf4j</groupId>
-                                    <artifactId>slf4j-api</artifactId>
-                                </dependency>
-                            </dependencies>
-                            <executions>
-                                <execution>
-                                    <id>update-db</id>
-                                    <phase>pre-integration-test</phase>
-                                    <configuration>
-                                        <changeLogFile>${database.changelog}</changeLogFile>
-                                        <driver>${jdbc.driver}</driver>
-                                        <url>${jdbc.url}</url>
-                                        <username>${jdbc.user}</username>
-                                        <password>${jdbc.password}</password>
-                                        <verbose>true</verbose>
-                                        <logging>warning</logging>
-                                        <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-                                        <dropFirst>false</dropFirst>
-                                    </configuration>
-                                    <goals>
-                                        <goal>update</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
+                        <configuration>
+                            <changeLogFile>${database.changelog}</changeLogFile>
+                            <driver>${jdbc.driver}</driver>
+                            <url>${jdbc.url}</url>
+                            <username>${jdbc.user}</username>
+                            <password>${jdbc.password}</password>
+                            <verbose>true</verbose>
+                            <logging>warning</logging>
+                            <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                            <dropFirst>false</dropFirst>
+                        </configuration>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.h2database</groupId>
+                                <artifactId>h2</artifactId>
+                                <version>1.4.192</version>
+                            </dependency>
+                            <dependency>
+                                <groupId>org.slf4j</groupId>
+                                <artifactId>slf4j-api</artifactId>
+                                <version>1.7.24</version>
+                            </dependency>
+                        </dependencies>
+                        <executions>
+                            <execution>
+                                <id>update-db</id>
+                                <phase>pre-integration-test</phase>
+                                <configuration>
+                                    <changeLogFile>${database.changelog}</changeLogFile>
+                                    <driver>${jdbc.driver}</driver>
+                                    <url>${jdbc.url}</url>
+                                    <username>${jdbc.user}</username>
+                                    <password>${jdbc.password}</password>
+                                    <verbose>true</verbose>
+                                    <logging>warning</logging>
+                                    <promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
+                                    <dropFirst>false</dropFirst>
+                                </configuration>
+                                <goals>
+                                    <goal>update</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
 
-                        <plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>dbunit-maven-plugin</artifactId>
-                            <version>1.0-beta-3</version>
-                            <configuration>
-                                <dataTypeFactoryName>${jdbc.dbunit.dataTypeFactoryName}</dataTypeFactoryName>
-                                <type>CLEAN_INSERT</type>
-                                <url>${jdbc.url}</url>
-                                <driver>${jdbc.driver}</driver>
-                                <username>${jdbc.user}</username>
-                                <password>${jdbc.password}</password>
-                                <format>xml</format>
-                                <src>${project.build.testOutputDirectory}/testdata.xml</src>
-                                <useQualifiedTableNames>true</useQualifiedTableNames>
-                                <schema>${db.schema}</schema>
-                                <format>FlatXmlDataFile</format>
-                            </configuration>
-                            <!--jar file that has the jdbc driver -->
-                            <dependencies>
-                                <dependency>
-                                    <groupId>com.h2database</groupId>
-                                    <artifactId>h2</artifactId>
-                                </dependency>
-                            </dependencies>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>build-helper-maven-plugin</artifactId>
+                        <version>1.12</version>
 
-                            <executions>
-                                <execution>
-                                    <id>importData</id>
-                                    <phase>pre-integration-test</phase>
-                                    <goals>
-                                        <goal>operation</goal>
-                                    </goals>
-                                    <configuration>
-                                        <dataTypeFactoryName>${jdbc.dbunit.dataTypeFactoryName}</dataTypeFactoryName>
-                                        <type>CLEAN_INSERT</type>
-                                        <url>${jdbc.url}</url>
-                                        <driver>${jdbc.driver}</driver>
-                                        <username>${jdbc.user}</username>
-                                        <password>${jdbc.password}</password>
-                                        <format>xml</format>
-                                        <src>${project.build.testOutputDirectory}/testdata.xml</src>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
+                        <executions>
+                            <execution>
+                                <id>reserve-ports</id>
+                                <phase>generate-sources</phase>
+                                <goals>
+                                    <goal>reserve-network-port</goal>
+                                </goals>
+                                <configuration>
+                                    <portNames>
+                                        <portName>h2port</portName>
+                                    </portNames>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
 
-                        <plugin>
-                            <groupId>org.codehaus.mojo</groupId>
-                            <artifactId>build-helper-maven-plugin</artifactId>
-                            <version>1.12</version>
-
-                            <executions>
-                                <execution>
-                                    <id>reserve-ports</id>
-                                    <phase>generate-sources</phase>
-                                    <goals>
-                                        <goal>reserve-network-port</goal>
-                                    </goals>
-                                    <configuration>
-                                        <portNames>
-                                            <portName>h2port</portName>
-                                        </portNames>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-failsafe-plugin</artifactId>
-                            <version>2.18.1</version>
-                            <configuration>
-                                <!--suppress MavenModelInspection --><!-- It's ok, it will be set by a plugin at build time -->
-                                <argLine>${surefireArgLine}</argLine>
-                            </configuration>
-                            <executions>
-                                <execution>
-                                    <id>integration-tests</id>
-                                    <goals>
-                                        <goal>integration-test</goal>
-                                    </goals>
-                                    <configuration>
-                                        <includes>
-                                            <include>**/*IT.java</include>
-                                            <include>**/IT*.java</include>
-                                        </includes>
-                                    </configuration>
-                                </execution>
-                            </executions>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
-
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <version>2.18.1</version>
+                        <configuration>
+                            <!--suppress MavenModelInspection --><!-- It's ok, it will be set by a plugin at build time -->
+                            <argLine>${surefireArgLine}</argLine>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>integration-tests</id>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                </goals>
+                                <configuration>
+                                    <includes>
+                                        <include>**/*IT.java</include>
+                                        <include>**/IT*.java</include>
+                                    </includes>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
             </build>
 
             <dependencies>

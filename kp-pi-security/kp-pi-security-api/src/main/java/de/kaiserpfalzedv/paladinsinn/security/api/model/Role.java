@@ -19,7 +19,7 @@ package de.kaiserpfalzedv.paladinsinn.security.api.model;
 import java.security.Principal;
 import java.util.Set;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 
 /**
  * The basic role within this system. It can have entitlements and other roles attached.
@@ -28,7 +28,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Identifiable;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public interface Role extends Identifiable {
+public interface Role extends Nameable {
     /**
      * @param role the role to be tested.
      *

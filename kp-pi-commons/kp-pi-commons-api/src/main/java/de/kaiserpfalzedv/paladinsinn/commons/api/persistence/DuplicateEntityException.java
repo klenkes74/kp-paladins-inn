@@ -27,28 +27,28 @@ public abstract class DuplicateEntityException extends PersistenceException {
     private static final long serialVersionUID = -9094170732297294020L;
 
     private String key;
-    private Identifiable identifiable;
+    private Nameable nameable;
 
 
     /**
      * @param clasz The class of the entity.
      * @param message The message of the exception to be thrown.
      * @param key The name of the key that contains duplicates.
-     * @param identifiable The identity that should be created.
+     * @param nameable The identity that should be created.
      */
-    DuplicateEntityException(final Class<?> clasz, final String message, final String key, final Identifiable identifiable) {
-        super(clasz, String.format(message, key, identifiable.getUniqueId()));
+    DuplicateEntityException(final Class<?> clasz, final String message, final String key, final Nameable nameable) {
+        super(clasz, String.format(message, key, nameable.getUniqueId()));
 
         this.key = key;
-        this.identifiable = identifiable;
+        this.nameable = nameable;
     }
 
 
     /**
      * @return The identity that should have been created.
      */
-    public Identifiable getIdentifiable() {
-        return identifiable;
+    public Nameable getNameable() {
+        return nameable;
     }
 
     /**
