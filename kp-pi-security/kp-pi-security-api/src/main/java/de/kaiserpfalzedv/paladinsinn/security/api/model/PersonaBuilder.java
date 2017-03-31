@@ -25,6 +25,8 @@ import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.api.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.api.person.Name;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.DefaultTenant;
+import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -37,6 +39,7 @@ public class PersonaBuilder {
      */
     private final ArrayList<String> errors = new ArrayList<>(2);
     private UUID uniqueId;
+    private UUID tenantId;
     private Name name;
     private Gender gender;
     private LocalDate dateOfBirth;
@@ -47,10 +50,14 @@ public class PersonaBuilder {
         setDefaultValuesIfNeeded();
         validateBeforeBuild();
 
-        return new PersonaImpl(uniqueId, name, gender, dateOfBirth, calculateAge(dateOfBirth), country, locale);
+        return new PersonaImpl(tenantId, uniqueId, name, gender, dateOfBirth, calculateAge(dateOfBirth), country, locale);
     }
 
     private void setDefaultValuesIfNeeded() {
+        if (tenantId == null) {
+            tenantId = DefaultTenant.INSTANCE.getUniqueId();
+        }
+
         if (uniqueId == null) {
             uniqueId = UUID.randomUUID();
         }
@@ -92,6 +99,7 @@ public class PersonaBuilder {
 
 
     public PersonaBuilder withPerson(final Persona person) {
+        tenantId = person.getTenantId();
         uniqueId = person.getUniqueId();
         name = person.getFullName();
         gender = person.getGender();
@@ -102,6 +110,15 @@ public class PersonaBuilder {
         return this;
     }
 
+    public PersonaBuilder withTenant(final Tenant tenant) {
+        this.tenantId = tenant.getUniqueId();
+        return this;
+    }
+
+    public PersonaBuilder withTenantId(final UUID tenantId) {
+        this.tenantId = tenantId;
+        return this;
+    }
 
     public PersonaBuilder withUniqueId(final UUID uniqueId) {
         this.uniqueId = uniqueId;

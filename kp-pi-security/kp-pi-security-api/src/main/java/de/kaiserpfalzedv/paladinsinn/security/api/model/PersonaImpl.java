@@ -34,6 +34,7 @@ public class PersonaImpl implements Persona {
 
     
     private UUID uniqueId;
+    private UUID tenantId;
 
     private Name name;
     private Gender gender;
@@ -44,6 +45,7 @@ public class PersonaImpl implements Persona {
     private Locale locale;
 
     PersonaImpl(
+            final UUID tenantId,
             final UUID uniqueId,
             final Name name,
             final Gender gender,
@@ -131,5 +133,10 @@ public class PersonaImpl implements Persona {
 
     public String getName() {
         return name.getFormalFullName();
+    }
+
+    @Override
+    public UUID getTenantId() {
+        return tenantId;
     }
 }

@@ -31,13 +31,13 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.service.SingleTenant;
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.WorkerService;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.DefaultTenant;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
-import de.kaiserpfalzedv.paladinsinn.security.api.model.Role;
-import de.kaiserpfalzedv.paladinsinn.security.api.store.RoleCrudService;
-import de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.RoleJPA;
+import de.kaiserpfalzedv.paladinsinn.security.api.model.User;
+import de.kaiserpfalzedv.paladinsinn.security.api.store.UserCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.UserJPA;
 
 /**
  * The non-multitenant version of the JPA CRUD implementation just delegates to the multitenant
- * {@link RoleMultitenantCrudJPA} with the static default tenant as tenant parameter.
+ * {@link UserMultitenantCrudJPA} with the static default tenant as tenant parameter.
  *
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
@@ -47,52 +47,52 @@ import de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.RoleJPA;
 @RequestScoped
 @SingleTenant
 @WorkerService
-public class RoleCrudJPA implements RoleCrudService {
+public class UserCrudJPA implements UserCrudService {
     private static final Tenant DEFAULT_TENANT = DefaultTenant.INSTANCE;
 
     @Inject
-    private RoleMultitenantCrudJPA multitenantService;
+    private UserMultitenantCrudJPA multitenantService;
 
-    public RoleCrudJPA() {}
+    public UserCrudJPA() {}
 
-    public RoleCrudJPA(
-            final RoleMultitenantCrudJPA service
+    public UserCrudJPA(
+            final UserMultitenantCrudJPA service
     ) {
         this.multitenantService = service;
     }
 
     @Override
-    public RoleJPA create(final Role data) throws DuplicateEntityException {
+    public UserJPA create(final User data) throws DuplicateEntityException {
         return multitenantService.create(DEFAULT_TENANT, data);
     }
 
     @Override
-    public Optional<? extends Role> retrieve(final UUID uniqueId) {
+    public Optional<? extends User> retrieve(final UUID uniqueId) {
         return multitenantService.retrieve(DEFAULT_TENANT, uniqueId);
     }
 
     @Override
-    public Optional<? extends Role> retrieve(final String uniqueName) {
+    public Optional<? extends User> retrieve(final String uniqueName) {
         return multitenantService.retrieve(DEFAULT_TENANT, uniqueName);
     }
 
     @Override
-    public Set<? extends Role> retrieve() {
+    public Set<? extends User> retrieve() {
         return multitenantService.retrieve(DEFAULT_TENANT);
     }
 
     @Override
-    public Page<? extends Role> retrieve(final PageRequest pageRequest) {
+    public Page<? extends User> retrieve(final PageRequest pageRequest) {
         return multitenantService.retrieve(DEFAULT_TENANT, pageRequest);
     }
 
     @Override
-    public RoleJPA update(final Role data) throws DuplicateEntityException {
+    public UserJPA update(final User data) throws DuplicateEntityException {
         return multitenantService.update(DEFAULT_TENANT, data);
     }
 
     @Override
-    public void delete(final Role data) {
+    public void delete(final User data) {
         multitenantService.delete(DEFAULT_TENANT, data);
     }
 

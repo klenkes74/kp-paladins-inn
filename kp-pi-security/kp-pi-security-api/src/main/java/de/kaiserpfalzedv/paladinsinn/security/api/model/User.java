@@ -35,6 +35,8 @@ import de.kaiserpfalzedv.paladinsinn.security.api.services.UserIsLockedException
  * @since 2017-03-11
  */
 public interface User extends Nameable {
+    String getPassword();
+
     /**
      * @return the person of the user.
      */

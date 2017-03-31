@@ -21,6 +21,8 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import de.kaiserpfalzedv.paladinsinn.commons.api.BuilderValidationException;
+
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
@@ -36,9 +38,11 @@ public abstract class NameableAbstractBuilder<T extends Nameable> {
     protected OffsetDateTime modified;
 
 
-    public abstract T build();
+    public abstract T build() throws BuilderValidationException;
 
     public abstract void validateDuringBuild();
+
+    public abstract boolean validate();
 
     protected void setDefaultsIfNeeded() {
         if (uniqueId == null) {
@@ -57,8 +61,6 @@ public abstract class NameableAbstractBuilder<T extends Nameable> {
             modified = created;
         }
     }
-
-    public abstract boolean validate();
 
     public NameableAbstractBuilder<T> withUniqueId(final UUID uniqueId) {
         this.uniqueId = uniqueId;

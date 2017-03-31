@@ -134,7 +134,7 @@ class UserImpl extends IdentifiableAbstractImpl implements User {
      *
      * @return the password of this user.
      */
-    String getPassword() {
+    public String getPassword() {
         return password;
     }
 

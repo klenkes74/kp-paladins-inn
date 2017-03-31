@@ -48,6 +48,7 @@ import de.kaiserpfalzedv.paladinsinn.security.api.model.Role;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.api.services.PasswordFailureException;
 import de.kaiserpfalzedv.paladinsinn.security.api.services.UserIsLockedException;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
@@ -140,6 +141,11 @@ public class UserJPA extends NamedTenantMetaData implements User, MultiTenantabl
         setLocked(locked);
     }
 
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
     private void setPassword(final String password) {
         this.password = password;
     }
@@ -165,7 +171,7 @@ public class UserJPA extends NamedTenantMetaData implements User, MultiTenantabl
 
     @Override
     public void login(final String passwordToCheck) throws PasswordFailureException, UserIsLockedException {
-        if (!password.equals(passwordToCheck)) {
+        if (!BCrypt.checkpw(passwordToCheck, password)) {
             throw new PasswordFailureException(getName());
         }
 

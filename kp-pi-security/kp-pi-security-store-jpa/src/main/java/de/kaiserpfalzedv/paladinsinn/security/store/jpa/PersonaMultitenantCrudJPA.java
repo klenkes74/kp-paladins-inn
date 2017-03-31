@@ -45,10 +45,10 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.PersistenceRuntimeE
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.SingleTenant;
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.WorkerService;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
-import de.kaiserpfalzedv.paladinsinn.security.api.model.Role;
-import de.kaiserpfalzedv.paladinsinn.security.api.store.RoleMultitenantCrudService;
-import de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.RoleJPA;
-import de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.RoleJPABuilder;
+import de.kaiserpfalzedv.paladinsinn.security.api.model.Persona;
+import de.kaiserpfalzedv.paladinsinn.security.api.store.PersonaMultitenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.PersonaJPA;
+import de.kaiserpfalzedv.paladinsinn.security.store.jpa.model.PersonaJPABuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,8 +61,8 @@ import org.slf4j.LoggerFactory;
 @RequestScoped
 @SingleTenant
 @WorkerService
-public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
-    private static final Logger LOG = LoggerFactory.getLogger(RoleMultitenantCrudJPA.class);
+public class PersonaMultitenantCrudJPA implements PersonaMultitenantCrudService {
+    private static final Logger LOG = LoggerFactory.getLogger(PersonaMultitenantCrudJPA.class);
 
 
     @PersistenceContext(name = "SECURITY_PU")
@@ -70,7 +70,7 @@ public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
 
 
     @SuppressWarnings("unused")
-    public RoleMultitenantCrudJPA() {}
+    public PersonaMultitenantCrudJPA() {}
 
     /**
      * Another constructor for testing the impementation. We need to be able to inject the entity manager ...
@@ -78,40 +78,48 @@ public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
      * @param em The entity manager (or mock for testing purposes)
      */
     @Inject
-    public RoleMultitenantCrudJPA(
+    public PersonaMultitenantCrudJPA(
             final EntityManager em
     ) {
         this.em = em;
     }
 
     @Override
-    public RoleJPA create(final Tenant tenant, final Role role) throws DuplicateUniqueIdException, DuplicateUniqueNameException {
-        Role data = createRoleJPA(tenant, role);
-
+    public PersonaJPA create(final Tenant tenant, final Persona persona) throws DuplicateUniqueIdException, DuplicateUniqueNameException {
         try {
+            Persona data = createPersonaJPA(tenant, persona);
+
             em.persist(data);
 
-            return em.find(RoleJPA.class, role.getUniqueId());
+            return em.find(PersonaJPA.class, persona.getUniqueId());
         } catch (EntityExistsException e) {
             LOG.warn(e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 
-            throw new DuplicateUniqueIdException(RoleJPA.class, role);
+            throw new DuplicateUniqueIdException(PersonaJPA.class, persona);
         } catch (IllegalArgumentException | TransactionRequiredException e) {
             LOG.warn(e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 
-            throw new PersistenceRuntimeException(RoleJPA.class, e.getMessage(), e);
+            throw new PersistenceRuntimeException(PersonaJPA.class, e.getMessage(), e);
+        } catch (BuilderValidationException e) {
+            LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
+
+            throw new PersistenceRuntimeException(
+                    PersonaJPA.class,
+                    e.getClass().getSimpleName() + " caught: " + e.getMessage(),
+                    e
+            );
         }
     }
 
-    private RoleJPA createRoleJPA(final Tenant tenant, final Role role) {
-        RoleJPA result;
+    private PersonaJPA createPersonaJPA(final Tenant tenant, final Persona persona) throws BuilderValidationException {
+        PersonaJPA result;
 
         try {
-            result = (RoleJPA) role;
+            result = (PersonaJPA) persona;
         } catch (ClassCastException e) {
-            result = new RoleJPABuilder()
-                    .withRole(role)
-                    .withTenant(tenant)
+            result = new PersonaJPABuilder()
+                    .withPersona(persona)
+                    .withTenantId(tenant.getUniqueId())
                     .build();
         }
 
@@ -119,15 +127,15 @@ public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
     }
 
     @Override
-    public Optional<RoleJPA> retrieve(final Tenant tenant, final UUID uniqueId) {
-        RoleJPA result;
+    public Optional<PersonaJPA> retrieve(final Tenant tenant, final UUID uniqueId) {
+        PersonaJPA result;
 
         try {
-            result = em.find(RoleJPA.class, uniqueId);
+            result = em.find(PersonaJPA.class, uniqueId);
         } catch (IllegalArgumentException e) {
             LOG.warn(e.getClass().getSimpleName() + ": " + e.getMessage(), e);
 
-            throw new PersistenceRuntimeException(RoleJPA.class, e.getMessage(), e);
+            throw new PersistenceRuntimeException(PersonaJPA.class, e.getMessage(), e);
         }
 
         if (result != null && result.getTenantId().equals(tenant.getUniqueId())) {
@@ -138,12 +146,12 @@ public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
     }
 
     @Override
-    public Optional<RoleJPA> retrieve(final Tenant tenant, final String uniqueName) {
-        RoleJPA result = null;
+    public Optional<PersonaJPA> retrieve(final Tenant tenant, final String uniqueName) {
+        PersonaJPA result = null;
 
         try {
             result = em
-                    .createNamedQuery("role-by-name", RoleJPA.class)
+                    .createNamedQuery("persona-by-name", PersonaJPA.class)
                     .setParameter("tenant", tenant.getUniqueId())
                     .setParameter("name", uniqueName)
                     .getSingleResult();
@@ -154,8 +162,8 @@ public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
         } catch (PersistenceException e) {
             LOG.error(e.getClass().getSimpleName() + " during retrieval: " + e.getMessage(), e);
 
-            throw new PersistenceRuntimeException(RoleJPA.class, "Caught a " + e.getClass()
-                                                                                .getSimpleName() + ": " + e
+            throw new PersistenceRuntimeException(PersonaJPA.class, "Caught a " + e.getClass()
+                                                                                   .getSimpleName() + ": " + e
                     .getMessage());
         }
 
@@ -163,12 +171,12 @@ public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
     }
 
     @Override
-    public Set<Role> retrieve(final Tenant tenant) {
-        final HashSet<Role> result = new HashSet<>();
+    public Set<Persona> retrieve(final Tenant tenant) {
+        final HashSet<Persona> result = new HashSet<>();
 
         try {
             em
-                    .createNamedQuery("roles", RoleJPA.class)
+                    .createNamedQuery("personas", PersonaJPA.class)
                     .setParameter("tenant", tenant.getUniqueId())
                     .getResultList()
                     .forEach(result::add);
@@ -179,8 +187,8 @@ public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
         } catch (PersistenceException e) {
             LOG.error(e.getClass().getSimpleName() + " during retrieval: " + e.getMessage(), e);
 
-            throw new PersistenceRuntimeException(RoleJPA.class, "Caught a " + e.getClass()
-                                                                                .getSimpleName() + ": " + e
+            throw new PersistenceRuntimeException(PersonaJPA.class, "Caught a " + e.getClass()
+                                                                                   .getSimpleName() + ": " + e
                     .getMessage());
         }
 
@@ -189,17 +197,21 @@ public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
     }
 
     @Override
-    public Page<Role> retrieve(final Tenant tenant, final PageRequest pageRequest) {
-        final ArrayList<Role> result = new ArrayList<>((int) pageRequest.getPageSize());
+    public Page<Persona> retrieve(final Tenant tenant, final PageRequest pageRequest) {
+        final ArrayList<Persona> result = new ArrayList<>((int) pageRequest.getPageSize());
 
-        int elementCount = getElementCount(tenant);
+        TypedQuery<PersonaJPA> query = em
+                .createNamedQuery("personas", PersonaJPA.class)
+                .setParameter("tenant", tenant.getUniqueId());
+
+        int elementCount = query.getMaxResults();
 
         if (elementCount > 0) {
             retrieveResultsFromJPA(tenant, pageRequest, result);
         }
 
         try {
-            return new PageBuilder<Role>()
+            return new PageBuilder<Persona>()
                     .withData(result)
                     .withRequest(pageRequest)
                     .withTotalElements(elementCount)
@@ -208,23 +220,15 @@ public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
         } catch (BuilderValidationException e) {
             LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
 
-            throw new PersistenceRuntimeException(RoleJPA.class, e.getClass()
-                                                                  .getSimpleName() + " caught: " + e.getMessage());
+            throw new PersistenceRuntimeException(PersonaJPA.class, e.getClass()
+                                                                     .getSimpleName() + " caught: " + e.getMessage());
         }
     }
 
-    private int getElementCount(Tenant tenant) {
-        TypedQuery<RoleJPA> query = em
-                .createNamedQuery("roles", RoleJPA.class)
-                .setParameter("tenant", tenant.getUniqueId());
-
-        return query.getMaxResults();
-    }
-
-    private void retrieveResultsFromJPA(final Tenant tenant, final PageRequest pageRequest, ArrayList<Role> result) {
+    private void retrieveResultsFromJPA(final Tenant tenant, final PageRequest pageRequest, ArrayList<Persona> result) {
         try {
             em
-                    .createNamedQuery("roles", RoleJPA.class)
+                    .createNamedQuery("personas", PersonaJPA.class)
                     .setParameter("tenant", tenant.getUniqueId())
                     .setFirstResult(calculateStartPosition(pageRequest))
                     .setMaxResults((int) pageRequest.getPageSize())
@@ -238,8 +242,8 @@ public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
         } catch (PersistenceException e) {
             LOG.error(e.getClass().getSimpleName() + " during retrieval: " + e.getMessage(), e);
 
-            throw new PersistenceRuntimeException(RoleJPA.class, "Caught a " + e.getClass()
-                                                                                .getSimpleName() + ": " + e
+            throw new PersistenceRuntimeException(PersonaJPA.class, "Caught a " + e.getClass()
+                                                                                   .getSimpleName() + ": " + e
                     .getMessage());
         }
     }
@@ -249,12 +253,22 @@ public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
     }
 
     @Override
-    public RoleJPA update(final Tenant tenant, Role data) throws DuplicateUniqueNameException, DuplicateUniqueIdException {
-        return update(tenant, createRoleJPA(tenant, data));
+    public PersonaJPA update(final Tenant tenant, Persona data) throws DuplicateUniqueNameException, DuplicateUniqueIdException {
+        try {
+            return update(tenant, createPersonaJPA(tenant, data));
+        } catch (BuilderValidationException e) {
+            LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
+
+            throw new PersistenceRuntimeException(
+                    PersonaJPA.class,
+                    e.getClass().getSimpleName() + " caught: " + e.getMessage(),
+                    e
+            );
+        }
     }
 
 
-    private RoleJPA update(final Tenant tenant, RoleJPA data) throws DuplicateUniqueNameException, DuplicateUniqueIdException {
+    private PersonaJPA update(final Tenant tenant, final PersonaJPA data) throws DuplicateUniqueNameException, DuplicateUniqueIdException {
         try {
             return em.merge(data);
         } catch (IllegalArgumentException e) {
@@ -262,45 +276,45 @@ public class RoleMultitenantCrudJPA implements RoleMultitenantCrudService {
         } catch (TransactionRequiredException e) {
             LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
 
-            throw new PersistenceRuntimeException(RoleJPA.class, e.getClass()
-                                                                  .getSimpleName() + " caught: " + e.getMessage());
+            throw new PersistenceRuntimeException(PersonaJPA.class, e.getClass()
+                                                                     .getSimpleName() + " caught: " + e.getMessage());
         }
     }
 
     @Override
-    public void delete(final Tenant tenant, Role data) {
+    public void delete(final Tenant tenant, final Persona data) {
         delete(tenant, data.getUniqueId());
     }
 
 
     @Override
-    public void delete(final Tenant tenant, UUID uniqueId) {
+    public void delete(final Tenant tenant, final UUID uniqueId) {
         retrieve(tenant, uniqueId).ifPresent(data -> delete(data, data.getUniqueId()));
     }
 
-    private void delete(RoleJPA data, final Object errorMessageData) {
+    private void delete(PersonaJPA data, final Object errorMessageData) {
         if (data != null) {
             try {
                 em.remove(data);
 
-                LOG.info("Deleted role: {}", data);
+                LOG.info("Deleted persona: {}", data);
             } catch (IllegalArgumentException e) {
-                LOG.warn("Tried to delete role. But it did not exist: {}", data);
+                LOG.warn("Tried to delete persona. But it did not exist: {}", data);
             } catch (TransactionRequiredException e) {
                 LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
 
                 throw new PersistenceRuntimeException(
-                        RoleJPA.class,
+                        PersonaJPA.class,
                         e.getClass().getSimpleName() + " caught: " + e.getMessage()
                 );
             }
         } else {
-            LOG.warn("Tried to delete role. But its unique id is not in the database: {}", errorMessageData);
+            LOG.warn("Tried to delete persona. But its unique id is not in the database: {}", errorMessageData);
         }
     }
 
     @Override
-    public void delete(final Tenant tenant, String uniqueName) {
+    public void delete(final Tenant tenant, final String uniqueName) {
         retrieve(tenant, uniqueName).ifPresent(data -> delete(data, data.getUniqueId()));
     }
 }

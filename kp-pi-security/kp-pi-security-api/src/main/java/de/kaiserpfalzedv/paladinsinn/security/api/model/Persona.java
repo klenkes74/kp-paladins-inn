@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Locale;
 
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.MultiTenantable;
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 import de.kaiserpfalzedv.paladinsinn.commons.api.person.Gender;
 import de.kaiserpfalzedv.paladinsinn.commons.api.person.Name;
@@ -31,7 +32,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.person.Name;
  * @version 1.0.0
  * @since 2017-03-11
  */
-public interface Persona extends Nameable, Serializable {
+public interface Persona extends Nameable, MultiTenantable, Serializable {
     /**
      * @return the full name data of this persona.
      */
