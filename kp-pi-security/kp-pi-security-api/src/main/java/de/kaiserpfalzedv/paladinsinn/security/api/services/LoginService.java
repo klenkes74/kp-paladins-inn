@@ -86,10 +86,17 @@ public interface LoginService {
     /**
      * Logs a user in without any tenant (that means with the
      * {@link de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.DefaultTenant}) or with the tenant specified by its
-     * name. The tenant can be specified within the userId. If the userId contains an @-sign, the data is splittet and
-     * the first part is the real userId within the tenant specified by its name after the @-sign.
+     * name.
      *
-     * @param userId   the user id to log in.
+     * <p>The tenant can be specified within the userId:</p>
+     *
+     * <p>If the userId contains a sign <b>@</b>, the data is splitted and the first part is the real userId within the
+     * tenant specified by its name after the @-sign.</p>
+     *
+     * <p>If the userId contains a sign <b>\</b>, the data is splitted and the first part is the {@link Tenant#getKey()}
+     * of the tenant and the {@link User#getName()} is given after the |-sign.</p>
+     *
+     * @param userId   the user id to log in. May contain the tenant to be used either with the key or the full name.
      * @param password the password of the user to log in.
      *
      * @return the user object.

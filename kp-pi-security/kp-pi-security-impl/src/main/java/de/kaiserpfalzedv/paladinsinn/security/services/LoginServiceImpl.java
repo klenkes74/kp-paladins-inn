@@ -110,6 +110,18 @@ public class LoginServiceImpl implements LoginService {
             tenant = wrappedTenant.get();
         }
 
+        if (userId.contains("\\")) {
+            String[] userAndTenant = userId.split("\\\\", 2);
+            userName = userAndTenant[1];
+
+            Optional<? extends Tenant> wrappedTenant = tenantService.retrieve(userAndTenant[0]);
+            if (!wrappedTenant.isPresent()) {
+                throw new UserNotFoundException(userId);
+            }
+
+            tenant = wrappedTenant.get();
+        }
+
         return login(tenant, userName, password);
     }
 
