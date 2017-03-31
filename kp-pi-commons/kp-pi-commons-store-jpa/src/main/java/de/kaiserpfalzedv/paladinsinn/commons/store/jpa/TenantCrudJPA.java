@@ -89,6 +89,13 @@ public class TenantCrudJPA implements TenantCrudService {
     }
 
     @Override
+    public Optional<? extends Tenant> retrieveByFullName(String uniqueName) {
+        TypedQuery<TenantJPA> query = createTenantByNameQuery(uniqueName);
+
+        return retrieveSingleTenant(query);
+    }
+
+    @Override
     public void delete(final String uniqueKey) {
         TypedQuery<TenantJPA> query = createTenantByKeyQuery(uniqueKey);
         Optional<TenantJPA> loaded = retrieveSingleTenant(query);
@@ -141,6 +148,10 @@ public class TenantCrudJPA implements TenantCrudService {
 
     private TypedQuery<TenantJPA> createTenantByKeyQuery(String tenantKey) {
         return createNamedQuery("tenant-by-key").setParameter("key", tenantKey);
+    }
+
+    private TypedQuery<TenantJPA> createTenantByNameQuery(final String uniqueName) {
+        return createNamedQuery("tenant-by-name").setParameter("name", uniqueName);
     }
 
     private Optional<TenantJPA> retrieveSingleTenant(final TypedQuery<TenantJPA> query) {

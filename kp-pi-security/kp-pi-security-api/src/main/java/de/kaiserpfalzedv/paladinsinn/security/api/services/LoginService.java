@@ -16,6 +16,9 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.api.services;
 
+import java.util.Set;
+import java.util.UUID;
+
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.User;
 
@@ -43,4 +46,65 @@ public interface LoginService {
     User login(Tenant tenant, String userId, String password)
             throws UserNotFoundException, PasswordFailureException, UserIsLockedException,
                    UserHasNoAccessToTenantException;
+
+    /**
+     * Logs a user in for a special tenant. The tenant is specified by its unique id.
+     *
+     * @param tenantId the tenant to log the user in.
+     * @param userId   the user id to log in.
+     * @param password the password of the user to log in.
+     *
+     * @return the user object.
+     *
+     * @throws UserNotFoundException            If there is no user with the id given.
+     * @throws PasswordFailureException         The password did not match the password of the user.
+     * @throws UserIsLockedException            The user is locked and can not log in.
+     * @throws UserHasNoAccessToTenantException The user exists but is not entitled for the given tenant.
+     */
+    User login(UUID tenantId, String userId, String password)
+            throws UserNotFoundException, PasswordFailureException, UserIsLockedException,
+                   UserHasNoAccessToTenantException;
+
+    /**
+     * Logs a user in for a special tenant. The tenant is specified by its key.
+     *
+     * @param tenantKey the tenant to log the user in.
+     * @param userId    the user id to log in.
+     * @param password  the password of the user to log in.
+     *
+     * @return the user object.
+     *
+     * @throws UserNotFoundException            If there is no user with the id given.
+     * @throws PasswordFailureException         The password did not match the password of the user.
+     * @throws UserIsLockedException            The user is locked and can not log in.
+     * @throws UserHasNoAccessToTenantException The user exists but is not entitled for the given tenant.
+     */
+    User login(String tenantKey, String userId, String password)
+            throws UserNotFoundException, PasswordFailureException, UserIsLockedException,
+                   UserHasNoAccessToTenantException;
+
+    /**
+     * Logs a user in without any tenant (that means with the
+     * {@link de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.DefaultTenant}) or with the tenant specified by its
+     * name. The tenant can be specified within the userId. If the userId contains an @-sign, the data is splittet and
+     * the first part is the real userId within the tenant specified by its name after the @-sign.
+     *
+     * @param userId   the user id to log in.
+     * @param password the password of the user to log in.
+     *
+     * @return the user object.
+     *
+     * @throws UserNotFoundException            If there is no user with the id given.
+     * @throws PasswordFailureException         The password did not match the password of the user.
+     * @throws UserIsLockedException            The user is locked and can not log in.
+     * @throws UserHasNoAccessToTenantException The user exists but is not entitled for the given tenant.
+     */
+    User login(String userId, String password)
+            throws UserNotFoundException, PasswordFailureException, UserIsLockedException,
+                   UserHasNoAccessToTenantException;
+
+    /**
+     * @return the valid tenants to be usable for login.
+     */
+    Set<? extends Tenant> availableTenants();
 }

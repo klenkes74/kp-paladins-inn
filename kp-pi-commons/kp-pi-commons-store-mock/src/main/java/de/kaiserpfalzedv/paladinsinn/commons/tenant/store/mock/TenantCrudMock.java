@@ -62,6 +62,11 @@ public class TenantCrudMock implements TenantCrudService {
     }
 
     @Override
+    public Optional<? extends Tenant> retrieveByFullName(String uniqueName) {
+        return Optional.ofNullable(tenantsByName.get(uniqueName));
+    }
+
+    @Override
     public Tenant create(final Tenant tenant) throws DuplicateUniqueKeyException {
         checkDuplicateTenantUniqueId(tenant);
         checkDuplicateTenantKey(tenant);

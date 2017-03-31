@@ -37,14 +37,24 @@ public interface TenantCrudService extends CrudService<Tenant> {
      * With tenants the {@link CrudService#delete(String)} method does not take the {@link Nameable#getName()} but
      * the {@link Tenant#getKey()} as parameter. Please keep that in mind!
      *
-     * @param uniqueKey the {@link Tenant#getKey()} of the data set to be deleted.
+     * @param uniqueKey the {@link Tenant#getKey()} of the data set to be retrieved.
      *
      * @return the tenant with the unique key given as parameter.
      *
      * @see Tenant#getKey()
      * @see Tenant#getName()
+     * @see #retrieveByFullName(String)
      */
     Optional<? extends Tenant> retrieve(String uniqueKey);
+
+    /**
+     * @param uniqueName the {@link Tenant#getName()} of the data set to be retrieved.
+     *
+     * @return the tenant with the unique name given as parameter.
+     *
+     * @see #retrieve(String)
+     */
+    Optional<? extends Tenant> retrieveByFullName(String uniqueName);
 
     /**
      * With tenants the {@link CrudService#delete(String)} method does not take the {@link Nameable#getName()} but
