@@ -38,13 +38,17 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Versionable;
  */
 @MappedSuperclass
 public class MetaData implements Identifiable, Versionable, Modifiable {
+    private static final long serialVersionUID = 2143714435726971357L;
+
+
     /**
      * The default {@link ZoneId} for which all date times are created.
      * That is the <a href="https://en.wikipedia.org/wiki/Coordinated_Universal_Time">UTC</a> as currently defined in
      * document ITU-R TF.460-6.
      */
     public static final ZoneId ZONE_ID = ZoneId.of("UTC");
-    private static final long serialVersionUID = 2143714435726971357L;
+
+
     @Id
     @Column(name = "ID", nullable = false, updatable = false)
     private volatile UUID uniqueId;
@@ -112,6 +116,17 @@ public class MetaData implements Identifiable, Versionable, Modifiable {
         this.uniqueId = uniqueId;
     }
 
+
+    @Override
+    public Long getVersion() {
+        return version;
+    }
+
+    protected void setVersion(final Long version) {
+        this.version = version;
+    }
+
+    
     @Override
     public OffsetDateTime getCreated() {
         OffsetDateTime tmp = created;
@@ -139,15 +154,15 @@ public class MetaData implements Identifiable, Versionable, Modifiable {
             synchronized (this) {
                 tmp = modified;
                 if (tmp == null) {
-                    this.modified = tmp = OffsetDateTime.now(ZONE_ID);
+                    this.modified = getCreated();
                 }
             }
         }
         return tmp;
     }
 
-    protected void setModified(final OffsetDateTime changed) {
-        this.modified = changed;
+    protected void setModified(final OffsetDateTime modified) {
+        this.modified = modified;
     }
 
     @Override
@@ -177,14 +192,5 @@ public class MetaData implements Identifiable, Versionable, Modifiable {
 
         return result
                 .append(']').toString();
-    }
-
-    @Override
-    public Long getVersion() {
-        return version;
-    }
-
-    protected void setVersion(final Long version) {
-        this.version = version;
     }
 }

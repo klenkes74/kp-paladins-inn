@@ -21,16 +21,22 @@ import java.util.UUID;
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 
 /**
- * The tenant of a data node in the database.
+ * The tenant of a data node in the database. The tenant consistss of its unique id, the unique name (up to
+ * {@value Nameable#MAX_LENGTH} characters in length) and the unique key (up to {@value #MAX_KEY_LENGTH} characters
+ * long).
  *
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
 public interface Tenant extends Nameable {
+    int MAX_KEY_LENGTH = 5;
     /**
      * The default tenant id for non-multitenant systems.
      */
     UUID DEFAULT_TENANT = UUID.fromString("4dfb9268-7f29-4442-a458-f00e7e620f18");
 
+    /**
+     * @return the unique key (up to {@value #MAX_KEY_LENGTH} characters long) of the tenant.
+     */
     String getKey();
 }

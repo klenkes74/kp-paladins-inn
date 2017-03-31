@@ -24,5 +24,12 @@ import java.security.Principal;
  * @since 2017-03-11
  */
 public interface Nameable extends Principal, Identifiable {
-    
+    int MAX_LENGTH = 100;
+
+    /**
+     * The unique name may be up to {@value #MAX_LENGTH} characters long.
+     *
+     * @return the unique name.
+     */
+    String getName();
 }
