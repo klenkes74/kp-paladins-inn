@@ -82,24 +82,28 @@ public class EntitlementCrudJPATest {
                 .withName(ENTITLEMENT_NAME_1)
                 .build();
 
-        ENTITLEMENT_1_JPA = new EntitlementJPABuilder()
-                .withUniqueId(ENTITLEMENT_UNIQUE_ID_1)
-                .withName(ENTITLEMENT_NAME_1)
-                .withCreated(ENTITLEMENT_CREATED_1)
-                .withModified(ENTITLEMENT_MODIFIED_1)
-                .build();
-        ENTITLEMENT_2_JPA = new EntitlementJPABuilder()
-                .withUniqueId(ENTITLEMENT_UNIQUE_ID_2)
-                .withName(ENTITLEMENT_NAME_2)
-                .withCreated(ENTITLEMENT_CREATED_2)
-                .withModified(ENTITLEMENT_MODIFIED_2)
-                .build();
-        ENTITLEMENT_3_JPA = new EntitlementJPABuilder()
-                .withUniqueId(ENTITLEMENT_UNIQUE_ID_3)
-                .withName(ENTITLEMENT_NAME_3)
-                .withCreated(ENTITLEMENT_CREATED_3)
-                .withModified(ENTITLEMENT_MODIFIED_3)
-                .build();
+        try {
+            ENTITLEMENT_1_JPA = new EntitlementJPABuilder()
+                    .withUniqueId(ENTITLEMENT_UNIQUE_ID_1)
+                    .withName(ENTITLEMENT_NAME_1)
+                    .withCreated(ENTITLEMENT_CREATED_1)
+                    .withModified(ENTITLEMENT_MODIFIED_1)
+                    .build();
+            ENTITLEMENT_2_JPA = new EntitlementJPABuilder()
+                    .withUniqueId(ENTITLEMENT_UNIQUE_ID_2)
+                    .withName(ENTITLEMENT_NAME_2)
+                    .withCreated(ENTITLEMENT_CREATED_2)
+                    .withModified(ENTITLEMENT_MODIFIED_2)
+                    .build();
+            ENTITLEMENT_3_JPA = new EntitlementJPABuilder()
+                    .withUniqueId(ENTITLEMENT_UNIQUE_ID_3)
+                    .withName(ENTITLEMENT_NAME_3)
+                    .withCreated(ENTITLEMENT_CREATED_3)
+                    .withModified(ENTITLEMENT_MODIFIED_3)
+                    .build();
+        } catch (BuilderValidationException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Mock

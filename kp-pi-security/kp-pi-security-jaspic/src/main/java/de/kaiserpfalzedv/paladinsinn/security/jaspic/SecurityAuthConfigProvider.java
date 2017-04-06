@@ -27,8 +27,8 @@ import javax.security.auth.message.config.RegistrationListener;
 import javax.security.auth.message.config.ServerAuthConfig;
 
 import de.kaiserpfalzedv.paladinsinn.commons.api.BuilderValidationException;
-import de.kaiserpfalzedv.paladinsinn.security.jaspic.client.SecurityClientAuthConfigBuilder;
-import de.kaiserpfalzedv.paladinsinn.security.jaspic.server.SecurityServerAuthConfigBuilder;
+import de.kaiserpfalzedv.paladinsinn.security.jaspic.client.SecurityClientAuthConfig;
+import de.kaiserpfalzedv.paladinsinn.security.jaspic.server.SecurityServerAuthConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,6 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SecurityAuthConfigProvider implements AuthConfigProvider, RegistrationListener {
     private static final Logger LOG = LoggerFactory.getLogger(SecurityAuthConfigProvider.class);
+
 
     private AuthConfigFactory factory;
     private Map<String, String> properties;
@@ -59,11 +60,11 @@ public class SecurityAuthConfigProvider implements AuthConfigProvider, Registrat
         LOG.debug("{}:getClientAuthConfig: layer={}, appContext={}, handler={}", this, layer, appContext, handler);
 
         try {
-            return new SecurityClientAuthConfigBuilder(factory, properties)
+            return new AuthConfigBuilder<SecurityClientAuthConfig>(factory, properties)
                     .withLayer(layer)
                     .withAppContext(appContext)
                     .withHandler(handler)
-                    .build();
+                    .buildClientAuthConfig();
         } catch (BuilderValidationException e) {
             LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
 
@@ -76,11 +77,11 @@ public class SecurityAuthConfigProvider implements AuthConfigProvider, Registrat
         LOG.debug("{}:getServerAuthConfig: layer={}, appContext={}, handler={}", this, layer, appContext, handler);
 
         try {
-            return new SecurityServerAuthConfigBuilder(factory, properties)
+            return new AuthConfigBuilder<SecurityServerAuthConfig>(factory, properties)
                     .withLayer(layer)
                     .withAppContext(appContext)
                     .withHandler(handler)
-                    .build();
+                    .buildServerAuthConfig();
         } catch (BuilderValidationException e) {
             LOG.error(e.getClass().getSimpleName() + " caught: " + e.getMessage(), e);
 

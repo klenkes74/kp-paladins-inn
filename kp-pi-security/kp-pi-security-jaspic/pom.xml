@@ -40,6 +40,10 @@
     <dependencies>
         <dependency>
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-commons-impl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
             <artifactId>kp-pi-security-impl</artifactId>
         </dependency>
 

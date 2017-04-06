@@ -14,15 +14,18 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.security.jaspic.server;
+package de.kaiserpfalzedv.paladinsinn.security.jaspic;
 
 import java.util.Map;
 
 import javax.security.auth.callback.CallbackHandler;
+import javax.security.auth.message.config.AuthConfig;
 import javax.security.auth.message.config.AuthConfigFactory;
 
 import de.kaiserpfalzedv.paladinsinn.commons.api.Builder;
 import de.kaiserpfalzedv.paladinsinn.commons.api.BuilderValidationException;
+import de.kaiserpfalzedv.paladinsinn.security.jaspic.client.SecurityClientAuthConfig;
+import de.kaiserpfalzedv.paladinsinn.security.jaspic.server.SecurityServerAuthConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,18 +34,20 @@ import org.slf4j.LoggerFactory;
  * @version 1.0.0
  * @since 2017-04-01
  */
-public class SecurityServerAuthConfigBuilder implements Builder<SecurityServerAuthConfig> {
-    private static final Logger LOG = LoggerFactory.getLogger(SecurityServerAuthConfigBuilder.class);
+public class AuthConfigBuilder<T extends AuthConfig> implements Builder<T> {
+    private static final Logger LOG = LoggerFactory.getLogger(AuthConfigBuilder.class);
 
     private AuthConfigFactory factory;
     private Map<String, String> properties;
+
+    private boolean serverAuthConfig = true;
 
     private String layer;
     private String appContext;
     private CallbackHandler handler;
 
 
-    public SecurityServerAuthConfigBuilder(final AuthConfigFactory factory, final Map<String, String> properties) {
+    public AuthConfigBuilder(final AuthConfigFactory factory, final Map<String, String> properties) {
         LOG.debug("***** Creating {}: factory={}, properties={}", this, factory, properties);
         properties.forEach((k, v) -> LOG.trace("      Property {}: {}", k, v));
 
@@ -51,31 +56,61 @@ public class SecurityServerAuthConfigBuilder implements Builder<SecurityServerAu
     }
 
 
+    @SuppressWarnings("unchecked")
     @Override
-    public SecurityServerAuthConfig build() throws BuilderValidationException {
+    public T build() throws BuilderValidationException {
         LOG.trace("Building new client authentication context: layer={}, appContext={}, handler={}",
                   layer, appContext, handler
         );
 
-        return new SecurityServerAuthConfig();
+        T result;
+        if (serverAuthConfig) {
+            result = (T) new SecurityServerAuthConfig();
+        } else {
+            result = (T) new SecurityClientAuthConfig();
+        }
+
+        return result;
+    }
+
+    public SecurityClientAuthConfig buildClientAuthConfig() throws BuilderValidationException {
+        client();
+
+        return (SecurityClientAuthConfig) build();
+    }
+
+    public SecurityServerAuthConfig buildServerAuthConfig() throws BuilderValidationException {
+        server();
+
+        return (SecurityServerAuthConfig) build();
     }
 
     @Override
     public void validate() throws BuilderValidationException {
-        // TODO klenkes Auto defined stub for: de.kaiserpfalzedv.paladinsinn.security.jaspic.client.SecurityServerAuthConfigBuilder.validate
+        // TODO klenkes Auto defined stub for: de.kaiserpfalzedv.paladinsinn.security.jaspic.client.AuthConfigBuilder.validate
     }
 
-    public SecurityServerAuthConfigBuilder withLayer(final String layer) {
+    public AuthConfigBuilder server() {
+        serverAuthConfig = true;
+        return this;
+    }
+
+    public AuthConfigBuilder client() {
+        serverAuthConfig = false;
+        return this;
+    }
+
+    public AuthConfigBuilder withLayer(final String layer) {
         this.layer = layer;
         return this;
     }
 
-    public SecurityServerAuthConfigBuilder withAppContext(final String appContext) {
+    public AuthConfigBuilder withAppContext(final String appContext) {
         this.appContext = appContext;
         return this;
     }
 
-    public SecurityServerAuthConfigBuilder withHandler(final CallbackHandler handler) {
+    public AuthConfigBuilder withHandler(final CallbackHandler handler) {
         this.handler = handler;
         return this;
     }

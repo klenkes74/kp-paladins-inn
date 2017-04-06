@@ -16,12 +16,15 @@
 
 package de.kaiserpfalzedv.paladinsinn.security.jaspic.server;
 
+import java.util.Set;
+
 import javax.security.auth.Subject;
 import javax.security.auth.message.AuthException;
 import javax.security.auth.message.AuthStatus;
 import javax.security.auth.message.MessageInfo;
 import javax.security.auth.message.config.ServerAuthContext;
 
+import de.kaiserpfalzedv.paladinsinn.security.api.model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,11 +36,13 @@ import org.slf4j.LoggerFactory;
 public class SecurityServerAuthContext implements ServerAuthContext {
     private static final Logger LOG = LoggerFactory.getLogger(SecurityServerAuthContext.class);
 
+
     @Override
     public AuthStatus validateRequest(MessageInfo messageInfo, Subject clientSubject, Subject serviceSubject) throws AuthException {
         LOG.debug("{}:validateRequest called: messageInfo={}, clientSubject={}, serviceSubject={}",
                   this, messageInfo, clientSubject, serviceSubject
         );
+
 
         // TODO klenkes Auto defined stub for: de.kaiserpfalzedv.paladinsinn.security.jaspic.server.SecurityServerAuthContext.validateRequest
 
@@ -58,7 +63,16 @@ public class SecurityServerAuthContext implements ServerAuthContext {
     @Override
     public void cleanSubject(MessageInfo messageInfo, Subject subject) throws AuthException {
         LOG.debug("{}:cleanSubject called: messageInfo={}, subject={}", this, messageInfo, subject);
+        LOG.trace("      working on subject with principals: {}", subject.getPrincipals());
+        LOG.trace("      Is request: {}", messageInfo.getRequestMessage() != null);
+        messageInfo.getMap().forEach((k, v) -> LOG.trace("      messageInfo[{}]: {}", k, v));
 
-        // TODO klenkes Auto defined stub for: de.kaiserpfalzedv.paladinsinn.security.jaspic.server.SecurityServerAuthContext.cleanSubject
+        removeAllUsersFromPrincipals(subject);
+    }
+
+    private void removeAllUsersFromPrincipals(Subject subject) {
+        Set<User> principalsToRemove = subject.getPrincipals(User.class);
+        LOG.debug("      Removing principals: {}", principalsToRemove);
+        subject.getPrincipals().removeAll(principalsToRemove);
     }
 }

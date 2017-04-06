@@ -82,24 +82,28 @@ public class RoleCrudJPATest {
                 .withName(ROLE_NAME_1)
                 .build();
 
-        ROLE_1_JPA = new RoleJPABuilder()
-                .withUniqueId(ROLE_UNIQUE_ID_1)
-                .withName(ROLE_NAME_1)
-                .withCreated(ROLE_CREATED_1)
-                .withModified(ROLE_MODIFIED_1)
-                .build();
-        ROLE_2_JPA = new RoleJPABuilder()
-                .withUniqueId(ROLE_UNIQUE_ID_2)
-                .withName(ROLE_NAME_2)
-                .withCreated(ROLE_CREATED_2)
-                .withModified(ROLE_MODIFIED_2)
-                .build();
-        ROLE_3_JPA = new RoleJPABuilder()
-                .withUniqueId(ROLE_UNIQUE_ID_3)
-                .withName(ROLE_NAME_3)
-                .withCreated(ROLE_CREATED_3)
-                .withModified(ROLE_MODIFIED_3)
-                .build();
+        try {
+            ROLE_1_JPA = new RoleJPABuilder()
+                    .withUniqueId(ROLE_UNIQUE_ID_1)
+                    .withName(ROLE_NAME_1)
+                    .withCreated(ROLE_CREATED_1)
+                    .withModified(ROLE_MODIFIED_1)
+                    .build();
+            ROLE_2_JPA = new RoleJPABuilder()
+                    .withUniqueId(ROLE_UNIQUE_ID_2)
+                    .withName(ROLE_NAME_2)
+                    .withCreated(ROLE_CREATED_2)
+                    .withModified(ROLE_MODIFIED_2)
+                    .build();
+            ROLE_3_JPA = new RoleJPABuilder()
+                    .withUniqueId(ROLE_UNIQUE_ID_3)
+                    .withName(ROLE_NAME_3)
+                    .withCreated(ROLE_CREATED_3)
+                    .withModified(ROLE_MODIFIED_3)
+                    .build();
+        } catch (BuilderValidationException e) {
+            throw new IllegalStateException(e);
+        }
     }
 
     @Mock
@@ -159,7 +163,7 @@ public class RoleCrudJPATest {
         tenantList.add(ROLE_2_JPA);
         tenantList.add(ROLE_3_JPA);
 
-        when(em.createNamedQuery("entitlements", RoleJPA.class)).thenReturn(query);
+        when(em.createNamedQuery("roles", RoleJPA.class)).thenReturn(query);
         when(query.setParameter(eq("tenant"), any())).thenReturn(query);
         when(query.setFirstResult(3)).thenReturn(query);
         when(query.setMaxResults(3)).thenReturn(query);
