@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.commons.api.persistence;
+package de.kaiserpfalzedv.paladinsinn.commons.mock;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -27,6 +27,11 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.commons.api.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageBuilder;
 import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateUniqueIdException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateUniqueNameException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.MultitenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.PersistenceRuntimeException;
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.MockService;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 import org.slf4j.Logger;
@@ -111,7 +116,7 @@ public abstract class AbstractMultitenantCrudMock<T extends Nameable> implements
         prepareTenant(tenant);
 
         if (!uuidMap.get(tenant).containsKey(uniqueId)) {
-            LOG.warn("Tenant '{}' contains no {} with UUID: {}", clasz.getSimpleName(), tenant.getKey(), uniqueId);
+            LOG.warn("Tenant '{}' contains no {} with UUID: {}", tenant.getKey(), clasz.getSimpleName(), uniqueId);
 
             return Optional.empty();
         }
@@ -121,17 +126,17 @@ public abstract class AbstractMultitenantCrudMock<T extends Nameable> implements
     }
 
     @Override
-    public Optional<T> retrieve(Tenant tenant, String userName) {
+    public Optional<T> retrieve(Tenant tenant, String uniqueKey) {
         prepareTenant(tenant);
 
-        if (!uniqueNameMap.get(tenant).containsKey(userName)) {
-            LOG.warn("Tenant '{}' contains no {} with user name: {}", clasz.getSimpleName(), tenant.getKey(), userName);
+        if (!uniqueNameMap.get(tenant).containsKey(uniqueKey)) {
+            LOG.warn("Tenant '{}' contains no {} with unique key: {}", tenant.getKey(), clasz.getSimpleName(), uniqueKey);
 
             return Optional.empty();
         }
 
-        LOG.debug("Retrieving {} from tenant '{}' with user name: {}", clasz.getSimpleName(), tenant.getKey(), userName);
-        return Optional.ofNullable(copy(uniqueNameMap.get(tenant).get(userName)));
+        LOG.debug("Retrieving {} from tenant '{}' with unique key: {}", clasz.getSimpleName(), tenant.getKey(), uniqueKey);
+        return Optional.ofNullable(copy(uniqueNameMap.get(tenant).get(uniqueKey)));
     }
 
     @Override

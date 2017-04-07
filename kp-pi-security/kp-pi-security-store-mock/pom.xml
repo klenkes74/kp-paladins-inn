@@ -78,6 +78,10 @@
 
         <dependency>
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-commons-mock</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
             <artifactId>kp-pi-commons-store-mock</artifactId>
         </dependency>
 

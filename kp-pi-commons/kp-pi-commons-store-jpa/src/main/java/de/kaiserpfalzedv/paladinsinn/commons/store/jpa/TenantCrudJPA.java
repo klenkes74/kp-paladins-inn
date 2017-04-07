@@ -22,6 +22,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Alternative;
 import javax.persistence.EntityExistsException;
@@ -51,6 +52,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * The JPA based CRUD base service for tenant data access. Should only be used from the higher services and never direct
+ * by other packages than implementations of
+ * {@link de.kaiserpfalzedv.paladinsinn.commons.api.tenant.service.TenantCommandService}
+ * or
+ * {@link de.kaiserpfalzedv.paladinsinn.commons.api.tenant.service.TenantQueryService}.
+ * 
  * @author klenkes {@literal <rlichti@kaiserpfalz-edv.de>}
  * @version 1.0.0
  * @since 2017-03-18
@@ -74,10 +81,13 @@ public class TenantCrudJPA implements TenantCrudService {
      *
      * @param em The entity manager (or mock for testing purposes)
      */
-    public TenantCrudJPA(
-            EntityManager em
-    ) {
+    TenantCrudJPA(EntityManager em) {
         this.em = em;
+    }
+
+    @PostConstruct
+    public void init() {
+        LOG.debug("{} created with entity manager: {}", this, em);
     }
 
 

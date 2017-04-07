@@ -24,5 +24,7 @@ package de.kaiserpfalzedv.paladinsinn.commons.api.service;
 public interface ServiceSelector<T> {
     T loadWorker(Class<T> clasz) throws ClassNotLoadableException, ClassNotFoundException;
 
+    T loadNetworkservice(Class<T> clasz) throws ClassNotLoadableException, ClassNotFoundException;
+
     T loadMock(Class<T> clasz) throws ClassNotLoadableException, ClassNotFoundException;
 }

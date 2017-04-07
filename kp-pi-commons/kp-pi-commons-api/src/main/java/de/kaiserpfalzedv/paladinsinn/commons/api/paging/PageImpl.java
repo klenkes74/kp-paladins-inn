@@ -28,7 +28,7 @@ import java.util.List;
  * @since 2017-03-17
  */
 public class PageImpl<T extends Serializable> implements Page<T> {
-    private static final long serialVersionUID = -1245206955340210764L;
+    private static final long serialVersionUID = 6624708689787112478L;
 
 
     private final ArrayList<T> data = new ArrayList<>();

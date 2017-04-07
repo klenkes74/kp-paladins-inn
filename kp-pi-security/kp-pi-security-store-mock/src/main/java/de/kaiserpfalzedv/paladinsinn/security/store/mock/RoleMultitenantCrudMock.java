@@ -18,9 +18,9 @@ package de.kaiserpfalzedv.paladinsinn.security.store.mock;
 
 import javax.enterprise.inject.Alternative;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.AbstractMultitenantCrudMock;
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.MockService;
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.MultiTenant;
+import de.kaiserpfalzedv.paladinsinn.commons.mock.AbstractMultitenantCrudMock;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.Role;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.RoleBuilder;
 import de.kaiserpfalzedv.paladinsinn.security.api.store.RoleMultitenantCrudService;

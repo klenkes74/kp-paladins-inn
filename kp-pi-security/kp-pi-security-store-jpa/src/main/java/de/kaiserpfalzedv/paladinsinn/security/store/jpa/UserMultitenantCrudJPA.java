@@ -22,6 +22,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -40,6 +42,8 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageRequest;
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateUniqueIdException;
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateUniqueNameException;
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.PersistenceRuntimeException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.MultiTenant;
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.WorkerService;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.User;
 import de.kaiserpfalzedv.paladinsinn.security.api.store.UserMultitenantCrudService;
@@ -53,6 +57,10 @@ import org.slf4j.LoggerFactory;
  * @version 1.0.0
  * @since 2017-03-31
  */
+@Alternative
+@RequestScoped
+@MultiTenant
+@WorkerService
 public class UserMultitenantCrudJPA implements UserMultitenantCrudService {
     private static final Logger LOG = LoggerFactory.getLogger(UserMultitenantCrudJPA.class);
 

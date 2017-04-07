@@ -42,7 +42,7 @@ import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageRequest;
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateUniqueIdException;
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateUniqueNameException;
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.PersistenceRuntimeException;
-import de.kaiserpfalzedv.paladinsinn.commons.api.service.SingleTenant;
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.MultiTenant;
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.WorkerService;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.Entitlement;
@@ -59,7 +59,7 @@ import org.slf4j.LoggerFactory;
  */
 @Alternative
 @RequestScoped
-@SingleTenant
+@MultiTenant
 @WorkerService
 public class EntitlementMultitenantCrudJPA implements EntitlementMultitenantCrudService {
     private static final Logger LOG = LoggerFactory.getLogger(EntitlementMultitenantCrudJPA.class);

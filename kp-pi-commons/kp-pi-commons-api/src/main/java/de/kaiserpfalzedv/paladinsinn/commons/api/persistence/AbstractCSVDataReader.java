@@ -40,6 +40,9 @@ public abstract class AbstractCSVDataReader<T extends Nameable> implements DataR
 
     public AbstractCSVDataReader(final CrudService<T> crudService) {
         this.crudService = crudService;
+
+        LOG.info("***** CSV Reader created: {}", this);
+        LOG.info("*   *    crud service: {}", this.crudService);
     }
 
 

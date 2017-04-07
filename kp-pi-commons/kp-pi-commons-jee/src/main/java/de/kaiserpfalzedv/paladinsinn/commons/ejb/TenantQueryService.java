@@ -99,6 +99,13 @@ public class TenantQueryService
     }
 
     @Override
+    public Optional<Tenant> retrieveByFullName(String fullName) {
+        Optional<? extends Tenant> result = service.retrieveByFullName(fullName);
+
+        return result.isPresent() ? Optional.of(result.get()) : Optional.empty();
+    }
+
+    @Override
     public Page<Tenant> retrieve(PageRequest pageRequest) {
         Page<? extends Tenant> result = service.retrieve(pageRequest);
 

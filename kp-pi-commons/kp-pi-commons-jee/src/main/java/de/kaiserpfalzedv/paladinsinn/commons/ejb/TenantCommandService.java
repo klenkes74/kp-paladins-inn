@@ -55,11 +55,12 @@ public class TenantCommandService
         implements de.kaiserpfalzedv.paladinsinn.commons.api.tenant.service.TenantCommandService {
     private static final Logger LOG = LoggerFactory.getLogger(TenantCommandService.class);
 
-    @Inject
     private TenantCrudService service;
 
+    @Deprecated
     public TenantCommandService() {}
 
+    @Inject
     public TenantCommandService(TenantCrudService service) {
         this.service = service;
     }

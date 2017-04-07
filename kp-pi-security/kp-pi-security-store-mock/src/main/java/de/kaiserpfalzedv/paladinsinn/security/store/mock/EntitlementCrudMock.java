@@ -19,11 +19,11 @@ package de.kaiserpfalzedv.paladinsinn.security.store.mock;
 import javax.enterprise.inject.Alternative;
 import javax.inject.Inject;
 
-import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.AbstractCrudMock;
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.MockService;
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.SingleTenant;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.DefaultTenant;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
+import de.kaiserpfalzedv.paladinsinn.commons.mock.AbstractCrudMock;
 import de.kaiserpfalzedv.paladinsinn.security.api.model.Entitlement;
 import de.kaiserpfalzedv.paladinsinn.security.api.store.EntitlementCrudService;
 import de.kaiserpfalzedv.paladinsinn.security.api.store.EntitlementMultitenantCrudService;

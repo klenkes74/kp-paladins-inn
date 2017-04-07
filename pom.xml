@@ -28,10 +28,12 @@
     <modules>
         <module>kp-pi-commons</module>
         <module>kp-pi-security</module>
+        <!--
         <module>kp-pi-topics</module>
         <module>kp-pi-events</module>
         <module>kp-pi-peers</module>
         <module>kp-pi-shops</module>
+        -->
     </modules>
 
     <url>http://www.paladins-inn.de</url>
@@ -309,6 +311,11 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+                <artifactId>kp-pi-commons-mock</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
                 <artifactId>kp-pi-commons-store-mock</artifactId>
                 <version>${project.version}</version>
             </dependency>
@@ -329,7 +336,7 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-commons-ejb</artifactId>
+                <artifactId>kp-pi-commons-jee</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -370,7 +377,7 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-security-ejb</artifactId>
+                <artifactId>kp-pi-security-jee</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -406,7 +413,7 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-events-ejb</artifactId>
+                <artifactId>kp-pi-events-jee</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -442,7 +449,7 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-peers-ejb</artifactId>
+                <artifactId>kp-pi-peers-jee</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -478,7 +485,7 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-shops-ejb</artifactId>
+                <artifactId>kp-pi-shops-jee</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
@@ -514,7 +521,7 @@
             </dependency>
             <dependency>
                 <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
-                <artifactId>kp-pi-topics-ejb</artifactId>
+                <artifactId>kp-pi-topics-jee</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

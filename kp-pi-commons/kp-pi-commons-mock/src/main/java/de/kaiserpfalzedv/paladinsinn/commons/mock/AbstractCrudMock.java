@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package de.kaiserpfalzedv.paladinsinn.commons.api.persistence;
+package de.kaiserpfalzedv.paladinsinn.commons.mock;
 
 import java.util.Optional;
 import java.util.Set;
@@ -22,6 +22,11 @@ import java.util.UUID;
 
 import de.kaiserpfalzedv.paladinsinn.commons.api.paging.Page;
 import de.kaiserpfalzedv.paladinsinn.commons.api.paging.PageRequest;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.CrudService;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateUniqueIdException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.DuplicateUniqueNameException;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.MultitenantCrudService;
+import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.Nameable;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.DefaultTenant;
 import de.kaiserpfalzedv.paladinsinn.commons.api.tenant.model.Tenant;
 

@@ -18,7 +18,9 @@ package de.kaiserpfalzedv.paladinsinn.commons.service;
 
 import java.util.ServiceLoader;
 
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.ClassNotLoadableException;
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.MockService;
+import de.kaiserpfalzedv.paladinsinn.commons.api.service.NetworkService;
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.ServiceSelector;
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.WorkerService;
 import org.slf4j.Logger;
@@ -45,6 +47,21 @@ public class ServiceSelectorImpl<T> implements ServiceSelector<T> {
 
         LOG.debug("No matching worker object of type {} found!", clasz.getCanonicalName());
         throw new ClassNotFoundException("No matching worker class of type " + clasz.getCanonicalName() + " found!");
+    }
+
+    @Override
+    public T loadNetworkservice(Class<T> clasz) throws ClassNotLoadableException, ClassNotFoundException {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        LOG.debug("Trying to load worker {} from class loader {}", clasz, classLoader);
+
+        for (T c : ServiceLoader.load(clasz, classLoader)) {
+            if (c.getClass().isAnnotationPresent(NetworkService.class)) {
+                return c;
+            }
+        }
+
+        LOG.debug("No matching network service of type {} found!", clasz.getCanonicalName());
+        throw new ClassNotFoundException("No matching network service of type " + clasz.getCanonicalName() + " found!");
     }
 
 

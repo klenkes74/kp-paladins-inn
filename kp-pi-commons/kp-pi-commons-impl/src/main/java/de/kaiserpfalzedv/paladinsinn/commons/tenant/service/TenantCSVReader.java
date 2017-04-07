@@ -19,8 +19,6 @@ package de.kaiserpfalzedv.paladinsinn.commons.tenant.service;
 import java.util.Scanner;
 import java.util.UUID;
 
-import javax.inject.Inject;
-
 import de.kaiserpfalzedv.paladinsinn.commons.api.BuilderValidationException;
 import de.kaiserpfalzedv.paladinsinn.commons.api.persistence.AbstractCSVDataReader;
 import de.kaiserpfalzedv.paladinsinn.commons.api.service.CSV;
@@ -42,7 +40,6 @@ public class TenantCSVReader extends AbstractCSVDataReader<Tenant> {
     private static final Logger LOG = LoggerFactory.getLogger(TenantCSVReader.class);
 
 
-    @Inject
     public TenantCSVReader(final TenantCrudService crudService) {
         super(crudService);
     }

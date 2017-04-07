@@ -46,6 +46,12 @@ public interface TenantQueryService {
      */
     Optional<? extends Tenant> retrieve(String key);
 
+    /**
+     * @param fullName The unique full name of the tenant to be retrieved.
+     *
+     * @return The tenant or {@link Optional#empty()}.
+     */
+    Optional<? extends Tenant> retrieveByFullName(String fullName);
 
     /**
      * @param pageRequest The page definition of the data page of tenants to be retrieved.

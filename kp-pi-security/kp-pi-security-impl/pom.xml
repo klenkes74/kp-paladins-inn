@@ -59,6 +59,11 @@
             <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
             <artifactId>kp-pi-security-api</artifactId>
         </dependency>
+        <dependency>
+            <groupId>de.kaiserpfalz-edv.paladins-inn</groupId>
+            <artifactId>kp-pi-commons-impl</artifactId>
+            <scope>test</scope>
+        </dependency>
 
         <dependency>
             <groupId>javax.inject</groupId>

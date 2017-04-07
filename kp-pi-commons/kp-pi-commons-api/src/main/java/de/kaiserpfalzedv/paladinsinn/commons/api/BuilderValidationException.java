@@ -26,8 +26,8 @@ import java.util.Set;
  * @author rlichti {@literal <rlichti@kaiserpfalz-edv.de>}
  * @since 2016-03-20
  */
-public class BuilderValidationException extends PaladinsInnBaseException {
-    private static final long serialVersionUID = 3972248405759625575L;
+public class BuilderValidationException extends PaladinsInnBaseRuntimeException {
+    private static final long serialVersionUID = -4806737667677367796L;
     
     private final HashSet<String> failures = new HashSet<>();
 

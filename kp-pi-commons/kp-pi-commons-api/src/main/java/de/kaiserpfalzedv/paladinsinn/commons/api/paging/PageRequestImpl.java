@@ -24,7 +24,7 @@ import java.util.Objects;
  * @since 2017-03-17
  */
 public class PageRequestImpl implements PageRequest {
-    private static final long serialVersionUID = -4390847181944395810L;
+    private static final long serialVersionUID = -6347402828243367262L;
     
     private long pageNumber;
     private long pageSize;

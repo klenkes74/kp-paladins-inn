@@ -111,7 +111,7 @@ public interface LoginService {
                    UserHasNoAccessToTenantException;
 
     /**
-     * @return the valid tenants to be usable for login.
+     * @return an unmodifiable set of the valid tenants to be usable for login.
      */
     Set<? extends Tenant> availableTenants();
 }

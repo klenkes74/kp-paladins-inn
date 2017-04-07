@@ -45,14 +45,14 @@ public interface TenantCommandService {
      * @param key The new key for the tenant.
      * @throws EntityNotFoundException If there is no such tenant.
      */
-    void changeKey(UUID uniqueId, String key) throws EntityNotFoundException;
+    void changeKey(UUID uniqueId, String key) throws EntityNotFoundException, DuplicateEntityException;
 
     /**
      * @param uniqueId The unique id of the tenant to be changed.
      * @param name The new name for the tenant.
      * @throws EntityNotFoundException If there is no such tenant.
      */
-    void changeName(UUID uniqueId, String name) throws EntityNotFoundException;
+    void changeName(UUID uniqueId, String name) throws EntityNotFoundException, DuplicateEntityException;
 
     /**
      * @param uniqueId The unique id of the tenant to be deleted.
